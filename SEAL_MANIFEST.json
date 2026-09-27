@@ -1,0 +1,86 @@
+{
+  "package": "Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0) — Zenodo & CAEAI Replication Suite",
+  "authors": [
+    {
+      "name": "Zerrin Dağlı",
+      "orcid": "0000-0001-9490-6425"
+    },
+    {
+      "name": "Volkan Dağlı",
+      "orcid": "0009-0000-1587-8703"
+    },
+    {
+      "name": "Dağhan Dağlı",
+      "orcid": "0009-0003-2492-8313"
+    }
+  ],
+  "patent_priority": "TÜRKPATENT TR 2026/016285",
+  "timestamp_utc": "2026-09-27T16:50:34.588094+00:00",
+  "master_merkle_sha256": "088f004bc0179034fcbc0589cac4158b402c14f394a7c21ca300956086e0f7bc",
+  "files": {
+    "Procedural_Fractal_Pedagogy_Seed_Paper_v1.pdf": {
+      "sha256": "c424195d38989a33fa3f96e7eb478c05601dbd6bae1f1d019847544e7c3f4495",
+      "size_bytes": 2483305
+    },
+    ".zenodo.json": {
+      "sha256": "3f99ce3b4ddef1b328d1ecd8b16f844ed9602b0e9021c92bfd1d12a56abb192a",
+      "size_bytes": 11954
+    },
+    "README.md": {
+      "sha256": "0d7052f61203e0b9342ca9b493d605ac2001198a819242bc4582d2ecf6c11b39",
+      "size_bytes": 8990
+    },
+    "ZENODO_ARXIV_Q1_YUKLEME_REHBERI.md": {
+      "sha256": "04cda2421620bb839ff70ce0a0062a94511ead8f5f6f9be747d7a4b696dab878",
+      "size_bytes": 16025
+    },
+    "latex/main.tex": {
+      "sha256": "0a00135458ed7c7f55e53076b61ceac09cae6a03aacbea39bb557151d3a7da67",
+      "size_bytes": 42835
+    },
+    "latex/references.bib": {
+      "sha256": "d64f99ac200fcfa7465cf0bb0965d7b14df276d4f4d71cf384c7368ebe9fcfe1",
+      "size_bytes": 7272
+    },
+    "latex/camera_ready_manuscript.html": {
+      "sha256": "048e50c1ed114244f9e4c35ffdb1adad5d520e77159f18cdd385c50272878fc6",
+      "size_bytes": 2717930
+    },
+    "lean4/PFP_HorizonProof.lean": {
+      "sha256": "ae9a6b8901810618aa5cc5cba45befcb1ccf779d9d51463ccda459d2133edf2f",
+      "size_bytes": 4081
+    },
+    "sim/benchmark_pfp_saturn_paradox.py": {
+      "sha256": "3b0c4ef4ab2e10f0a8291243f310e2f5421b18b47674ada6e451171d55f50c24",
+      "size_bytes": 33036
+    },
+    "sim/build_camera_ready_pdf.py": {
+      "sha256": "4581778affa7fe3af61e8004daad33ca1355a4385f3113dbf10d02e6db3622fe",
+      "size_bytes": 50874
+    },
+    "data/pfp_saturn_benchmark_results.json": {
+      "sha256": "4dd3a0ded6b6d91140ebaa91f7a878ac687b5f8bfd2b241fd30688429c5f6cad",
+      "size_bytes": 11381
+    },
+    "data/pfp_student_trajectories_summary.csv": {
+      "sha256": "7684b1a922a34c39791c9047141422f31f47aad292df08a4cb06592544a47bc5",
+      "size_bytes": 1245
+    },
+    "figures/fig1_observer_horizon_zpd.png": {
+      "sha256": "c68027f7e21f3e2ee0e6f5254705e9d6a65e75271a2e7c37f2dc56a2cb7a4b57",
+      "size_bytes": 866915
+    },
+    "figures/fig2_saturn_paradox_trajectories.png": {
+      "sha256": "46813e0f9f3960bdd189067014fdc0fefdf8ab2e0dc323d7c90965d596c8b81a",
+      "size_bytes": 513775
+    },
+    "figures/fig3_tamame_error_kernel.png": {
+      "sha256": "b02c3e3f7dfe7200bf4db3f51a8b3e2467a0dd5d99520a1799d9a13f1a85fe99",
+      "size_bytes": 319298
+    },
+    "figures/fig4_edge_latency_memory_pareto.png": {
+      "sha256": "ed446c44f695d2f6da8e5e198aaeaac40dbc2c5e617dca06abc53441fd260da8",
+      "size_bytes": 301473
+    }
+  }
+}

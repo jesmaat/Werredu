@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+.pytest_cache/
+
+# Lean 4 / Lake
+.lake/
+lake-packages/
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+
+# OS generated
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Sensitive files
+*token*.txt
+*password*.txt
+*.key
+credentials.json
