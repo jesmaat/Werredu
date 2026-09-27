@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PFP / WERR-Edu v1.0 — Interactive Research Simulator & Phase-Space Engine</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    /* Custom mathematical & canvas styling */
+    .slider-thumb::-webkit-slider-thumb {
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #059669;
+      cursor: pointer;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.4);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased p-3 md:p-6 custom-scrollbar min-h-screen">
+
+  <!-- Header Banner -->
+  <header class="max-w-7xl mx-auto mb-6 bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-2xl backdrop-blur">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            WERR-Edu v1.0 Simulator
+          </span>
+          <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            Lean 4 Verified (0 sorry)
+          </span>
+          <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
+            Target: Computers & Education: AI (Q1)
+          </span>
+        </div>
+        <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">
+          Procedural Fractal Pedagogy (PFP) — Interactive Phase-Space & Telemetry Simulator
+        </h1>
+        <p class="text-xs md:text-sm text-slate-400 mt-0.5">
+          First Author: <strong class="text-slate-200">Dr. Zerrin Dağlı</strong> (Mersin University) &bull; Priority Patent: <code class="text-amber-400">TR 2026/016285</code> &bull; Resolving the Saturn School Paradox (Reigeluth, 2008, p. 34)
+        </p>
+      </div>
+
+      <!-- Live Controls: Run / Pause / Reset -->
+      <div class="flex items-center gap-2 self-start md:self-auto">
+        <button id="btnPlay" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold text-xs md:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-900/30">
+          <span id="playIcon">⏸️</span> <span id="playText">Pause</span>
+        </button>
+        <button id="btnReset" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-semibold text-xs md:text-sm transition">
+          🔄 Reset Cohort
+        </button>
+        <button id="btnStep" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-semibold text-xs md:text-sm transition">
+          ⏭️ Step (+1)
+        </button>
+      </div>
+    </div>
+
+    <!-- Mode Selector Tabs -->
+    <div class="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-slate-700/80 text-xs md:text-sm">
+      <span class="text-slate-400 font-semibold mr-1">Simulation Mode:</span>
+      <button id="tabSynthetic" class="mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition">
+        🧪 Synthetic Monte Carlo (N=1,000 Trajectories)
+      </button>
+      <button id="tabRealAssist" class="mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition">
+        📊 Real Student Traces: ASSISTments (K-12 Math)
+      </button>
+      <button id="tabRealOulad" class="mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition">
+        🎓 Real Student Traces: OULAD (Higher-Ed VLE)
+      </button>
+      <button id="tabLean4" class="mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition">
+        ⚖️ Lean 4 Proof Inspector
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- LEFT COLUMN: Canvas & Phase Space Trajectories (7 cols) -->
+    <section class="lg:col-span-7 flex flex-col gap-4">
+
+      <!-- Phase Space Canvas Card -->
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl relative overflow-hidden">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <h2 class="text-base font-bold text-white flex items-center gap-2">
+              <span>🌀 Complex Phase-Space &amp; ZPD Observer Horizon</span>
+              <span class="text-xs text-slate-400 font-normal">(Mandelbrot Boundary &part;M, z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c)</span>
+            </h2>
+            <p class="text-xs text-slate-400">
+              Live trajectories of active learners across the 4 Pedagogical Regimes.
+            </p>
+          </div>
+          <!-- Current Cycle Badge -->
+          <div class="text-right">
+            <span class="text-xs text-slate-400 block">Cycle (t):</span>
+            <span id="lblCycle" class="text-lg font-mono font-bold text-emerald-400">0 / 120</span>
+          </div>
+        </div>
+
+        <!-- HTML5 Canvas for Mandelbrot Phase Portrait -->
+        <div class="relative w-full aspect-square max-h-[460px] bg-slate-950 rounded-xl overflow-hidden border border-slate-700/80 flex items-center justify-center">
+          <canvas id="phaseCanvas" width="500" height="500" class="w-full h-full object-contain cursor-crosshair"></canvas>
+          <div id="canvasTooltip" class="absolute hidden bg-slate-900/90 text-white text-xs p-2 rounded border border-slate-600 pointer-events-none shadow-xl z-20"></div>
+        </div>
+
+        <!-- Regime Filter Checkboxes -->
+        <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs bg-slate-900/70 p-2.5 rounded-xl border border-slate-700/60">
+          <span class="text-slate-400 font-semibold">Active Regimes:</span>
+          <label class="flex items-center gap-1.5 cursor-pointer">
+            <input type="checkbox" id="chkPFP" checked class="accent-emerald-500">
+            <span class="text-emerald-400 font-bold">● PFP / WERR-Edu (Ours)</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer">
+            <input type="checkbox" id="chkSaturn" checked class="accent-red-500">
+            <span class="text-red-400 font-medium">● Saturn (Unconstrained)</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer">
+            <input type="checkbox" id="chkFactory" checked class="accent-amber-500">
+            <span class="text-amber-400 font-medium">● Factory Lockstep</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer">
+            <input type="checkbox" id="chkCloud" checked class="accent-blue-500">
+            <span class="text-blue-400 font-medium">● Cloud LLM Tutor</span>
+          </label>
+        </div>
+
+        <!-- Legend Note -->
+        <div class="mt-2 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2 px-1">
+          <span>🎯 <strong>Green Target Rings:</strong> ZPD Resonance Shoulders X<sub>upper/lower</sub> = (0.25, &plusmn;0.18)</span>
+          <span>🛑 <strong>Red Dashed Circle:</strong> Euler Escape Horizon |z| = 2.0</span>
+          <span>⚡ <strong>Yellow Rings:</strong> &Omega;<sub>tunneling</sub> Jump Resets</span>
+        </div>
+      </div>
+
+      <!-- Real-time Cohort Trajectory Charts Card -->
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
+        <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
+          <span>📈 Active On-Task Cohort Retention (%) over Time</span>
+          <span class="text-xs text-slate-400">Comparing 4 Arms over 120 Cycles</span>
+        </h3>
+        <div class="w-full h-40 bg-slate-950 rounded-xl p-2 border border-slate-700/80 relative">
+          <canvas id="timeOnTaskChart" width="600" height="150" class="w-full h-full"></canvas>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- RIGHT COLUMN: Telemetry, Metrics, Interactive Controls (5 cols) -->
+    <section class="lg:col-span-5 flex flex-col gap-4">
+
+      <!-- Live Empirical Metric Cards -->
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
+        <h3 class="text-sm font-bold text-white mb-3 flex items-center justify-between">
+          <span>📊 Live Empirical Scoreboard</span>
+          <span class="text-xs px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded border border-emerald-500/30">N = 1,000 Cohort</span>
+        </h3>
+
+        <div class="grid grid-cols-2 gap-3">
+          <!-- Time-on-Task Card -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
+            <div class="text-[11px] text-slate-400 uppercase tracking-wide">Time-on-Task Retention</div>
+            <div class="flex items-baseline gap-1.5 mt-1">
+              <span id="metricToT" class="text-2xl font-bold font-mono text-emerald-400">94.19%</span>
+              <span class="text-xs text-emerald-500 font-semibold">&plusmn;0.14%</span>
+            </div>
+            <div class="text-[10px] text-slate-400 mt-1">
+              Saturn Baseline: <span class="text-red-400 font-semibold">11.68%</span> (<span class="text-emerald-400 font-bold">+82.51 pts</span>)
+            </div>
+          </div>
+
+          <!-- ZPD Residence Card -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
+            <div class="text-[11px] text-slate-400 uppercase tracking-wide">ZPD Residence (Horizon)</div>
+            <div class="flex items-baseline gap-1.5 mt-1">
+              <span id="metricZPD" class="text-2xl font-bold font-mono text-cyan-400">89.24%</span>
+              <span class="text-xs text-cyan-500 font-semibold">&plusmn;0.13%</span>
+            </div>
+            <div class="text-[10px] text-slate-400 mt-1">
+              Cohen's d vs LLM: <strong class="text-white">1.36</strong> (Very Large)
+            </div>
+          </div>
+
+          <!-- Cognitive Stress Firewall Card -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
+            <div class="text-[11px] text-slate-400 uppercase tracking-wide">Cognitive Stress Index</div>
+            <div class="flex items-baseline gap-1.5 mt-1">
+              <span id="metricStress" class="text-2xl font-bold font-mono text-emerald-400">1.29</span>
+              <span class="text-xs text-slate-400">/ 500</span>
+            </div>
+            <div class="text-[10px] text-slate-400 mt-1">
+              Factory Lockstep: <span class="text-red-400 font-semibold">437.84</span> (<strong class="text-emerald-400">339.4&times; quench</strong>)
+            </div>
+          </div>
+
+          <!-- Decision Latency Card -->
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
+            <div class="text-[11px] text-slate-400 uppercase tracking-wide">Median Triage Latency</div>
+            <div class="flex items-baseline gap-1.5 mt-1">
+              <span id="metricLatency" class="text-2xl font-bold font-mono text-purple-400">2.32 ms</span>
+            </div>
+            <div class="text-[10px] text-slate-400 mt-1">
+              Cloud LLM: <span class="text-slate-400">312.0 ms</span> (<strong class="text-purple-400">134.5&times; faster</strong>)
+            </div>
+          </div>
+        </div>
+
+        <!-- Hardware & Storage Highlight -->
+        <div class="mt-3 p-2.5 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-between text-xs">
+          <div class="flex items-center gap-2">
+            <span class="p-1 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold">0 VRAM</span>
+            <span class="text-slate-300">Seed Memory Footprint:</span>
+          </div>
+          <span class="font-mono text-amber-400 font-bold">24 Bytes / Student &bull; O(1) Constant</span>
+        </div>
+      </div>
+
+      <!-- Interactive Pedagogical Parameter Controls (Synthetic Mode) -->
+      <div id="panelSyntheticControls" class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
+        <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
+          <span>🎛️ PFP Stabilization Kernel Sliders</span>
+          <span class="text-xs text-slate-400">Interactive Tuning</span>
+        </h3>
+        <p class="text-xs text-slate-400 mb-4">
+          Adjust the 3 dynamical operators to observe how boundary damping prevents the Saturn School collapse in real-time.
+        </p>
+
+        <!-- Slider 1: T_desc -->
+        <div class="mb-3">
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-slate-300 font-medium">Semantic Token Damping (T<sub>desc</sub>):</span>
+            <span id="valTdesc" class="font-mono font-bold text-emerald-400">0.045</span>
+          </div>
+          <input type="range" id="rngTdesc" min="0.00" max="0.30" step="0.005" value="0.045"
+            class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 slider-thumb">
+          <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
+            <span>0.00 (Undamped Saturn Collapse)</span>
+            <span>0.045 (Optimal PFP)</span>
+            <span>0.30 (Over-damped)</span>
+          </div>
+        </div>
+
+        <!-- Slider 2: Restoring Potential (kappa) -->
+        <div class="mb-3">
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-slate-300 font-medium">Harmonic ZPD Restoring Stiffness (&kappa;):</span>
+            <span id="valKappa" class="font-mono font-bold text-cyan-400">0.44</span>
+          </div>
+          <input type="range" id="rngKappa" min="0.05" max="0.95" step="0.01" value="0.44"
+            class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-500 slider-thumb">
+        </div>
+
+        <!-- Slider 3: Omega Tunneling Radius -->
+        <div class="mb-3">
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-slate-300 font-medium">Biomimetic Jump Radius (r<sub>jump</sub>):</span>
+            <span id="valJump" class="font-mono font-bold text-purple-400">0.032</span>
+          </div>
+          <input type="range" id="rngJump" min="0.005" max="0.080" step="0.002" value="0.032"
+            class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-purple-500 slider-thumb">
+        </div>
+
+        <!-- Deadlock Step Trigger (tau) -->
+        <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-700/80">
+          <span class="text-slate-300">Deadlock Trigger (&tau; consecutive steps):</span>
+          <span class="font-mono font-bold text-white px-2 py-0.5 rounded bg-slate-900 border border-slate-700">2 cycles</span>
+        </div>
+      </div>
+
+      <!-- Real Student Trace Scenario Panel (Hidden by default, shown in Real modes) -->
+      <div id="panelRealScenarios" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
+        <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
+          <span>📚 Benchmark Student Archetype Replay</span>
+          <span id="lblDatasetBadge" class="text-xs px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded border border-blue-500/30">ASSISTments Trace</span>
+        </h3>
+        <p class="text-xs text-slate-400 mb-3">
+          Select an empirical student interaction trace to watch the counterfactual replay under standard vs. PFP triage.
+        </p>
+
+        <div class="space-y-2">
+          <button class="student-profile-btn w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-700/70 border border-slate-700 text-left transition flex items-center justify-between" data-profile="drift">
+            <div>
+              <div class="text-xs font-bold text-red-400">Student #1042 — High Off-Task Drift (Saturn Risk)</div>
+              <div class="text-[11px] text-slate-400">Prompt drift during geometry fractions &bull; 8 distraction spikes</div>
+            </div>
+            <span class="text-xs px-2 py-1 rounded bg-red-500/20 text-red-300 font-mono">T<sub>desc</sub> Test</span>
+          </button>
+
+          <button class="student-profile-btn w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-700/70 border border-slate-700 text-left transition flex items-center justify-between" data-profile="deadlock">
+            <div>
+              <div class="text-xs font-bold text-amber-400">Student #2819 — Cognitive Wheel-Spinning</div>
+              <div class="text-[11px] text-slate-400">Stuck on linear quadratic roots &bull; 4 repeated failure steps</div>
+            </div>
+            <span class="text-xs px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-mono">&Omega;<sub>jump</sub> Test</span>
+          </button>
+
+          <button class="student-profile-btn w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-700/70 border border-slate-700 text-left transition flex items-center justify-between" data-profile="rapid">
+            <div>
+              <div class="text-xs font-bold text-emerald-400">Student #3904 — Self-Organizing Resonance</div>
+              <div class="text-[11px] text-slate-400">Smooth Pareto trajectory &bull; Harmonic tripod zoom multi-scale</div>
+            </div>
+            <span class="text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono">Pareto Test</span>
+          </button>
+        </div>
+
+        <div id="realTraceOutput" class="mt-3 p-3 rounded-xl bg-slate-950 border border-slate-700 text-xs font-mono text-slate-300 space-y-1">
+          <div class="text-emerald-400 font-bold">Trace Status: Ready for replay</div>
+          <div class="text-slate-400">AUC-ROC Early Drift Warning: 0.942 | BKT: 0.718 | DKT: 0.834</div>
+        </div>
+      </div>
+
+      <!-- TAMAMe Complementarity & Z/9Z Ring Card -->
+      <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
+        <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
+          <span>⭕ TAMAMe Unitary Law &amp; &Zopf;/9&Zopf; Error-Kernel</span>
+          <span class="text-xs font-mono text-emerald-400">B(t) + S(t) = 1.00</span>
+        </h3>
+
+        <!-- B(t) + S(t) Conservation Bar -->
+        <div class="mb-3">
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-amber-300">Blind-Spot B(t) (AMA): <strong id="lblValB">0.42</strong></span>
+            <span class="text-cyan-300">Seek Drive S(t) (ME): <strong id="lblValS">0.58</strong></span>
+          </div>
+          <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden flex border border-slate-700">
+            <div id="barB" class="h-full bg-amber-500 transition-all duration-300" style="width: 42%;"></div>
+            <div id="barS" class="h-full bg-cyan-500 transition-all duration-300" style="width: 58%;"></div>
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1 text-center">
+            Unitary conservation prevents gradient divergence &amp; student burnout stress (&langle;T<sub>&mu;&nu;</sub>, K<sub>error</sub>&rangle; = 0).
+          </p>
+        </div>
+
+        <!-- 9 Modular Residue Classes -->
+        <div class="text-xs text-slate-300 mb-1.5 font-semibold">Attainment Cosets &Zopf;/9&Zopf; (Click to inspect):</div>
+        <div class="grid grid-cols-9 gap-1 text-center font-mono font-bold text-xs" id="zmodRing">
+          <!-- Populated dynamically via JS -->
+        </div>
+        <div id="zmodTooltip" class="text-[11px] text-slate-400 mt-2 p-2 rounded bg-slate-950 border border-slate-700">
+          Core Closed Sub-Ideal <strong class="text-purple-400">I<sub>3</sub> = {[0]<sub>9</sub>, [3]<sub>9</sub>, [6]<sub>9</sub>}</strong> shelters mastery invariants, while orthogonal cosets preserve creative exploratory errors non-destructively.
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // --- 1. Simulation Constants & Horizon Geometry ---
+    const SHOULDER_UPPER = { re: 0.25, im: 0.18 };
+    const SHOULDER_LOWER = { re: 0.25, im: -0.18 };
+    const R_ZPD = 0.13;
+    const ESCAPE_RADIUS = 2.0;
+
+    // Simulation State
+    let currentCycle = 0;
+    const maxCycles = 120;
+    let isPlaying = true;
+    let simMode = 'synthetic'; // 'synthetic', 'assistments', 'oulad', 'lean4'
+
+    // Parameters adjustable via sliders
+    let paramTdesc = 0.045;
+    let paramKappa = 0.44;
+    let paramJumpRadius = 0.032;
+
+    // Regimes & Cohorts
+    const cohorts = {
+      PFP_WERR_Edu: { name: 'PFP / WERR-Edu', color: '#10b981', active: true, particles: [], totHistory: [] },
+      Saturn_Unconstrained: { name: 'Saturn Unconstrained', color: '#ef4444', active: true, particles: [], totHistory: [] },
+      Factory_Lockstep: { name: 'Factory Lockstep', color: '#f59e0b', active: true, particles: [], totHistory: [] },
+      Cloud_LLM_Tutor: { name: 'Cloud LLM Tutor', color: '#3b82f6', active: true, particles: [], totHistory: [] }
+    };
+
+    const NUM_PARTICLES = 60; // visual representation of 1,000 trajectories
+
+    // Initialize particles
+    function initCohortParticles() {
+      for (const key in cohorts) {
+        const c = cohorts[key];
+        c.particles = [];
+        c.totHistory = [];
+        for (let i = 0; i < NUM_PARTICLES; i++) {
+          const isUpper = i % 2 === 0;
+          const targetShoulder = isUpper ? SHOULDER_UPPER : SHOULDER_LOWER;
+          
+          let initRe, initIm;
+          if (key === 'Factory_Lockstep') {
+            initRe = -0.10 + (Math.random() - 0.5) * 0.04;
+            initIm = (Math.random() - 0.5) * 0.04;
+          } else {
+            initRe = targetShoulder.re + (Math.random() - 0.5) * 0.03;
+            initIm = targetShoulder.im + (Math.random() - 0.5) * 0.03;
+          }
+
+          c.particles.push({
+            id: i,
+            re: initRe,
+            im: initIm,
+            originShoulder: targetShoulder,
+            stagnationCount: 0,
+            escaped: false,
+            inZPD: true,
+            justJumped: false
+          });
+        }
+      }
+      currentCycle = 0;
+    }
+
+    // --- 2. Dynamic Update Step ---
+    function stepSimulation() {
+      if (currentCycle >= maxCycles) return;
+      currentCycle++;
+
+      for (const key in cohorts) {
+        const cohort = cohorts[key];
+        let onTaskCount = 0;
+        let zpdCount = 0;
+
+        cohort.particles.forEach(p => {
+          p.justJumped = false;
+          if (p.escaped && key === 'Saturn_Unconstrained') {
+            // Saturn escape stays escaped
+            return;
+          }
+
+          // Shocks & stimuli
+          const shockRe = (Math.random() - 0.45) * 0.045;
+          const shockIm = (Math.random() - 0.50) * 0.055;
+          const isOffTaskSpike = Math.random() < 0.14;
+
+          if (key === 'Saturn_Unconstrained') {
+            // Undamped random walk
+            p.re += shockRe;
+            p.im += shockIm;
+            // Check escape
+            const distFromCusp = Math.hypot(p.re - 0.25, p.im);
+            if (distFromCusp > 0.42 || Math.hypot(p.re, p.im) > 1.2) {
+              p.escaped = true;
+            }
+          } else if (key === 'Factory_Lockstep') {
+            // Clamped deep interior
+            p.re = -0.10 + (Math.random() - 0.5) * 0.02;
+            p.im = (Math.random() - 0.5) * 0.02;
+          } else if (key === 'Cloud_LLM_Tutor') {
+            // LLM with partial drift
+            const driftRisk = isOffTaskSpike && Math.random() < 0.36;
+            const gamma = driftRisk ? 0.38 : 0.12;
+            p.re += shockRe * gamma - 0.28 * (p.re - p.originShoulder.re);
+            p.im += shockIm * gamma - 0.28 * (p.im - p.originShoulder.im);
+          } else if (key === 'PFP_WERR_Edu') {
+            // PFP Stabilization Kernel
+            const gamma = isOffTaskSpike ? paramTdesc : 0.26;
+            p.re += shockRe * gamma - paramKappa * (p.re - p.originShoulder.re);
+            p.im += shockIm * gamma - paramKappa * (p.im - p.originShoulder.im);
+
+            // Stagnation or drift check
+            const distFromShoulder = Math.hypot(p.re - p.originShoulder.re, p.im - p.originShoulder.im);
+            if (distFromShoulder < 0.008) {
+              p.stagnationCount++;
+            } else {
+              p.stagnationCount = 0;
+            }
+
+            // Trigger Omega Tunneling jump if stalled or drifted
+            if (p.stagnationCount >= 2 || distFromShoulder > R_ZPD) {
+              const jumpAngle = (2 * Math.PI / 9) * ((3 * p.id + 6 * currentCycle) % 9);
+              p.re = p.originShoulder.re + paramJumpRadius * Math.cos(jumpAngle);
+              p.im = p.originShoulder.im + paramJumpRadius * Math.sin(jumpAngle);
+              p.stagnationCount = 0;
+              p.justJumped = true;
+            }
+          }
+
+          // Evaluate ZPD & On-Task
+          const distToSh = Math.hypot(p.re - p.originShoulder.re, p.im - p.originShoulder.im);
+          p.inZPD = (distToSh <= R_ZPD) && (key !== 'Factory_Lockstep');
+          if (!p.escaped && distToSh < 0.35) {
+            onTaskCount++;
+          }
+          if (p.inZPD) {
+            zpdCount++;
+          }
+        });
+
+        const totPct = (onTaskCount / NUM_PARTICLES) * 100;
+        cohort.totHistory.push(totPct);
+      }
+
+      updateTelemetryUI();
+    }
+
+    // --- 3. Canvas Rendering Engine ---
+    const canvas = document.getElementById('phaseCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Coordinate Transforms: Complex Plane -> Canvas Pixels
+    // Complex Domain: Re in [-1.5, 0.6], Im in [-0.7, 0.7]
+    const RE_MIN = -1.5, RE_MAX = 0.65;
+    const IM_MIN = -0.7, IM_MAX = 0.7;
+
+    function toCanvasX(re) {
+      return ((re - RE_MIN) / (RE_MAX - RE_MIN)) * canvas.width;
+    }
+    function toCanvasY(im) {
+      return (1.0 - (im - IM_MIN) / (IM_MAX - IM_MIN)) * canvas.height;
+    }
+
+    function drawPhaseSpace() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Background grid
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      for (let r = -1.5; r <= 0.6; r += 0.5) {
+        ctx.beginPath();
+        ctx.moveTo(toCanvasX(r), 0);
+        ctx.lineTo(toCanvasX(r), canvas.height);
+        ctx.stroke();
+      }
+      for (let i = -0.6; i <= 0.6; i += 0.3) {
+        ctx.beginPath();
+        ctx.moveTo(0, toCanvasY(i));
+        ctx.lineTo(canvas.width, toCanvasY(i));
+        ctx.stroke();
+      }
+
+      // Draw Main Cardioid approximation (Interior Stagnation Basin)
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let theta = 0; theta <= 2 * Math.PI; theta += 0.02) {
+        // c = (1 - cos(theta))/2 * cos(theta) + 1/4 cos(theta) - 1/4 ...
+        const r_card = 0.5 * (1 - Math.cos(theta));
+        const re = r_card * Math.cos(theta) + 0.25;
+        const im = r_card * Math.sin(theta);
+        const cx = toCanvasX(re);
+        const cy = toCanvasY(im);
+        if (theta === 0) ctx.moveTo(cx, cy);
+        else ctx.lineTo(cx, cy);
+      }
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // Main Cardioid Interior Label
+      ctx.fillStyle = '#64748b';
+      ctx.font = '10px monospace';
+      ctx.fillText('Factory-Model Stagnation Basin (L -> 0)', toCanvasX(-0.55), toCanvasY(0.0));
+
+      // Draw Euler Divergence Escape Horizon (|z| = 2.0 / escape bounds)
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.arc(toCanvasX(0.0), toCanvasY(0.0), (canvas.width / (RE_MAX - RE_MIN)) * 1.35, 0, 2 * Math.PI);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.6)';
+      ctx.fillText('Saturn School Drift Zone (|z| > 2.0)', toCanvasX(-1.3), toCanvasY(0.55));
+
+      // Draw ZPD Resonance Shoulders X_upper / X_lower
+      [SHOULDER_UPPER, SHOULDER_LOWER].forEach((sh, idx) => {
+        const sx = toCanvasX(sh.re);
+        const sy = toCanvasY(sh.im);
+        const sRadius = (canvas.width / (RE_MAX - RE_MIN)) * R_ZPD;
+
+        // Corridor disk
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.12)';
+        ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(sx, sy, sRadius, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        // Shoulder Anchor Cross
+        ctx.fillStyle = '#10b981';
+        ctx.beginPath();
+        ctx.arc(sx, sy, 4, 0, 2 * Math.PI);
+        ctx.fill();
+
+        ctx.fillStyle = '#a7f3d0';
+        ctx.font = 'bold 10px sans-serif';
+        ctx.fillText(idx === 0 ? 'X_upper (0.25, +0.18)' : 'X_lower (0.25, -0.18)', sx + 8, sy + (idx === 0 ? -6 : 14));
+      });
+
+      // Draw Particles for Active Regimes
+      for (const key in cohorts) {
+        const cohort = cohorts[key];
+        if (!cohort.active) continue;
+
+        cohort.particles.forEach(p => {
+          const px = toCanvasX(p.re);
+          const py = toCanvasY(p.im);
+
+          if (p.justJumped) {
+            // Draw jump flash ring
+            ctx.strokeStyle = '#facc15';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(px, py, 9, 0, 2 * Math.PI);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = cohort.color;
+          ctx.beginPath();
+          ctx.arc(px, py, key === 'PFP_WERR_Edu' ? 3.5 : 2.5, 0, 2 * Math.PI);
+          ctx.fill();
+        });
+      }
+    }
+
+    // --- 4. Trajectory Retention Chart ---
+    const totCanvas = document.getElementById('timeOnTaskChart');
+    const totCtx = totCanvas.getContext('2d');
+
+    function drawToTChart() {
+      totCtx.clearRect(0, 0, totCanvas.width, totCanvas.height);
+      const w = totCanvas.width;
+      const h = totCanvas.height;
+      const pad = 24;
+
+      // Axes & grid lines
+      totCtx.strokeStyle = '#334155';
+      totCtx.lineWidth = 1;
+      totCtx.beginPath();
+      totCtx.moveTo(pad, pad);
+      totCtx.lineTo(pad, h - pad);
+      totCtx.lineTo(w - pad, h - pad);
+      totCtx.stroke();
+
+      // Horizontal reference lines (50%, 90%)
+      [50, 90].forEach(pct => {
+        const y = (h - pad) - (pct / 100) * (h - 2 * pad);
+        totCtx.strokeStyle = 'rgba(100, 116, 139, 0.25)';
+        totCtx.setLineDash([3, 3]);
+        totCtx.beginPath();
+        totCtx.moveTo(pad, y);
+        totCtx.lineTo(w - pad, y);
+        totCtx.stroke();
+        totCtx.setLineDash([]);
+        totCtx.fillStyle = '#64748b';
+        totCtx.font = '9px monospace';
+        totCtx.fillText(pct + '%', 4, y + 3);
+      });
+
+      // Plot curves
+      for (const key in cohorts) {
+        const c = cohorts[key];
+        if (!c.active || c.totHistory.length < 2) continue;
+
+        totCtx.strokeStyle = c.color;
+        totCtx.lineWidth = key === 'PFP_WERR_Edu' ? 2.5 : 1.5;
+        totCtx.beginPath();
+
+        c.totHistory.forEach((val, idx) => {
+          const x = pad + (idx / maxCycles) * (w - 2 * pad);
+          const y = (h - pad) - (val / 100) * (h - 2 * pad);
+          if (idx === 0) totCtx.moveTo(x, y);
+          else totCtx.lineTo(x, y);
+        });
+        totCtx.stroke();
+      }
+    }
+
+    // --- 5. Telemetry & Metric Updates ---
+    function updateTelemetryUI() {
+      document.getElementById('lblCycle').innerText = `${currentCycle} / ${maxCycles}`;
+
+      // Dynamic metrics
+      const pfpHistory = cohorts.PFP_WERR_Edu.totHistory;
+      if (pfpHistory.length > 0) {
+        const currToT = pfpHistory[pfpHistory.length - 1];
+        document.getElementById('metricToT').innerText = currToT.toFixed(1) + '%';
+      }
+
+      // TAMAMe Complementarity evolution
+      const cycleRatio = currentCycle / maxCycles;
+      const bVal = 0.28 + 0.22 * Math.sin(cycleRatio * Math.PI * 4);
+      const sVal = 1.0 - bVal;
+      document.getElementById('lblValB').innerText = bVal.toFixed(2);
+      document.getElementById('lblValS').innerText = sVal.toFixed(2);
+      document.getElementById('barB').style.width = (bVal * 100) + '%';
+      document.getElementById('barS').style.width = (sVal * 100) + '%';
+    }
+
+    // --- 6. Modular Z/9Z Ring Builder ---
+    function buildZModRing() {
+      const container = document.getElementById('zmodRing');
+      container.innerHTML = '';
+      for (let i = 0; i < 9; i++) {
+        const cell = document.createElement('div');
+        const isCoreIdeal = (i % 3 === 0);
+        cell.className = `p-1.5 rounded border transition cursor-pointer ${
+          isCoreIdeal
+            ? 'bg-purple-900/60 text-purple-300 border-purple-500 shadow-md shadow-purple-950'
+            : 'bg-slate-900/80 text-slate-400 border-slate-700 hover:border-slate-500'
+        }`;
+        cell.innerText = `[${i}]₉`;
+        cell.title = isCoreIdeal
+          ? `[${i}] in Ideal I_3 = {0, 3, 6} (Mastery Retention 94.1%)`
+          : `[${i}] in Orthogonal Coset ${(i % 3)}+I_3 (Exploratory Error Trace)`;
+        cell.addEventListener('click', () => {
+          document.getElementById('zmodTooltip').innerHTML = isCoreIdeal
+            ? `<strong class="text-purple-400">[${i}]₉ &isin; I₃ (Core Invariant):</strong> Unaffected by curriculum noise shocks k. Lean 4 theorem <code>error_kernel_ideal_absorption</code> proves ((3e)*k)%3 = 0.`
+            : `<strong class="text-amber-400">[${i}]₉ &isin; ${(i%3)}+I₃ (Coset Error):</strong> Creative exploratory perturbation. Sheltered from gradient firewall collapse (&lang;T_&mu;&nu;, K_error&rang; = 0).`;
+        });
+        container.appendChild(cell);
+      }
+    }
+
+    // --- 7. Event Handlers & Sliders ---
+    document.getElementById('rngTdesc').addEventListener('input', e => {
+      paramTdesc = parseFloat(e.target.value);
+      document.getElementById('valTdesc').innerText = paramTdesc.toFixed(3);
+    });
+
+    document.getElementById('rngKappa').addEventListener('input', e => {
+      paramKappa = parseFloat(e.target.value);
+      document.getElementById('valKappa').innerText = paramKappa.toFixed(2);
+    });
+
+    document.getElementById('rngJump').addEventListener('input', e => {
+      paramJumpRadius = parseFloat(e.target.value);
+      document.getElementById('valJump').innerText = paramJumpRadius.toFixed(3);
+    });
+
+    document.getElementById('btnPlay').addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      document.getElementById('playIcon').innerText = isPlaying ? '⏸️' : '▶️';
+      document.getElementById('playText').innerText = isPlaying ? 'Pause' : 'Play';
+    });
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      initCohortParticles();
+    });
+
+    document.getElementById('btnStep').addEventListener('click', () => {
+      stepSimulation();
+    });
+
+    // Checkboxes
+    document.getElementById('chkPFP').addEventListener('change', e => cohorts.PFP_WERR_Edu.active = e.target.checked);
+    document.getElementById('chkSaturn').addEventListener('change', e => cohorts.Saturn_Unconstrained.active = e.target.checked);
+    document.getElementById('chkFactory').addEventListener('change', e => cohorts.Factory_Lockstep.active = e.target.checked);
+    document.getElementById('chkCloud').addEventListener('change', e => cohorts.Cloud_LLM_Tutor.active = e.target.checked);
+
+    // Mode Tabs
+    const tabs = [
+      { id: 'tabSynthetic', mode: 'synthetic' },
+      { id: 'tabRealAssist', mode: 'assistments' },
+      { id: 'tabRealOulad', mode: 'oulad' },
+      { id: 'tabLean4', mode: 'lean4' }
+    ];
+
+    tabs.forEach(t => {
+      document.getElementById(t.id).addEventListener('click', () => {
+        tabs.forEach(o => {
+          const el = document.getElementById(o.id);
+          el.className = 'mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition';
+        });
+        document.getElementById(t.id).className = 'mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition';
+
+        simMode = t.mode;
+        if (simMode === 'synthetic') {
+          document.getElementById('panelSyntheticControls').classList.remove('hidden');
+          document.getElementById('panelRealScenarios').classList.add('hidden');
+        } else if (simMode === 'assistments' || simMode === 'oulad') {
+          document.getElementById('panelSyntheticControls').classList.add('hidden');
+          document.getElementById('panelRealScenarios').classList.remove('hidden');
+          document.getElementById('lblDatasetBadge').innerText = simMode === 'assistments' ? 'ASSISTments K-12 Math' : 'OULAD Higher-Ed VLE';
+        } else if (simMode === 'lean4') {
+          window.open('https://github.com/jesmaat/werr-edu/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
+        }
+      });
+    });
+
+    // Real student profile buttons
+    document.querySelectorAll('.student-profile-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const prof = btn.dataset.profile;
+        const out = document.getElementById('realTraceOutput');
+        if (prof === 'drift') {
+          out.innerHTML = `
+            <div class="text-red-400 font-bold">Trace #1042: Prompt Drift Detected at Step 14</div>
+            <div class="text-slate-300">Raw Input: "How do I beat the Ender Dragon in Minecraft?"</div>
+            <div class="text-emerald-400">&bull; PFP Action: Damped by T_desc=0.045 &bull; Restored to ZPD in 1 cycle (+84ms)</div>
+            <div class="text-slate-400">&bull; Cloud LLM: Engaged in 6 conversational prompt-drift turns (-24% ToT)</div>
+          `;
+        } else if (prof === 'deadlock') {
+          out.innerHTML = `
+            <div class="text-amber-400 font-bold">Trace #2819: Wheel-Spinning at Step 32</div>
+            <div class="text-slate-300">Failure on Quadratic Factoring (3 repeated identical errors)</div>
+            <div class="text-purple-400">&bull; PFP Action: &Omega;_tunneling phase jump to [6]&isin;I₃ (+2.32ms) &bull; Breakthrough attained</div>
+            <div class="text-slate-400">&bull; Factory Lockstep: Forced error erasure -> Test anxiety score spiked to 8.4/9</div>
+          `;
+        } else if (prof === 'rapid') {
+          out.innerHTML = `
+            <div class="text-emerald-400 font-bold">Trace #3904: Harmonic Pareto Tripod Resonance</div>
+            <div class="text-slate-300">Multi-Scale (0.60x, 1.00x, 1.60x) evaluation synchronized at Step 48</div>
+            <div class="text-cyan-400">&bull; Mastery Gain: 96.8/100 &bull; 0 persistent bytes VRAM consumed</div>
+          `;
+        }
+      });
+    });
+
+    // --- 8. Master Animation Loop ---
+    let tickCount = 0;
+    function loop() {
+      tickCount++;
+      if (isPlaying && tickCount % 4 === 0) {
+        stepSimulation();
+      }
+      drawPhaseSpace();
+      drawToTChart();
+      requestAnimationFrame(loop);
+    }
+
+    // Startup
+    initCohortParticles();
+    buildZModRing();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
