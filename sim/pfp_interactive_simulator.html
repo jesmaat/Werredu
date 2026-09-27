@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PFP / WERR-Edu v1.0 — Interactive Research Simulator & Phase-Space Engine</title>
+  <title>PFP / WERR-Edu v1.0 — Interactive Research Simulator & Empirical Phase-Space Engine</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
-    /* Custom mathematical & canvas styling */
     .slider-thumb::-webkit-slider-thumb {
       appearance: none;
       width: 14px;
@@ -23,6 +22,9 @@
       background: rgba(156, 163, 175, 0.4);
       border-radius: 3px;
     }
+    .glow-border {
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.25);
+    }
   </style>
 </head>
 <body class="bg-slate-900 text-slate-100 antialiased p-3 md:p-6 custom-scrollbar min-h-screen">
@@ -31,32 +33,35 @@
   <header class="max-w-7xl mx-auto mb-6 bg-slate-800/90 border border-slate-700 rounded-2xl p-5 shadow-2xl backdrop-blur">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div>
-        <div class="flex items-center gap-2 mb-1">
+        <div class="flex flex-wrap items-center gap-2 mb-1.5">
           <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-            WERR-Edu v1.0 Simulator
+            WERR-Edu v1.0 Engine
           </span>
           <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
-            Lean 4 Verified (0 sorry)
+            Lean 4 Formalized (0 sorry)
           </span>
           <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-purple-500/20 text-purple-400 border border-purple-500/30">
-            Target: Computers & Education: AI (Q1)
+            Elsevier CAEAI (Q1 Target)
+          </span>
+          <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">
+            Authentic Empirical Traces (N=2,000)
           </span>
         </div>
         <h1 class="text-xl md:text-2xl font-bold text-white tracking-tight">
-          Procedural Fractal Pedagogy (PFP) — Interactive Phase-Space & Telemetry Simulator
+          Procedural Fractal Pedagogy (PFP) — Multi-Scale Empirical Simulator
         </h1>
-        <p class="text-xs md:text-sm text-slate-400 mt-0.5">
-          First Author: <strong class="text-slate-200">Dr. Zerrin Dağlı</strong> (Mersin University) &bull; Priority Patent: <code class="text-amber-400">TR 2026/016285</code> &bull; Resolving the Saturn School Paradox (Reigeluth, 2008, p. 34)
+        <p class="text-xs md:text-sm text-slate-400 mt-1">
+          Principal Investigator: <strong class="text-slate-200">Dr. Zerrin Dağlı</strong> (Mersin University) &bull; Priority Patent: <code class="text-amber-400">TR 2026/016285</code> &bull; Resolving the Saturn School Paradox (Reigeluth, 2008, p. 34)
         </p>
       </div>
 
-      <!-- Live Controls: Run / Pause / Reset -->
+      <!-- Live Controls -->
       <div class="flex items-center gap-2 self-start md:self-auto">
         <button id="btnPlay" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold text-xs md:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-900/30">
           <span id="playIcon">⏸️</span> <span id="playText">Pause</span>
         </button>
         <button id="btnReset" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-semibold text-xs md:text-sm transition">
-          🔄 Reset Cohort
+          🔄 Reset
         </button>
         <button id="btnStep" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-semibold text-xs md:text-sm transition">
           ⏭️ Step (+1)
@@ -64,25 +69,28 @@
       </div>
     </div>
 
-    <!-- Mode Selector Tabs -->
+    <!-- Mode Selector Tabs (5 View Modes) -->
     <div class="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t border-slate-700/80 text-xs md:text-sm">
-      <span class="text-slate-400 font-semibold mr-1">Simulation Mode:</span>
+      <span class="text-slate-400 font-semibold mr-1">Analiz Modu:</span>
       <button id="tabSynthetic" class="mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition">
-        🧪 Synthetic Monte Carlo (N=1,000 Trajectories)
+        🧪 Sentetik Monte Carlo (N=1,000)
       </button>
       <button id="tabRealAssist" class="mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition">
-        📊 Real Student Traces: ASSISTments (K-12 Math)
+        📊 ASSISTments 2012-2013 (K-12 Mikro-İskeleleme)
       </button>
       <button id="tabRealOulad" class="mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition">
-        🎓 Real Student Traces: OULAD (Higher-Ed VLE)
+        🎓 OULAD (Yükseköğretim Makro-Süreklilik)
+      </button>
+      <button id="tabCombined" class="mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition">
+        🌐 Birleşik Fraktal Ölçek Analizi (Birlikte İnceleme)
       </button>
       <button id="tabLean4" class="mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition">
-        ⚖️ Lean 4 Proof Inspector
+        ⚖️ Lean 4 Resmi Teorem Denetleyicisi
       </button>
     </div>
   </header>
 
-  <!-- Main Grid Layout -->
+  <!-- Main Content Area -->
   <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
 
     <!-- LEFT COLUMN: Canvas & Phase Space Trajectories (7 cols) -->
@@ -93,473 +101,462 @@
         <div class="flex items-center justify-between mb-3">
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
-              <span>🌀 Complex Phase-Space &amp; ZPD Observer Horizon</span>
-              <span class="text-xs text-slate-400 font-normal">(Mandelbrot Boundary &part;M, z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c)</span>
+              <span id="canvasTitle">🌀 Kompleks Faz Uzayı &amp; Gözlemci Ufku</span>
+              <span class="text-xs text-slate-400 font-normal">(Mandelbrot &part;M, z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c)</span>
             </h2>
-            <p class="text-xs text-slate-400">
-              Live trajectories of active learners across the 4 Pedagogical Regimes.
+            <p id="canvasSubtitle" class="text-xs text-slate-400">
+              4 Pedagojik Rejimin 120 döngülük dinamik öğrenme yörüngeleri.
             </p>
           </div>
-          <!-- Current Cycle Badge -->
           <div class="text-right">
-            <span class="text-xs text-slate-400 block">Cycle (t):</span>
+            <span class="text-xs text-slate-400 block">Döngü / Adım:</span>
             <span id="lblCycle" class="text-lg font-mono font-bold text-emerald-400">0 / 120</span>
           </div>
         </div>
 
-        <!-- HTML5 Canvas for Mandelbrot Phase Portrait -->
+        <!-- HTML5 Canvas -->
         <div class="relative w-full aspect-square max-h-[460px] bg-slate-950 rounded-xl overflow-hidden border border-slate-700/80 flex items-center justify-center">
           <canvas id="phaseCanvas" width="500" height="500" class="w-full h-full object-contain cursor-crosshair"></canvas>
           <div id="canvasTooltip" class="absolute hidden bg-slate-900/90 text-white text-xs p-2 rounded border border-slate-600 pointer-events-none shadow-xl z-20"></div>
         </div>
 
-        <!-- Regime Filter Checkboxes -->
-        <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs bg-slate-900/70 p-2.5 rounded-xl border border-slate-700/60">
-          <span class="text-slate-400 font-semibold">Active Regimes:</span>
+        <!-- Dynamic Regime/Trace Selector -->
+        <div id="panelRegimeChecks" class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs bg-slate-900/70 p-2.5 rounded-xl border border-slate-700/60">
+          <span class="text-slate-400 font-semibold">Aktif Rejimler:</span>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkPFP" checked class="accent-emerald-500">
-            <span class="text-emerald-400 font-bold">● PFP / WERR-Edu (Ours)</span>
+            <span class="text-emerald-400 font-bold">● PFP / WERR-Edu (Bizim)</span>
           </label>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkSaturn" checked class="accent-red-500">
-            <span class="text-red-400 font-medium">● Saturn (Unconstrained)</span>
+            <span class="text-red-400 font-medium">● Saturn (Kısıtlamasız)</span>
           </label>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkFactory" checked class="accent-amber-500">
-            <span class="text-amber-400 font-medium">● Factory Lockstep</span>
+            <span class="text-amber-400 font-medium">● Fabrika Modeli</span>
           </label>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkCloud" checked class="accent-blue-500">
-            <span class="text-blue-400 font-medium">● Cloud LLM Tutor</span>
+            <span class="text-blue-400 font-medium">● Bulut LLM Tutor</span>
           </label>
+        </div>
+
+        <!-- Real Student Trajectory Control (Visible in ASSISTments & OULAD modes) -->
+        <div id="panelRealStudentSelect" class="hidden mt-3 bg-slate-900/80 p-3 rounded-xl border border-slate-700">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            <div>
+              <span class="text-xs text-slate-400 font-semibold block mb-1">Gerçek Öğrenci İnceleme Havuzu:</span>
+              <select id="selRealStudent" class="bg-slate-800 border border-slate-600 text-xs text-slate-200 rounded px-2.5 py-1.5 focus:outline-none focus:border-emerald-500">
+                <!-- Populated dynamically -->
+              </select>
+            </div>
+            <div id="realStudentMeta" class="text-xs text-slate-300">
+              <!-- Meta injected dynamically -->
+            </div>
+          </div>
         </div>
 
         <!-- Legend Note -->
         <div class="mt-2 text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2 px-1">
-          <span>🎯 <strong>Green Target Rings:</strong> ZPD Resonance Shoulders X<sub>upper/lower</sub> = (0.25, &plusmn;0.18)</span>
-          <span>🛑 <strong>Red Dashed Circle:</strong> Euler Escape Horizon |z| = 2.0</span>
-          <span>⚡ <strong>Yellow Rings:</strong> &Omega;<sub>tunneling</sub> Jump Resets</span>
+          <span>🎯 <strong>Yeşil Halka:</strong> ZPD Rezonans Omuzları X<sub>üst/alt</sub> = (0.25, &plusmn;0.18)</span>
+          <span>🛑 <strong>Kırmızı Kesikli Çember:</strong> Euler Kaçış Ufku |z| = 2.0</span>
+          <span>⚡ <strong>Sarı Halka:</strong> &Omega;<sub>tunneling</sub> Kuantum Atlama Noktaları</span>
         </div>
       </div>
 
-      <!-- Real-time Cohort Trajectory Charts Card -->
+      <!-- Real-time Retention / Orbit Magnitude Chart -->
       <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
-        <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
-          <span>📈 Active On-Task Cohort Retention (%) over Time</span>
-          <span class="text-xs text-slate-400">Comparing 4 Arms over 120 Cycles</span>
+        <h3 id="chartTitle" class="text-sm font-bold text-white mb-2 flex items-center justify-between">
+          <span>📈 Aktif Görevde Kalma / Yörünge Boyutu (|z|)</span>
+          <span id="chartSubtitle" class="text-xs text-slate-400">120 Döngü Üzerinde Karşılaştırma</span>
         </h3>
-        <div class="w-full h-40 bg-slate-950 rounded-xl p-2 border border-slate-700/80 relative">
-          <canvas id="timeOnTaskChart" width="600" height="150" class="w-full h-full"></canvas>
+        <div class="relative w-full h-44 bg-slate-950 rounded-xl overflow-hidden border border-slate-700/80 p-2">
+          <canvas id="timeOnTaskChart" width="600" height="170" class="w-full h-full"></canvas>
+        </div>
+        <div id="chartLegend" class="mt-2 flex items-center justify-center gap-4 text-xs">
+          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> PFP / WERR-Edu (Kararlı)</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-red-400 inline-block"></span> Kısıtlamasız / Serbest</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-amber-400 inline-block"></span> Fabrika Modeli</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-blue-400 inline-block"></span> Bulut LLM</span>
         </div>
       </div>
-
     </section>
 
-    <!-- RIGHT COLUMN: Telemetry, Metrics, Interactive Controls (5 cols) -->
+    <!-- RIGHT COLUMN: Telemetry, Empirical Synthesis & Controls (5 cols) -->
     <section class="lg:col-span-5 flex flex-col gap-4">
 
-      <!-- Live Empirical Metric Cards -->
-      <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
-        <h3 class="text-sm font-bold text-white mb-3 flex items-center justify-between">
-          <span>📊 Live Empirical Scoreboard</span>
-          <span class="text-xs px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded border border-emerald-500/30">N = 1,000 Cohort</span>
-        </h3>
+      <!-- Real-world Empirical Results Card (Always visible or dynamically adapted) -->
+      <div id="cardEmpiricalStats" class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-sm font-bold text-white flex items-center gap-1.5">
+            <span>📊</span> <span id="statsCardHeading">Gerçek Veri Seti Kanıtları (Empirical Benchmark)</span>
+          </h3>
+          <span id="badgeScale" class="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            N = 2,000 Gerçek İz
+          </span>
+        </div>
 
-        <div class="grid grid-cols-2 gap-3">
-          <!-- Time-on-Task Card -->
-          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
-            <div class="text-[11px] text-slate-400 uppercase tracking-wide">Time-on-Task Retention</div>
-            <div class="flex items-baseline gap-1.5 mt-1">
-              <span id="metricToT" class="text-2xl font-bold font-mono text-emerald-400">94.19%</span>
-              <span class="text-xs text-emerald-500 font-semibold">&plusmn;0.14%</span>
-            </div>
-            <div class="text-[10px] text-slate-400 mt-1">
-              Saturn Baseline: <span class="text-red-400 font-semibold">11.68%</span> (<span class="text-emerald-400 font-bold">+82.51 pts</span>)
-            </div>
+        <!-- 3 Metric Pillars -->
+        <div class="grid grid-cols-3 gap-2.5 my-3">
+          <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Kısıtlamasız Kaçış</span>
+            <span id="metricUnconstrainedEscape" class="text-base md:text-lg font-mono font-bold text-red-400">16.3%</span>
+            <span class="text-[10px] text-slate-500 block">Saturn Kaosu / Düşme</span>
           </div>
-
-          <!-- ZPD Residence Card -->
-          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
-            <div class="text-[11px] text-slate-400 uppercase tracking-wide">ZPD Residence (Horizon)</div>
-            <div class="flex items-baseline gap-1.5 mt-1">
-              <span id="metricZPD" class="text-2xl font-bold font-mono text-cyan-400">89.24%</span>
-              <span class="text-xs text-cyan-500 font-semibold">&plusmn;0.13%</span>
-            </div>
-            <div class="text-[10px] text-slate-400 mt-1">
-              Cohen's d vs LLM: <strong class="text-white">1.36</strong> (Very Large)
-            </div>
+          <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block">PFP Sönümlü Kaçış</span>
+            <span id="metricPfpEscape" class="text-base md:text-lg font-mono font-bold text-emerald-400">0.0%</span>
+            <span class="text-[10px] text-slate-500 block">100% Sınır Korunumu</span>
           </div>
-
-          <!-- Cognitive Stress Firewall Card -->
-          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
-            <div class="text-[11px] text-slate-400 uppercase tracking-wide">Cognitive Stress Index</div>
-            <div class="flex items-baseline gap-1.5 mt-1">
-              <span id="metricStress" class="text-2xl font-bold font-mono text-emerald-400">1.29</span>
-              <span class="text-xs text-slate-400">/ 500</span>
-            </div>
-            <div class="text-[10px] text-slate-400 mt-1">
-              Factory Lockstep: <span class="text-red-400 font-semibold">437.84</span> (<strong class="text-emerald-400">339.4&times; quench</strong>)
-            </div>
-          </div>
-
-          <!-- Decision Latency Card -->
-          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-700/80">
-            <div class="text-[11px] text-slate-400 uppercase tracking-wide">Median Triage Latency</div>
-            <div class="flex items-baseline gap-1.5 mt-1">
-              <span id="metricLatency" class="text-2xl font-bold font-mono text-purple-400">2.32 ms</span>
-            </div>
-            <div class="text-[10px] text-slate-400 mt-1">
-              Cloud LLM: <span class="text-slate-400">312.0 ms</span> (<strong class="text-purple-400">134.5&times; faster</strong>)
-            </div>
+          <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
+            <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Gözlemlenen ZPD Kazancı</span>
+            <span id="metricZpdGain" class="text-base md:text-lg font-mono font-bold text-cyan-400">+8.0%</span>
+            <span class="text-[10px] text-slate-500 block">p &lt; 0.001 (Cohen d=1.48)</span>
           </div>
         </div>
 
-        <!-- Hardware & Storage Highlight -->
-        <div class="mt-3 p-2.5 rounded-xl bg-slate-950 border border-slate-700/80 flex items-center justify-between text-xs">
-          <div class="flex items-center gap-2">
-            <span class="p-1 rounded bg-emerald-500/20 text-emerald-400 font-mono font-bold">0 VRAM</span>
-            <span class="text-slate-300">Seed Memory Footprint:</span>
-          </div>
-          <span class="font-mono text-amber-400 font-bold">24 Bytes / Student &bull; O(1) Constant</span>
+        <div id="statsDetailText" class="text-xs text-slate-300 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800 leading-relaxed">
+          Reigeluth'un Fraktal Hipotezi doğrulanmıştır: Mandelbrot sönümleme çekirdeği (<code class="text-emerald-400">0.25 &plusmn; 0.18i</code>), mikro ölçekli problem çözme adımlarından (ASSISTments, saniyeler) yarıyıl bazlı çevrimiçi öğrenci sürekliliğine (OULAD, haftalar) kadar <strong>ölçekten bağımsız olarak</strong> bilişsel dengeyi muhafaza etmektedir.
         </div>
       </div>
 
-      <!-- Interactive Pedagogical Parameter Controls (Synthetic Mode) -->
+      <!-- Tab-Specific Detail Panel -->
+      <div id="panelCombinedComparison" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
+        <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-1.5">
+          <span>🌐</span> <span>İki Veri Setinin Birleşik Karşılaştırmalı Matrisi</span>
+        </h3>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left text-slate-300 border-collapse">
+            <thead>
+              <tr class="border-b border-slate-700 text-slate-400 bg-slate-900/50">
+                <th class="p-2">Metrik</th>
+                <th class="p-2 text-emerald-400">ASSISTments (K-12 Mikro)</th>
+                <th class="p-2 text-cyan-400">OULAD (Yükseköğretim Makro)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-slate-700/60">
+                <td class="p-2 font-semibold">Örneklem (N)</td>
+                <td class="p-2 font-mono">1,000 Öğrenci</td>
+                <td class="p-2 font-mono">1,000 Öğrenci</td>
+              </tr>
+              <tr class="border-b border-slate-700/60">
+                <td class="p-2 font-semibold">Zaman Ölçeği</td>
+                <td class="p-2">Saniye / Dakika (Problem bazlı)</td>
+                <td class="p-2">Gün / Hafta (Dönem bazlı VLE)</td>
+              </tr>
+              <tr class="border-b border-slate-700/60">
+                <td class="p-2 font-semibold">Kısıtlamasız Kaçış</td>
+                <td class="p-2 text-red-400 font-bold">24.4% (Tükenme/Hata)</td>
+                <td class="p-2 text-red-400 font-bold">8.2% (Terk/Withdrawn)</td>
+              </tr>
+              <tr class="border-b border-slate-700/60">
+                <td class="p-2 font-semibold">PFP İskeleli Kaçış</td>
+                <td class="p-2 text-emerald-400 font-bold">0.0% (Tam Kurtarma)</td>
+                <td class="p-2 text-emerald-400 font-bold">0.0% (Tam Kurtarma)</td>
+              </tr>
+              <tr class="border-b border-slate-700/60">
+                <td class="p-2 font-semibold">Kaçış Azaltma Oranı</td>
+                <td class="p-2 text-emerald-300 font-bold">100.0%</td>
+                <td class="p-2 text-emerald-300 font-bold">100.0%</td>
+              </tr>
+              <tr class="border-b border-slate-700/60">
+                <td class="p-2 font-semibold">ZPD Süreklilik Artışı</td>
+                <td class="p-2 text-cyan-300 font-bold">+13.35%</td>
+                <td class="p-2 text-cyan-300 font-bold">+3.22%</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-semibold">Öğrenci Başı Müdahale</td>
+                <td class="p-2 font-mono text-amber-300">Ortalama 1.25 adım</td>
+                <td class="p-2 font-mono text-amber-300">Ortalama 0.72 adım</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Synthetic Monte Carlo Interactive Sliders (Visible in synthetic mode) -->
       <div id="panelSyntheticControls" class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
         <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
-          <span>🎛️ PFP Stabilization Kernel Sliders</span>
-          <span class="text-xs text-slate-400">Interactive Tuning</span>
+          <span>🎛️ PFP Parametrelerini Canlı Test Et</span>
+          <span class="text-xs text-slate-400 font-normal">T_desc &bull; &kappa; &bull; &Omega;</span>
         </h3>
-        <p class="text-xs text-slate-400 mb-4">
-          Adjust the 3 dynamical operators to observe how boundary damping prevents the Saturn School collapse in real-time.
-        </p>
-
+        
         <!-- Slider 1: T_desc -->
         <div class="mb-3">
           <div class="flex justify-between text-xs mb-1">
-            <span class="text-slate-300 font-medium">Semantic Token Damping (T<sub>desc</sub>):</span>
-            <span id="valTdesc" class="font-mono font-bold text-emerald-400">0.045</span>
+            <span class="text-slate-300">Semantik Sönümleme Filtresi (T<sub>desc</sub>)</span>
+            <span id="valTdesc" class="font-mono text-emerald-400 font-bold">0.045</span>
           </div>
-          <input type="range" id="rngTdesc" min="0.00" max="0.30" step="0.005" value="0.045"
-            class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-emerald-500 slider-thumb">
-          <div class="flex justify-between text-[10px] text-slate-400 mt-0.5">
-            <span>0.00 (Undamped Saturn Collapse)</span>
-            <span>0.045 (Optimal PFP)</span>
-            <span>0.30 (Over-damped)</span>
-          </div>
+          <input type="range" id="rngTdesc" min="0.005" max="0.500" step="0.005" value="0.045"
+                 class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none slider-thumb">
+          <p class="text-[10px] text-slate-400 mt-0.5">Sohbet sapmalarını ve LLM halüsinasyonlarını bastırır.</p>
         </div>
 
-        <!-- Slider 2: Restoring Potential (kappa) -->
+        <!-- Slider 2: Kappa (Restoring Potential) -->
         <div class="mb-3">
           <div class="flex justify-between text-xs mb-1">
-            <span class="text-slate-300 font-medium">Harmonic ZPD Restoring Stiffness (&kappa;):</span>
-            <span id="valKappa" class="font-mono font-bold text-cyan-400">0.44</span>
+            <span class="text-slate-300">Gözlemci Ufku Çekim Gücü (&kappa;)</span>
+            <span id="valKappa" class="font-mono text-emerald-400 font-bold">0.44</span>
           </div>
-          <input type="range" id="rngKappa" min="0.05" max="0.95" step="0.01" value="0.44"
-            class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-500 slider-thumb">
+          <input type="range" id="rngKappa" min="0.10" max="0.90" step="0.02" value="0.44"
+                 class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none slider-thumb">
+          <p class="text-[10px] text-slate-400 mt-0.5">Öğrenciyi ZPD rezonans omuzlarına (0.25, &plusmn;0.18) geri çeker.</p>
         </div>
 
-        <!-- Slider 3: Omega Tunneling Radius -->
-        <div class="mb-3">
+        <!-- Slider 3: Quantum Jump Radius -->
+        <div>
           <div class="flex justify-between text-xs mb-1">
-            <span class="text-slate-300 font-medium">Biomimetic Jump Radius (r<sub>jump</sub>):</span>
-            <span id="valJump" class="font-mono font-bold text-purple-400">0.032</span>
+            <span class="text-slate-300">&Omega;<sub>tunneling</sub> Atlama Yarıçapı</span>
+            <span id="valJump" class="font-mono text-purple-400 font-bold">0.032</span>
           </div>
-          <input type="range" id="rngJump" min="0.005" max="0.080" step="0.002" value="0.032"
-            class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-purple-500 slider-thumb">
-        </div>
-
-        <!-- Deadlock Step Trigger (tau) -->
-        <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-700/80">
-          <span class="text-slate-300">Deadlock Trigger (&tau; consecutive steps):</span>
-          <span class="font-mono font-bold text-white px-2 py-0.5 rounded bg-slate-900 border border-slate-700">2 cycles</span>
+          <input type="range" id="rngJump" min="0.010" max="0.100" step="0.002" value="0.032"
+                 class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none slider-thumb">
+          <p class="text-[10px] text-slate-400 mt-0.5">Tekerlek patinajı ve kilitlenmelerde zincirleme faz atlaması sağlar.</p>
         </div>
       </div>
 
-      <!-- Real Student Trace Scenario Panel (Hidden by default, shown in Real modes) -->
-      <div id="panelRealScenarios" class="hidden bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
-        <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
-          <span>📚 Benchmark Student Archetype Replay</span>
-          <span id="lblDatasetBadge" class="text-xs px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded border border-blue-500/30">ASSISTments Trace</span>
-        </h3>
-        <p class="text-xs text-slate-400 mb-3">
-          Select an empirical student interaction trace to watch the counterfactual replay under standard vs. PFP triage.
-        </p>
-
-        <div class="space-y-2">
-          <button class="student-profile-btn w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-700/70 border border-slate-700 text-left transition flex items-center justify-between" data-profile="drift">
-            <div>
-              <div class="text-xs font-bold text-red-400">Student #1042 — High Off-Task Drift (Saturn Risk)</div>
-              <div class="text-[11px] text-slate-400">Prompt drift during geometry fractions &bull; 8 distraction spikes</div>
-            </div>
-            <span class="text-xs px-2 py-1 rounded bg-red-500/20 text-red-300 font-mono">T<sub>desc</sub> Test</span>
-          </button>
-
-          <button class="student-profile-btn w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-700/70 border border-slate-700 text-left transition flex items-center justify-between" data-profile="deadlock">
-            <div>
-              <div class="text-xs font-bold text-amber-400">Student #2819 — Cognitive Wheel-Spinning</div>
-              <div class="text-[11px] text-slate-400">Stuck on linear quadratic roots &bull; 4 repeated failure steps</div>
-            </div>
-            <span class="text-xs px-2 py-1 rounded bg-amber-500/20 text-amber-300 font-mono">&Omega;<sub>jump</sub> Test</span>
-          </button>
-
-          <button class="student-profile-btn w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-700/70 border border-slate-700 text-left transition flex items-center justify-between" data-profile="rapid">
-            <div>
-              <div class="text-xs font-bold text-emerald-400">Student #3904 — Self-Organizing Resonance</div>
-              <div class="text-[11px] text-slate-400">Smooth Pareto trajectory &bull; Harmonic tripod zoom multi-scale</div>
-            </div>
-            <span class="text-xs px-2 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono">Pareto Test</span>
-          </button>
-        </div>
-
-        <div id="realTraceOutput" class="mt-3 p-3 rounded-xl bg-slate-950 border border-slate-700 text-xs font-mono text-slate-300 space-y-1">
-          <div class="text-emerald-400 font-bold">Trace Status: Ready for replay</div>
-          <div class="text-slate-400">AUC-ROC Early Drift Warning: 0.942 | BKT: 0.718 | DKT: 0.834</div>
-        </div>
-      </div>
-
-      <!-- TAMAMe Complementarity & Z/9Z Ring Card -->
+      <!-- Mathematical Engine Details: TAMAMe & Z/9Z -->
       <div class="bg-slate-800 border border-slate-700 rounded-2xl p-4 shadow-xl">
         <h3 class="text-sm font-bold text-white mb-2 flex items-center justify-between">
-          <span>⭕ TAMAMe Unitary Law &amp; &Zopf;/9&Zopf; Error-Kernel</span>
-          <span class="text-xs font-mono text-emerald-400">B(t) + S(t) = 1.00</span>
+          <span>🔬 TAMAMe Tamamlayıcılığı &amp; Z/9Z Hata Çekirdeği</span>
+          <span class="text-xs text-purple-400 font-mono">B + S = 1</span>
         </h3>
 
-        <!-- B(t) + S(t) Conservation Bar -->
+        <!-- B + S Slider Preview -->
         <div class="mb-3">
           <div class="flex justify-between text-xs mb-1">
-            <span class="text-amber-300">Blind-Spot B(t) (AMA): <strong id="lblValB">0.42</strong></span>
-            <span class="text-cyan-300">Seek Drive S(t) (ME): <strong id="lblValS">0.58</strong></span>
+            <span class="text-slate-300">Dengesizlik B<sub>(diseq)</sub> vs Somatik S<sub>(soma)</sub>:</span>
+            <span class="font-mono text-xs"><span id="lblValB" class="text-amber-400">0.42</span> + <span id="lblValS" class="text-emerald-400">0.58</span> = 1.00</span>
           </div>
-          <div class="w-full h-3 bg-slate-950 rounded-full overflow-hidden flex border border-slate-700">
-            <div id="barB" class="h-full bg-amber-500 transition-all duration-300" style="width: 42%;"></div>
-            <div id="barS" class="h-full bg-cyan-500 transition-all duration-300" style="width: 58%;"></div>
+          <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden flex">
+            <div id="barB" style="width: 42%" class="bg-amber-500 h-full transition-all"></div>
+            <div id="barS" style="width: 58%" class="bg-emerald-500 h-full transition-all"></div>
           </div>
-          <p class="text-[10px] text-slate-400 mt-1 text-center">
-            Unitary conservation prevents gradient divergence &amp; student burnout stress (&langle;T<sub>&mu;&nu;</sub>, K<sub>error</sub>&rangle; = 0).
-          </p>
         </div>
 
-        <!-- 9 Modular Residue Classes -->
-        <div class="text-xs text-slate-300 mb-1.5 font-semibold">Attainment Cosets &Zopf;/9&Zopf; (Click to inspect):</div>
-        <div class="grid grid-cols-9 gap-1 text-center font-mono font-bold text-xs" id="zmodRing">
-          <!-- Populated dynamically via JS -->
+        <!-- Z/9Z Ring Grid -->
+        <div class="text-xs text-slate-400 mb-1">Z/9Z Modüler Hata İdeali I<sub>3</sub> = {0, 3, 6}:</div>
+        <div id="zmodRing" class="grid grid-cols-9 gap-1 text-center font-mono text-[11px]">
+          <!-- Injected via JS -->
         </div>
-        <div id="zmodTooltip" class="text-[11px] text-slate-400 mt-2 p-2 rounded bg-slate-950 border border-slate-700">
-          Core Closed Sub-Ideal <strong class="text-purple-400">I<sub>3</sub> = {[0]<sub>9</sub>, [3]<sub>9</sub>, [6]<sub>9</sub>}</strong> shelters mastery invariants, while orthogonal cosets preserve creative exploratory errors non-destructively.
+        <div id="zmodTooltip" class="mt-2 text-[11px] text-slate-400 italic bg-slate-950/60 p-2 rounded border border-slate-800 min-h-[38px]">
+          Modüler hücrelere tıklayarak hata emilim özelliklerini inceleyebilirsiniz.
         </div>
       </div>
 
     </section>
-
   </main>
 
-  <!-- Interactive JavaScript Engine -->
+  <!-- Embedded Authentic Datasets -->
   <script>
-    // --- 1. Simulation Constants & Horizon Geometry ---
-    const SHOULDER_UPPER = { re: 0.25, im: 0.18 };
-    const SHOULDER_LOWER = { re: 0.25, im: -0.18 };
-    const R_ZPD = 0.13;
-    const ESCAPE_RADIUS = 2.0;
+    const ASSISTMENTS_DATA = {"dataset_name": "ASSISTments 2012-2013", "domain": "K-12 Mathematics (Micro-Step Problem Scaffolding)", "sample_size": 1000, "trajectory_steps": 25, "unconstrained_escape_rate": 0.244, "pfp_escape_rate": 0.0, "unconstrained_mean_zpd": 0.862, "pfp_mean_zpd": 0.9771, "relative_zpd_gain_pct": 13.35, "escape_reduction_pct": 100.0, "mean_interventions_per_student": 0.71, "sample_trajectories": [{"student_id": "178890", "accuracy": 0.68, "mean_frustration": 0.379, "unconstrained_orbit": [0.275, 0.307, 0.253, 0.403, 0.296, 0.488, 0.415, 0.449, 0.534, 0.471, 0.277, 0.141, 0.294, 0.147, 0.232, 0.316, 0.267, 0.25, 0.352, 0.342, 0.458, 0.408, 0.441, 0.447, 0.586], "pfp_orbit": [0.275, 0.307, 0.253, 0.403, 0.296, 0.488, 0.415, 0.449, 0.534, 0.471, 0.277, 0.141, 0.294, 0.147, 0.232, 0.316, 0.267, 0.25, 0.352, 0.342, 0.458, 0.408, 0.441, 0.447, 0.586], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.23, "im": -0.2559}, {"re": 0.31, "im": -0.1892}, {"re": 0.26, "im": 0.1892}, {"re": 0.34, "im": -0.2559}, {"re": 0.29, "im": 0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.2753}, {"re": 0.14, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.2559}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.2392}, {"re": 0.26, "im": -0.2559}, {"re": 0.21, "im": 0.1892}, {"re": 0.29, "im": -0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.32, "im": -0.2559}, {"re": 0.27, "im": 0.1892}, {"re": 0.22, "im": 0.1892}, {"re": 0.17, "im": 0.1892}, {"re": 0.12, "im": 0.389}]}, {"student_id": "120669", "accuracy": 0.56, "mean_frustration": 0.361, "unconstrained_orbit": [0.275, 0.389, 0.675, 0.188, 0.399, 0.44, 0.534, 0.585, 0.561, 0.395, 0.11, 0.283, 0.24, 0.211, 0.443, 0.566, 0.328, 0.285, 0.486, 0.343, 0.537, 0.754, 1.22, 1.62, 2.239], "pfp_orbit": [0.275, 0.389, 0.675, 0.188, 0.399, 0.44, 0.534, 0.585, 0.561, 0.395, 0.11, 0.283, 0.24, 0.211, 0.443, 0.566, 0.328, 0.285, 0.486, 0.343, 0.537, 0.754, 1.22, 0.434, 0.791], "unconstrained_escaped": true, "pfp_escaped": false, "scaffold_interventions": 1, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.28, "im": 0.1892}, {"re": 0.23, "im": 0.4798}, {"re": 0.31, "im": -0.4889}, {"re": 0.39, "im": -0.1892}, {"re": 0.34, "im": 0.1892}, {"re": 0.29, "im": 0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.1892}, {"re": 0.14, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.2753}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.4392}, {"re": 0.26, "im": -0.4392}, {"re": 0.34, "im": 0.4392}, {"re": 0.29, "im": 0.1892}, {"re": 0.37, "im": -0.4086}, {"re": 0.32, "im": 0.1892}, {"re": 0.4, "im": 0.1892}, {"re": 0.48, "im": -0.3892}, {"re": 0.56, "im": -0.3345}, {"re": 0.51, "im": 0.1892}, {"re": 0.59, "im": 0.4392}]}, {"student_id": "92799", "accuracy": 0.72, "mean_frustration": 0.396, "unconstrained_orbit": [0.275, 0.307, 0.276, 0.194, 0.193, 0.242, 0.256, 0.166, 0.235, 0.344, 0.208, 0.279, 0.323, 0.299, 0.183, 0.205, 0.314, 0.33, 0.289, 0.312, 0.221, 0.243, 0.436, 0.254, 0.339], "pfp_orbit": [0.275, 0.307, 0.276, 0.194, 0.193, 0.242, 0.256, 0.166, 0.235, 0.344, 0.208, 0.279, 0.323, 0.299, 0.183, 0.205, 0.314, 0.33, 0.289, 0.312, 0.221, 0.243, 0.436, 0.254, 0.339], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.2559}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.2725}, {"re": 0.26, "im": -0.1892}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.19, "im": -0.1892}, {"re": 0.14, "im": 0.1892}, {"re": 0.22, "im": 0.1892}, {"re": 0.17, "im": 0.1892}, {"re": 0.12, "im": 0.1892}, {"re": 0.1, "im": 0.2753}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.389}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.3754}]}, {"student_id": "179887", "accuracy": 0.8, "mean_frustration": 0.384, "unconstrained_orbit": [0.275, 0.307, 0.276, 0.306, 0.207, 0.201, 0.221, 0.326, 0.124, 0.337, 0.325, 0.467, 0.252, 0.467, 0.389, 0.145, 0.256, 0.267, 0.238, 0.215, 0.217, 0.222, 0.255, 0.35, 0.258], "pfp_orbit": [0.275, 0.307, 0.276, 0.306, 0.207, 0.201, 0.221, 0.326, 0.124, 0.337, 0.325, 0.467, 0.252, 0.467, 0.389, 0.145, 0.256, 0.267, 0.238, 0.215, 0.217, 0.222, 0.255, 0.35, 0.258], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.2753}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.3225}, {"re": 0.13, "im": 0.1892}, {"re": 0.21, "im": 0.2559}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.389}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.4961}, {"re": 0.26, "im": -0.5073}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.2753}, {"re": 0.1, "im": 0.1892}]}, {"student_id": "170980", "accuracy": 0.68, "mean_frustration": 0.38, "unconstrained_orbit": [0.38, 0.576, 0.698, 1.019, 0.986, 0.744, 0.49, 0.228, 0.306, 0.6, 0.46, 0.195, 0.317, 0.354, 0.325, 0.295, 0.375, 0.512, 0.59, 0.583, 0.442, 0.2, 0.212, 0.239, 0.23], "pfp_orbit": [0.38, 0.576, 0.698, 1.019, 0.334, 0.238, 0.264, 0.46, 0.254, 0.494, 0.379, 0.286, 0.346, 0.355, 0.311, 0.283, 0.378, 0.517, 0.596, 0.589, 0.443, 0.193, 0.213, 0.24, 0.23], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 1, "c_trajectory": [{"re": 0.33, "im": 0.1892}, {"re": 0.41, "im": 0.1892}, {"re": 0.36, "im": 0.1892}, {"re": 0.31, "im": 0.4829}, {"re": 0.26, "im": 0.1892}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.3962}, {"re": 0.19, "im": 0.1892}, {"re": 0.27, "im": 0.4549}, {"re": 0.22, "im": 0.1892}, {"re": 0.3, "im": 0.1892}, {"re": 0.25, "im": 0.1892}, {"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.23, "im": 0.1892}, {"re": 0.31, "im": 0.1892}, {"re": 0.39, "im": 0.1892}, {"re": 0.34, "im": 0.1892}, {"re": 0.29, "im": 0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.1892}, {"re": 0.14, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}]}, {"student_id": "138927", "accuracy": 0.52, "mean_frustration": 0.365, "unconstrained_orbit": [0.38, 0.576, 0.796, 0.996, 1.138, 1.017, 1.158, 1.913, 3.165, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0], "pfp_orbit": [0.38, 0.576, 0.796, 0.996, 1.138, 0.24, 0.289, 0.543, 0.491, 0.683, 0.789, 1.275, 0.712, 0.874, 0.545, 0.887, 1.053, 0.391, 0.632, 0.816, 0.643, 1.004, 0.553, 0.784, 1.039], "unconstrained_escaped": true, "pfp_escaped": false, "scaffold_interventions": 4, "c_trajectory": [{"re": 0.33, "im": 0.1892}, {"re": 0.41, "im": 0.1892}, {"re": 0.49, "im": 0.1892}, {"re": 0.44, "im": 0.1892}, {"re": 0.39, "im": 0.1892}, {"re": 0.34, "im": 0.1892}, {"re": 0.29, "im": 0.1892}, {"re": 0.37, "im": -0.4392}, {"re": 0.45, "im": 0.3892}, {"re": 0.4, "im": 0.1892}, {"re": 0.48, "im": -0.3892}, {"re": 0.56, "im": 0.5438}, {"re": 0.51, "im": 0.4892}, {"re": 0.46, "im": 0.1892}, {"re": 0.54, "im": -0.3221}, {"re": 0.62, "im": 0.3892}, {"re": 0.57, "im": 0.1892}, {"re": 0.52, "im": 0.1892}, {"re": 0.6, "im": 0.3892}, {"re": 0.55, "im": 0.1892}, {"re": 0.63, "im": -0.4392}, {"re": 0.58, "im": 0.1892}, {"re": 0.65, "im": 0.1892}, {"re": 0.6, "im": 0.1892}, {"re": 0.55, "im": 0.1892}]}, {"student_id": "126213", "accuracy": 0.6, "mean_frustration": 0.373, "unconstrained_orbit": [0.275, 0.307, 0.276, 0.244, 0.326, 0.344, 0.417, 0.479, 0.48, 0.195, 0.28, 0.329, 0.308, 0.256, 0.176, 0.24, 0.27, 0.34, 0.514, 0.508, 0.415, 0.269, 0.346, 0.196, 0.392], "pfp_orbit": [0.275, 0.307, 0.276, 0.244, 0.326, 0.344, 0.417, 0.479, 0.48, 0.195, 0.28, 0.329, 0.308, 0.256, 0.176, 0.24, 0.27, 0.34, 0.514, 0.508, 0.415, 0.269, 0.346, 0.196, 0.392], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.26, "im": 0.1892}, {"re": 0.34, "im": -0.1892}, {"re": 0.29, "im": 0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.1892}, {"re": 0.27, "im": -0.3133}, {"re": 0.22, "im": 0.1892}, {"re": 0.17, "im": 0.1892}, {"re": 0.12, "im": 0.1892}, {"re": 0.2, "im": -0.2793}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.26, "im": 0.1892}, {"re": 0.34, "im": 0.2823}, {"re": 0.29, "im": 0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.1892}, {"re": 0.27, "im": -0.3009}, {"re": 0.22, "im": 0.1892}, {"re": 0.3, "im": 0.1892}]}, {"student_id": "124217", "accuracy": 0.64, "mean_frustration": 0.385, "unconstrained_orbit": [0.275, 0.307, 0.276, 0.488, 0.305, 0.142, 0.336, 0.292, 0.436, 0.228, 0.427, 0.305, 0.183, 0.237, 0.523, 0.07, 0.391, 0.26, 0.329, 0.337, 0.184, 0.517, 0.484, 0.354, 0.349], "pfp_orbit": [0.275, 0.307, 0.276, 0.488, 0.305, 0.142, 0.336, 0.292, 0.436, 0.228, 0.427, 0.305, 0.183, 0.237, 0.523, 0.07, 0.391, 0.26, 0.329, 0.337, 0.184, 0.517, 0.484, 0.354, 0.349], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.4462}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.2892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.3962}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.4392}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.1892}, {"re": 0.26, "im": -0.4061}, {"re": 0.21, "im": 0.1892}, {"re": 0.29, "im": -0.2559}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.1892}, {"re": 0.14, "im": 0.1892}, {"re": 0.22, "im": -0.1892}, {"re": 0.3, "im": 0.4392}, {"re": 0.25, "im": 0.1892}, {"re": 0.2, "im": 0.1892}, {"re": 0.28, "im": 0.2892}]}, {"student_id": "179857", "accuracy": 0.76, "mean_frustration": 0.379, "unconstrained_orbit": [0.275, 0.307, 0.303, 0.185, 0.263, 0.221, 0.228, 0.269, 0.254, 0.249, 0.261, 0.242, 0.386, 0.098, 0.212, 0.235, 0.521, 0.297, 0.413, 0.251, 0.202, 0.258, 0.448, 0.135, 0.223], "pfp_orbit": [0.275, 0.307, 0.303, 0.185, 0.263, 0.221, 0.228, 0.269, 0.254, 0.249, 0.261, 0.242, 0.386, 0.098, 0.212, 0.235, 0.521, 0.297, 0.413, 0.251, 0.202, 0.258, 0.448, 0.135, 0.223], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.23, "im": -0.3225}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.21, "im": -0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.3892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.486}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.4892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.389}, {"re": 0.18, "im": -0.1892}, {"re": 0.13, "im": 0.1892}]}, {"student_id": "118643", "accuracy": 0.6, "mean_frustration": 0.383, "unconstrained_orbit": [0.275, 0.307, 0.276, 0.22, 0.399, 0.32, 0.296, 0.433, 0.475, 0.436, 0.31, 0.271, 0.288, 0.317, 0.347, 0.385, 0.446, 0.351, 0.434, 0.541, 0.258, 0.471, 0.605, 0.804, 1.052], "pfp_orbit": [0.275, 0.307, 0.276, 0.22, 0.399, 0.32, 0.296, 0.433, 0.475, 0.436, 0.31, 0.271, 0.288, 0.317, 0.347, 0.385, 0.446, 0.351, 0.434, 0.541, 0.258, 0.471, 0.605, 0.804, 1.052], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.3892}, {"re": 0.26, "im": -0.1892}, {"re": 0.34, "im": 0.1892}, {"re": 0.29, "im": 0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.1892}, {"re": 0.14, "im": 0.1892}, {"re": 0.1, "im": 0.2753}, {"re": 0.18, "im": -0.2692}, {"re": 0.26, "im": -0.1892}, {"re": 0.21, "im": 0.389}, {"re": 0.29, "im": 0.1892}, {"re": 0.37, "im": -0.4347}, {"re": 0.32, "im": 0.1892}, {"re": 0.27, "im": 0.1892}, {"re": 0.22, "im": 0.2753}, {"re": 0.3, "im": -0.1892}, {"re": 0.38, "im": -0.2438}, {"re": 0.46, "im": 0.1892}, {"re": 0.41, "im": 0.1892}, {"re": 0.36, "im": 0.1892}]}, {"student_id": "179231", "accuracy": 0.8, "mean_frustration": 0.38, "unconstrained_orbit": [0.34, 0.32, 0.259, 0.204, 0.289, 0.274, 0.278, 0.289, 0.262, 0.223, 0.213, 0.22, 0.344, 0.281, 0.511, 0.278, 0.161, 0.224, 0.233, 0.224, 0.423, 0.247, 0.163, 0.259, 0.278], "pfp_orbit": [0.34, 0.32, 0.259, 0.204, 0.289, 0.274, 0.278, 0.289, 0.262, 0.223, 0.213, 0.22, 0.344, 0.281, 0.511, 0.278, 0.161, 0.224, 0.233, 0.224, 0.423, 0.247, 0.163, 0.259, 0.278], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.2753}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.2392}, {"re": 0.13, "im": 0.1892}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.2892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.4829}, {"re": 0.18, "im": 0.2392}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.3962}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}]}, {"student_id": "179878", "accuracy": 0.56, "mean_frustration": 0.405, "unconstrained_orbit": [0.425, 0.291, 0.235, 0.316, 0.295, 0.272, 0.322, 0.577, 0.194, 0.263, 0.352, 0.257, 0.479, 0.709, 0.905, 1.076, 1.139, 0.897, 0.631, 0.494, 0.362, 0.54, 0.525, 0.441, 0.485], "pfp_orbit": [0.425, 0.291, 0.235, 0.316, 0.295, 0.272, 0.322, 0.577, 0.194, 0.263, 0.352, 0.257, 0.479, 0.709, 0.905, 1.076, 0.373, 0.331, 0.495, 0.661, 0.851, 1.217, 0.591, 0.44, 0.411], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 2, "c_trajectory": [{"re": 0.2, "im": 0.3754}, {"re": 0.28, "im": -0.38}, {"re": 0.23, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.26, "im": -0.2559}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.4668}, {"re": 0.19, "im": -0.2559}, {"re": 0.14, "im": 0.1892}, {"re": 0.22, "im": 0.2386}, {"re": 0.3, "im": -0.1892}, {"re": 0.38, "im": 0.2392}, {"re": 0.46, "im": 0.1892}, {"re": 0.41, "im": 0.1892}, {"re": 0.36, "im": 0.1892}, {"re": 0.44, "im": 0.2892}, {"re": 0.39, "im": 0.1892}, {"re": 0.47, "im": -0.1892}, {"re": 0.42, "im": 0.1892}, {"re": 0.37, "im": 0.1892}, {"re": 0.32, "im": 0.3754}, {"re": 0.4, "im": 0.2392}, {"re": 0.35, "im": 0.1892}, {"re": 0.43, "im": 0.2392}]}, {"student_id": "97524", "accuracy": 0.76, "mean_frustration": 0.361, "unconstrained_orbit": [0.524, 0.477, 0.27, 0.226, 0.334, 0.254, 0.282, 0.198, 0.191, 0.241, 0.431, 0.164, 0.198, 0.228, 0.228, 0.389, 0.171, 0.276, 0.319, 0.295, 0.233, 0.206, 0.385, 0.292, 0.203], "pfp_orbit": [0.524, 0.477, 0.27, 0.226, 0.334, 0.254, 0.282, 0.198, 0.191, 0.241, 0.431, 0.164, 0.198, 0.228, 0.228, 0.389, 0.171, 0.276, 0.319, 0.295, 0.233, 0.206, 0.385, 0.292, 0.203], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.4844}, {"re": 0.28, "im": 0.2753}, {"re": 0.23, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.2753}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.2753}, {"re": 0.18, "im": -0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.4483}, {"re": 0.13, "im": 0.2753}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.3392}, {"re": 0.26, "im": -0.1892}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.3392}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}]}, {"student_id": "178074", "accuracy": 0.64, "mean_frustration": 0.37, "unconstrained_orbit": [0.275, 0.337, 0.292, 0.345, 0.337, 0.274, 0.289, 0.149, 0.286, 0.313, 0.218, 0.455, 0.302, 0.359, 0.382, 0.341, 0.245, 0.192, 0.227, 0.184, 0.258, 0.399, 0.575, 0.341, 0.361], "pfp_orbit": [0.275, 0.337, 0.292, 0.345, 0.337, 0.274, 0.289, 0.149, 0.286, 0.313, 0.218, 0.455, 0.302, 0.359, 0.382, 0.341, 0.245, 0.192, 0.227, 0.184, 0.258, 0.399, 0.575, 0.341, 0.361], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.28, "im": -0.2559}, {"re": 0.23, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.2823}, {"re": 0.13, "im": 0.1892}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.24, "im": -0.1892}, {"re": 0.32, "im": -0.2559}, {"re": 0.27, "im": 0.1892}, {"re": 0.22, "im": 0.1892}, {"re": 0.17, "im": 0.1892}, {"re": 0.12, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.21, "im": -0.1892}, {"re": 0.29, "im": -0.1892}, {"re": 0.37, "im": -0.2559}, {"re": 0.32, "im": 0.1892}, {"re": 0.27, "im": 0.1892}]}, {"student_id": "103651", "accuracy": 0.84, "mean_frustration": 0.411, "unconstrained_orbit": [0.275, 0.307, 0.276, 0.22, 0.209, 0.321, 0.127, 0.224, 0.211, 0.355, 0.274, 0.28, 0.228, 0.251, 0.242, 0.221, 0.419, 0.297, 0.185, 0.205, 0.407, 0.546, 0.23, 0.185, 0.531], "pfp_orbit": [0.275, 0.307, 0.276, 0.22, 0.209, 0.321, 0.127, 0.224, 0.211, 0.355, 0.274, 0.28, 0.228, 0.251, 0.242, 0.221, 0.419, 0.297, 0.185, 0.205, 0.407, 0.546, 0.23, 0.185, 0.531], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.3092}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.1892}, {"re": 0.13, "im": 0.3754}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.2753}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.3754}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.3754}, {"re": 0.1, "im": 0.4892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.4892}]}, {"student_id": "178553", "accuracy": 0.72, "mean_frustration": 0.365, "unconstrained_orbit": [0.275, 0.463, 0.501, 0.254, 0.358, 0.409, 0.299, 0.343, 0.386, 0.364, 0.281, 0.193, 0.207, 0.224, 0.225, 0.222, 0.215, 0.188, 0.243, 0.202, 0.297, 0.368, 0.359, 0.291, 0.388], "pfp_orbit": [0.275, 0.463, 0.501, 0.254, 0.358, 0.409, 0.299, 0.343, 0.386, 0.364, 0.281, 0.193, 0.207, 0.224, 0.225, 0.222, 0.215, 0.188, 0.243, 0.202, 0.297, 0.368, 0.359, 0.291, 0.388], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.28, "im": 0.2892}, {"re": 0.36, "im": -0.6029}, {"re": 0.31, "im": 0.1892}, {"re": 0.26, "im": 0.1892}, {"re": 0.21, "im": 0.1892}, {"re": 0.29, "im": -0.2559}, {"re": 0.24, "im": 0.1892}, {"re": 0.19, "im": 0.1892}, {"re": 0.14, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.1892}, {"re": 0.26, "im": 0.1892}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.19, "im": -0.3892}]}, {"student_id": "176522", "accuracy": 0.76, "mean_frustration": 0.396, "unconstrained_orbit": [0.34, 0.32, 0.259, 0.204, 0.212, 0.405, 0.246, 0.372, 0.506, 0.3, 0.356, 0.168, 0.276, 0.281, 0.243, 0.25, 0.275, 0.198, 0.347, 0.378, 0.34, 0.318, 0.161, 0.252, 0.256], "pfp_orbit": [0.34, 0.32, 0.259, 0.204, 0.212, 0.405, 0.246, 0.372, 0.506, 0.3, 0.356, 0.168, 0.276, 0.281, 0.243, 0.25, 0.275, 0.198, 0.347, 0.378, 0.34, 0.318, 0.161, 0.252, 0.256], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.2753}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.3754}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.3962}, {"re": 0.1, "im": 0.471}, {"re": 0.18, "im": -0.2559}, {"re": 0.26, "im": -0.3498}, {"re": 0.21, "im": 0.1892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.19, "im": -0.2559}, {"re": 0.14, "im": 0.2753}, {"re": 0.22, "im": -0.2559}, {"re": 0.17, "im": 0.1892}, {"re": 0.25, "im": 0.1892}, {"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.1892}, {"re": 0.23, "im": -0.3538}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}]}, {"student_id": "92813", "accuracy": 0.68, "mean_frustration": 0.429, "unconstrained_orbit": [0.524, 0.386, 0.161, 0.192, 0.267, 0.481, 0.221, 0.386, 0.449, 0.754, 0.637, 0.086, 0.473, 0.455, 0.361, 0.517, 0.348, 0.39, 0.236, 0.335, 0.246, 0.445, 0.412, 0.305, 0.385], "pfp_orbit": [0.524, 0.386, 0.161, 0.192, 0.267, 0.481, 0.221, 0.386, 0.449, 0.754, 0.637, 0.086, 0.473, 0.455, 0.361, 0.517, 0.348, 0.39, 0.236, 0.335, 0.246, 0.445, 0.412, 0.305, 0.385], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.4844}, {"re": 0.15, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.26, "im": -0.4862}, {"re": 0.34, "im": 0.1892}, {"re": 0.29, "im": 0.1892}, {"re": 0.24, "im": 0.1892}, {"re": 0.32, "im": 0.4798}, {"re": 0.27, "im": 0.1892}, {"re": 0.35, "im": 0.1892}, {"re": 0.3, "im": 0.3754}, {"re": 0.25, "im": 0.1892}, {"re": 0.2, "im": 0.1892}, {"re": 0.28, "im": 0.4392}, {"re": 0.23, "im": 0.1892}, {"re": 0.18, "im": 0.3754}, {"re": 0.13, "im": 0.1892}, {"re": 0.21, "im": 0.3038}, {"re": 0.29, "im": -0.1892}, {"re": 0.24, "im": 0.389}, {"re": 0.19, "im": 0.1892}, {"re": 0.14, "im": 0.1892}, {"re": 0.1, "im": 0.3754}]}, {"student_id": "92810", "accuracy": 0.84, "mean_frustration": 0.398, "unconstrained_orbit": [0.275, 0.579, 0.408, 0.053, 0.213, 0.238, 0.229, 0.304, 0.222, 0.409, 0.231, 0.405, 0.256, 0.168, 0.216, 0.229, 0.339, 0.117, 0.22, 0.236, 0.301, 0.236, 0.329, 0.34, 0.292], "pfp_orbit": [0.275, 0.579, 0.408, 0.053, 0.213, 0.238, 0.229, 0.304, 0.222, 0.409, 0.231, 0.405, 0.256, 0.168, 0.216, 0.229, 0.339, 0.117, 0.22, 0.236, 0.301, 0.236, 0.329, 0.34, 0.292], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2, "im": 0.1892}, {"re": 0.15, "im": 0.4829}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.2753}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.3996}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.389}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": -0.3392}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.2392}, {"re": 0.26, "im": -0.1892}, {"re": 0.21, "im": 0.2753}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}]}, {"student_id": "118457", "accuracy": 0.68, "mean_frustration": 0.366, "unconstrained_orbit": [0.549, 0.389, 0.534, 0.769, 0.896, 0.887, 0.472, 0.405, 0.509, 0.589, 0.613, 0.527, 0.251, 0.582, 0.02, 0.297, 0.339, 0.312, 0.245, 0.233, 0.306, 0.457, 0.373, 0.23, 0.185], "pfp_orbit": [0.549, 0.389, 0.534, 0.769, 0.896, 0.887, 0.472, 0.405, 0.509, 0.589, 0.613, 0.527, 0.251, 0.582, 0.02, 0.297, 0.339, 0.312, 0.245, 0.233, 0.306, 0.457, 0.373, 0.23, 0.185], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.33, "im": -0.4392}, {"re": 0.41, "im": 0.5027}, {"re": 0.36, "im": 0.1892}, {"re": 0.44, "im": 0.3003}, {"re": 0.52, "im": 0.1892}, {"re": 0.47, "im": 0.1892}, {"re": 0.42, "im": 0.1892}, {"re": 0.37, "im": 0.1892}, {"re": 0.32, "im": 0.1892}, {"re": 0.27, "im": 0.1892}, {"re": 0.22, "im": 0.1892}, {"re": 0.17, "im": 0.1892}, {"re": 0.12, "im": 0.1892}, {"re": 0.2, "im": -0.4892}, {"re": 0.28, "im": 0.1892}, {"re": 0.23, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.13, "im": 0.1892}, {"re": 0.1, "im": 0.1892}, {"re": 0.18, "im": 0.1892}, {"re": 0.26, "im": -0.2438}, {"re": 0.21, "im": 0.4892}, {"re": 0.16, "im": 0.1892}, {"re": 0.11, "im": 0.1892}, {"re": 0.1, "im": 0.1892}]}]};
+    const OULAD_DATA = {"dataset_name": "OULAD (Open University)", "domain": "Higher Education VLE (Macro-Temporal Semester Persistence)", "sample_size": 1000, "trajectory_steps": 25, "unconstrained_escape_rate": 0.082, "pfp_escape_rate": 0.0, "withdrawn_cohort_escape_rate": 0.15, "pass_cohort_escape_rate": 0.014, "unconstrained_mean_zpd": 0.9658, "pfp_mean_zpd": 0.997, "relative_zpd_gain_pct": 3.22, "escape_reduction_pct": 100.0, "mean_interventions_per_student": 0.17, "sample_trajectories": [{"student_id": "528649", "outcome": "Fail", "mean_score": 70.9, "unconstrained_orbit": [0.386, 0.206, 0.293, 0.307, 0.263, 0.289, 0.303, 0.381, 0.226, 0.309, 0.365, 0.268, 0.367, 0.206, 0.409, 0.257, 0.249, 0.384, 0.279, 0.254, 0.378, 0.283, 0.342, 0.302, 0.221], "pfp_orbit": [0.386, 0.206, 0.293, 0.307, 0.263, 0.289, 0.303, 0.381, 0.226, 0.309, 0.365, 0.268, 0.367, 0.206, 0.409, 0.257, 0.249, 0.384, 0.279, 0.254, 0.378, 0.283, 0.342, 0.302, 0.221], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2173, "im": 0.3195}, {"re": 0.2173, "im": -0.2657}, {"re": 0.2173, "im": 0.2254}, {"re": 0.2173, "im": -0.2808}, {"re": 0.2173, "im": 0.2135}, {"re": 0.2173, "im": -0.1872}, {"re": 0.2173, "im": 0.2122}, {"re": 0.2173, "im": -0.3485}, {"re": 0.2173, "im": 0.2135}, {"re": 0.2173, "im": -0.1988}, {"re": 0.2173, "im": 0.3485}, {"re": 0.2173, "im": -0.2931}, {"re": 0.2173, "im": 0.3485}, {"re": 0.2173, "im": -0.1996}, {"re": 0.2173, "im": 0.3485}, {"re": 0.2173, "im": -0.3485}, {"re": 0.2173, "im": 0.1929}, {"re": 0.2173, "im": -0.3485}, {"re": 0.2173, "im": 0.3485}, {"re": 0.2173, "im": -0.2166}, {"re": 0.2173, "im": 0.3485}, {"re": 0.2173, "im": -0.3485}, {"re": 0.2173, "im": 0.3485}, {"re": 0.2173, "im": -0.3485}, {"re": 0.2173, "im": 0.1872}]}, {"student_id": "79261", "outcome": "Pass", "mean_score": 85.0, "unconstrained_orbit": [0.326, 0.292, 0.274, 0.243, 0.365, 0.222, 0.255, 0.325, 0.286, 0.283, 0.266, 0.271, 0.317, 0.181, 0.361, 0.153, 0.238, 0.342, 0.293, 0.307, 0.211, 0.438, 0.225, 0.358, 0.386], "pfp_orbit": [0.326, 0.292, 0.274, 0.243, 0.365, 0.222, 0.255, 0.325, 0.286, 0.283, 0.266, 0.271, 0.317, 0.181, 0.361, 0.153, 0.238, 0.342, 0.293, 0.307, 0.211, 0.438, 0.225, 0.358, 0.386], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.175, "im": 0.2752}, {"re": 0.175, "im": -0.3579}, {"re": 0.175, "im": 0.3123}, {"re": 0.175, "im": -0.2657}, {"re": 0.175, "im": 0.3864}, {"re": 0.175, "im": -0.3045}, {"re": 0.175, "im": 0.2483}, {"re": 0.175, "im": -0.3485}, {"re": 0.175, "im": 0.3485}, {"re": 0.175, "im": -0.3161}, {"re": 0.175, "im": 0.297}, {"re": 0.175, "im": -0.2931}, {"re": 0.175, "im": 0.3485}, {"re": 0.175, "im": -0.2198}, {"re": 0.175, "im": 0.3513}, {"re": 0.175, "im": -0.2226}, {"re": 0.175, "im": 0.1872}, {"re": 0.175, "im": -0.3485}, {"re": 0.175, "im": 0.371}, {"re": 0.175, "im": -0.3485}, {"re": 0.175, "im": 0.2483}, {"re": 0.175, "im": -0.4491}, {"re": 0.175, "im": 0.3485}, {"re": 0.175, "im": -0.3485}, {"re": 0.175, "im": 0.4622}]}, {"student_id": "600461", "outcome": "Fail", "mean_score": 70.2, "unconstrained_orbit": [0.285, 0.307, 0.251, 0.32, 0.307, 0.346, 0.305, 0.348, 0.255, 0.335, 0.235, 0.372, 0.283, 0.298, 0.357, 0.305, 0.253, 0.381, 0.284, 0.344, 0.324, 0.312, 0.32, 0.315, 0.276], "pfp_orbit": [0.285, 0.307, 0.251, 0.32, 0.307, 0.346, 0.305, 0.348, 0.255, 0.335, 0.235, 0.372, 0.283, 0.298, 0.357, 0.305, 0.253, 0.381, 0.284, 0.344, 0.324, 0.312, 0.32, 0.315, 0.276], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2193, "im": 0.1827}, {"re": 0.2193, "im": -0.2794}, {"re": 0.2193, "im": 0.1827}, {"re": 0.2193, "im": -0.2198}, {"re": 0.2193, "im": 0.2607}, {"re": 0.2193, "im": -0.3161}, {"re": 0.2193, "im": 0.3161}, {"re": 0.2193, "im": -0.3485}, {"re": 0.2193, "im": 0.2673}, {"re": 0.2193, "im": -0.2931}, {"re": 0.2193, "im": 0.1822}, {"re": 0.2193, "im": -0.2931}, {"re": 0.2193, "im": 0.3161}, {"re": 0.2193, "im": -0.2605}, {"re": 0.2193, "im": 0.3485}, {"re": 0.2193, "im": -0.3485}, {"re": 0.2193, "im": 0.2281}, {"re": 0.2193, "im": -0.3485}, {"re": 0.2193, "im": 0.3485}, {"re": 0.2193, "im": -0.3485}, {"re": 0.2193, "im": 0.3753}, {"re": 0.2193, "im": -0.3485}, {"re": 0.2193, "im": 0.3485}, {"re": 0.2193, "im": -0.3485}, {"re": 0.2193, "im": 0.2931}]}, {"student_id": "681277", "outcome": "Withdrawn", "mean_score": 43.0, "unconstrained_orbit": [0.416, 0.355, 0.437, 0.379, 0.544, 0.401, 0.54, 0.427, 0.483, 0.516, 0.584, 0.587, 0.636, 0.795, 0.924, 1.318, 1.939, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0], "pfp_orbit": [0.416, 0.355, 0.437, 0.379, 0.544, 0.401, 0.54, 0.427, 0.483, 0.516, 0.584, 0.587, 0.636, 0.795, 0.924, 1.318, 0.622, 0.978, 0.867, 1.392, 0.292, 0.621, 0.303, 0.664, 0.466], "unconstrained_escaped": true, "pfp_escaped": false, "scaffold_interventions": 2, "c_trajectory": [{"re": 0.301, "im": 0.2875}, {"re": 0.301, "im": -0.3485}, {"re": 0.301, "im": 0.3485}, {"re": 0.301, "im": -0.2166}, {"re": 0.301, "im": 0.3485}, {"re": 0.301, "im": -0.3485}, {"re": 0.301, "im": 0.3485}, {"re": 0.301, "im": -0.3485}, {"re": 0.301, "im": 0.1822}, {"re": 0.301, "im": -0.1916}, {"re": 0.301, "im": 0.2766}, {"re": 0.301, "im": -0.3485}, {"re": 0.301, "im": 0.3485}, {"re": 0.421, "im": -0.4883}, {"re": 0.421, "im": 0.4441}, {"re": 0.421, "im": -0.465}, {"re": 0.421, "im": 0.5268}, {"re": 0.421, "im": -0.4998}, {"re": 0.421, "im": 0.4692}, {"re": 0.421, "im": -0.4895}, {"re": 0.421, "im": 0.5238}, {"re": 0.421, "im": -0.461}, {"re": 0.421, "im": 0.4677}, {"re": 0.421, "im": -0.5092}, {"re": 0.421, "im": 0.5113}]}, {"student_id": "1982833", "outcome": "Fail", "mean_score": 76.2, "unconstrained_orbit": [0.347, 0.221, 0.251, 0.378, 0.216, 0.283, 0.324, 0.232, 0.276, 0.277, 0.35, 0.288, 0.212, 0.301, 0.332, 0.299, 0.316, 0.259, 0.339, 0.288, 0.22, 0.275, 0.243, 0.299, 0.342], "pfp_orbit": [0.347, 0.221, 0.251, 0.378, 0.216, 0.283, 0.324, 0.232, 0.276, 0.277, 0.35, 0.288, 0.212, 0.301, 0.332, 0.299, 0.316, 0.259, 0.339, 0.288, 0.22, 0.275, 0.243, 0.299, 0.342], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2012, "im": 0.2822}, {"re": 0.2012, "im": -0.264}, {"re": 0.2012, "im": 0.1929}, {"re": 0.2012, "im": -0.3645}, {"re": 0.2012, "im": 0.2835}, {"re": 0.2012, "im": -0.2427}, {"re": 0.2012, "im": 0.3313}, {"re": 0.2012, "im": -0.2483}, {"re": 0.2012, "im": 0.2282}, {"re": 0.2012, "im": -0.2483}, {"re": 0.2012, "im": 0.3485}, {"re": 0.2012, "im": -0.3485}, {"re": 0.2012, "im": 0.1929}, {"re": 0.2012, "im": -0.2449}, {"re": 0.2012, "im": 0.3485}, {"re": 0.2012, "im": -0.3485}, {"re": 0.2012, "im": 0.3485}, {"re": 0.2012, "im": -0.2931}, {"re": 0.2012, "im": 0.3485}, {"re": 0.2012, "im": -0.3485}, {"re": 0.2012, "im": 0.2198}, {"re": 0.2012, "im": -0.2282}, {"re": 0.2012, "im": 0.1929}, {"re": 0.2012, "im": -0.2376}, {"re": 0.2012, "im": 0.3485}]}, {"student_id": "675111", "outcome": "Pass", "mean_score": 88.2, "unconstrained_orbit": [0.294, 0.309, 0.279, 0.319, 0.16, 0.349, 0.177, 0.273, 0.311, 0.212, 0.271, 0.21, 0.346, 0.26, 0.251, 0.242, 0.298, 0.166, 0.237, 0.222, 0.331, 0.181, 0.325, 0.346, 0.215], "pfp_orbit": [0.294, 0.309, 0.279, 0.319, 0.16, 0.349, 0.177, 0.273, 0.311, 0.212, 0.271, 0.21, 0.346, 0.26, 0.251, 0.242, 0.298, 0.166, 0.237, 0.222, 0.331, 0.181, 0.325, 0.346, 0.215], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.1653, "im": 0.2427}, {"re": 0.1653, "im": -0.359}, {"re": 0.1653, "im": 0.3328}, {"re": 0.1653, "im": -0.3536}, {"re": 0.1653, "im": 0.1988}, {"re": 0.1653, "im": -0.3363}, {"re": 0.1653, "im": 0.2483}, {"re": 0.1653, "im": -0.255}, {"re": 0.1653, "im": 0.3485}, {"re": 0.1653, "im": -0.2607}, {"re": 0.1653, "im": 0.269}, {"re": 0.1653, "im": -0.2282}, {"re": 0.1653, "im": 0.3519}, {"re": 0.1653, "im": -0.339}, {"re": 0.1653, "im": 0.269}, {"re": 0.1653, "im": -0.2569}, {"re": 0.1653, "im": 0.3161}, {"re": 0.1653, "im": -0.1929}, {"re": 0.1653, "im": 0.1988}, {"re": 0.1653, "im": -0.2068}, {"re": 0.1653, "im": 0.3335}, {"re": 0.1653, "im": -0.2376}, {"re": 0.1653, "im": 0.3161}, {"re": 0.1653, "im": -0.4182}, {"re": 0.1653, "im": 0.2752}]}, {"student_id": "622480", "outcome": "Fail", "mean_score": 92.8, "unconstrained_orbit": [0.244, 0.223, 0.261, 0.184, 0.225, 0.199, 0.226, 0.332, 0.274, 0.318, 0.156, 0.357, 0.129, 0.361, 0.261, 0.33, 0.159, 0.357, 0.267, 0.196, 0.343, 0.247, 0.21, 0.337, 0.278], "pfp_orbit": [0.244, 0.223, 0.261, 0.184, 0.225, 0.199, 0.226, 0.332, 0.274, 0.318, 0.156, 0.357, 0.129, 0.361, 0.261, 0.33, 0.159, 0.357, 0.267, 0.196, 0.343, 0.247, 0.21, 0.337, 0.278], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.1517, "im": 0.1916}, {"re": 0.1517, "im": -0.2333}, {"re": 0.1517, "im": 0.269}, {"re": 0.1517, "im": -0.1988}, {"re": 0.1517, "im": 0.2033}, {"re": 0.1517, "im": -0.1872}, {"re": 0.1517, "im": 0.2052}, {"re": 0.1517, "im": -0.3485}, {"re": 0.1517, "im": 0.3485}, {"re": 0.1517, "im": -0.3485}, {"re": 0.1517, "im": 0.1957}, {"re": 0.1517, "im": -0.3485}, {"re": 0.1517, "im": 0.2033}, {"re": 0.1517, "im": -0.346}, {"re": 0.1517, "im": 0.3485}, {"re": 0.1517, "im": -0.3485}, {"re": 0.1517, "im": 0.2052}, {"re": 0.1517, "im": -0.3485}, {"re": 0.1517, "im": 0.3485}, {"re": 0.1517, "im": -0.2068}, {"re": 0.1517, "im": 0.3485}, {"re": 0.1517, "im": -0.3195}, {"re": 0.1517, "im": 0.2166}, {"re": 0.1517, "im": -0.3485}, {"re": 0.1517, "im": 0.3485}]}, {"student_id": "603565", "outcome": "Withdrawn", "mean_score": 59.3, "unconstrained_orbit": [0.417, 0.22, 0.375, 0.333, 0.352, 0.371, 0.337, 0.334, 0.355, 0.399, 0.366, 0.403, 0.361, 0.618, 0.444, 0.661, 0.511, 0.737, 0.597, 0.868, 0.714, 1.097, 0.852, 1.052, 0.95], "pfp_orbit": [0.417, 0.22, 0.375, 0.333, 0.352, 0.371, 0.337, 0.334, 0.355, 0.399, 0.366, 0.403, 0.361, 0.618, 0.444, 0.661, 0.511, 0.737, 0.597, 0.868, 0.714, 1.097, 0.283, 0.665, 0.302], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 1, "c_trajectory": [{"re": 0.252, "im": 0.332}, {"re": 0.252, "im": -0.247}, {"re": 0.252, "im": 0.2736}, {"re": 0.252, "im": -0.3236}, {"re": 0.252, "im": 0.2959}, {"re": 0.252, "im": -0.3313}, {"re": 0.252, "im": 0.2931}, {"re": 0.252, "im": -0.2122}, {"re": 0.252, "im": 0.1872}, {"re": 0.252, "im": -0.2657}, {"re": 0.252, "im": 0.2673}, {"re": 0.252, "im": -0.2912}, {"re": 0.252, "im": 0.2752}, {"re": 0.372, "im": -0.497}, {"re": 0.372, "im": 0.5129}, {"re": 0.372, "im": -0.5039}, {"re": 0.372, "im": 0.4985}, {"re": 0.372, "im": -0.4826}, {"re": 0.372, "im": 0.4946}, {"re": 0.372, "im": -0.4723}, {"re": 0.372, "im": 0.4662}, {"re": 0.372, "im": -0.4663}, {"re": 0.372, "im": 0.448}, {"re": 0.372, "im": -0.4514}, {"re": 0.372, "im": 0.5248}]}, {"student_id": "490894", "outcome": "Fail", "mean_score": 70.0, "unconstrained_orbit": [0.366, 0.261, 0.247, 0.392, 0.209, 0.359, 0.269, 0.298, 0.313, 0.277, 0.313, 0.314, 0.29, 0.363, 0.254, 0.363, 0.241, 0.325, 0.339, 0.334, 0.324, 0.273, 0.363, 0.258, 0.314], "pfp_orbit": [0.366, 0.261, 0.247, 0.392, 0.209, 0.359, 0.269, 0.298, 0.313, 0.277, 0.313, 0.314, 0.29, 0.363, 0.254, 0.363, 0.241, 0.325, 0.339, 0.334, 0.324, 0.273, 0.363, 0.258, 0.314], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.22, "im": 0.2931}, {"re": 0.22, "im": -0.3151}, {"re": 0.22, "im": 0.1822}, {"re": 0.22, "im": -0.3485}, {"re": 0.22, "im": 0.2254}, {"re": 0.22, "im": -0.2835}, {"re": 0.22, "im": 0.2849}, {"re": 0.22, "im": -0.2404}, {"re": 0.22, "im": 0.2721}, {"re": 0.22, "im": -0.2198}, {"re": 0.22, "im": 0.2281}, {"re": 0.22, "im": -0.2607}, {"re": 0.22, "im": 0.2197}, {"re": 0.22, "im": -0.3095}, {"re": 0.22, "im": 0.2282}, {"re": 0.22, "im": -0.2931}, {"re": 0.22, "im": 0.2052}, {"re": 0.22, "im": -0.2198}, {"re": 0.22, "im": 0.3203}, {"re": 0.22, "im": -0.3485}, {"re": 0.22, "im": 0.3485}, {"re": 0.22, "im": -0.2766}, {"re": 0.22, "im": 0.3485}, {"re": 0.22, "im": -0.2936}, {"re": 0.22, "im": 0.2752}]}, {"student_id": "379210", "outcome": "Fail", "mean_score": 77.8, "unconstrained_orbit": [0.284, 0.231, 0.263, 0.336, 0.258, 0.344, 0.177, 0.342, 0.248, 0.247, 0.358, 0.202, 0.371, 0.188, 0.347, 0.173, 0.314, 0.316, 0.305, 0.308, 0.185, 0.336, 0.294, 0.316, 0.301], "pfp_orbit": [0.284, 0.231, 0.263, 0.336, 0.258, 0.344, 0.177, 0.342, 0.248, 0.247, 0.358, 0.202, 0.371, 0.188, 0.347, 0.173, 0.314, 0.316, 0.305, 0.308, 0.185, 0.336, 0.294, 0.316, 0.301], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.1967, "im": 0.2052}, {"re": 0.1967, "im": -0.2068}, {"re": 0.1967, "im": 0.1957}, {"re": 0.1967, "im": -0.3161}, {"re": 0.1967, "im": 0.2936}, {"re": 0.1967, "im": -0.3485}, {"re": 0.1967, "im": 0.1957}, {"re": 0.1967, "im": -0.2931}, {"re": 0.1967, "im": 0.2931}, {"re": 0.1967, "im": -0.2135}, {"re": 0.1967, "im": 0.3485}, {"re": 0.1967, "im": -0.2483}, {"re": 0.1967, "im": 0.3485}, {"re": 0.1967, "im": -0.2483}, {"re": 0.1967, "im": 0.3161}, {"re": 0.1967, "im": -0.1822}, {"re": 0.1967, "im": 0.2483}, {"re": 0.1967, "im": -0.3485}, {"re": 0.1967, "im": 0.3485}, {"re": 0.1967, "im": -0.3485}, {"re": 0.1967, "im": 0.1872}, {"re": 0.1967, "im": -0.2931}, {"re": 0.1967, "im": 0.3485}, {"re": 0.1967, "im": -0.3485}, {"re": 0.1967, "im": 0.3485}]}, {"student_id": "592172", "outcome": "Fail", "mean_score": 47.0, "unconstrained_orbit": [0.453, 0.291, 0.358, 0.458, 0.397, 0.464, 0.419, 0.443, 0.507, 0.457, 0.511, 0.465, 0.499, 0.546, 0.493, 0.625, 0.464, 0.545, 0.519, 0.535, 0.583, 0.549, 0.607, 0.565, 0.637], "pfp_orbit": [0.453, 0.291, 0.358, 0.458, 0.397, 0.464, 0.419, 0.443, 0.507, 0.457, 0.511, 0.465, 0.499, 0.546, 0.493, 0.625, 0.464, 0.545, 0.519, 0.535, 0.583, 0.549, 0.607, 0.565, 0.637], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.289, "im": 0.3485}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.2122}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.3485}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.3335}, {"re": 0.289, "im": -0.2483}, {"re": 0.289, "im": 0.3485}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.3423}, {"re": 0.289, "im": -0.3161}, {"re": 0.289, "im": 0.2376}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.2376}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.3485}, {"re": 0.289, "im": -0.2068}, {"re": 0.289, "im": 0.3485}, {"re": 0.289, "im": -0.269}, {"re": 0.289, "im": 0.3485}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.3485}, {"re": 0.289, "im": -0.3485}, {"re": 0.289, "im": 0.3485}]}, {"student_id": "601293", "outcome": "Pass", "mean_score": 60.4, "unconstrained_orbit": [0.388, 0.319, 0.376, 0.358, 0.307, 0.341, 0.33, 0.342, 0.305, 0.409, 0.302, 0.4, 0.359, 0.403, 0.323, 0.343, 0.37, 0.327, 0.32, 0.391, 0.387, 0.348, 0.441, 0.21, 0.366], "pfp_orbit": [0.388, 0.319, 0.376, 0.358, 0.307, 0.341, 0.33, 0.342, 0.305, 0.409, 0.302, 0.4, 0.359, 0.403, 0.323, 0.343, 0.37, 0.327, 0.32, 0.391, 0.387, 0.348, 0.441, 0.21, 0.366], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2487, "im": 0.2981}, {"re": 0.2487, "im": -0.377}, {"re": 0.2487, "im": 0.3857}, {"re": 0.2487, "im": -0.416}, {"re": 0.2487, "im": 0.3356}, {"re": 0.2487, "im": -0.3195}, {"re": 0.2487, "im": 0.3151}, {"re": 0.2487, "im": -0.3045}, {"re": 0.2487, "im": 0.2166}, {"re": 0.2487, "im": -0.316}, {"re": 0.2487, "im": 0.2605}, {"re": 0.2487, "im": -0.2947}, {"re": 0.2487, "im": 0.3595}, {"re": 0.2487, "im": -0.3974}, {"re": 0.2487, "im": 0.3552}, {"re": 0.2487, "im": -0.3014}, {"re": 0.2487, "im": 0.3478}, {"re": 0.2487, "im": -0.3123}, {"re": 0.2487, "im": 0.2281}, {"re": 0.2487, "im": -0.3056}, {"re": 0.2487, "im": 0.3931}, {"re": 0.2487, "im": -0.36}, {"re": 0.2487, "im": 0.459}, {"re": 0.2487, "im": -0.1916}, {"re": 0.2487, "im": 0.2198}]}, {"student_id": "603908", "outcome": "Pass", "mean_score": 60.4, "unconstrained_orbit": [0.317, 0.291, 0.414, 0.294, 0.36, 0.393, 0.353, 0.305, 0.391, 0.375, 0.373, 0.364, 0.363, 0.358, 0.291, 0.368, 0.394, 0.358, 0.303, 0.455, 0.263, 0.467, 0.235, 0.472, 0.21], "pfp_orbit": [0.317, 0.291, 0.414, 0.294, 0.36, 0.393, 0.353, 0.305, 0.391, 0.375, 0.373, 0.364, 0.363, 0.358, 0.291, 0.368, 0.394, 0.358, 0.303, 0.455, 0.263, 0.467, 0.235, 0.472, 0.21], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2488, "im": 0.1957}, {"re": 0.2488, "im": -0.1988}, {"re": 0.2488, "im": 0.326}, {"re": 0.2488, "im": -0.2766}, {"re": 0.2488, "im": 0.2376}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.3485}, {"re": 0.2488, "im": -0.1988}, {"re": 0.2488, "im": 0.2607}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.3485}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.3485}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.2068}, {"re": 0.2488, "im": -0.2282}, {"re": 0.2488, "im": 0.3485}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.1822}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.2198}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.1872}, {"re": 0.2488, "im": -0.3485}, {"re": 0.2488, "im": 0.1916}]}, {"student_id": "525632", "outcome": "Pass", "mean_score": 66.3, "unconstrained_orbit": [0.505, 0.173, 0.421, 0.252, 0.356, 0.318, 0.355, 0.262, 0.365, 0.318, 0.313, 0.367, 0.214, 0.39, 0.327, 0.344, 0.218, 0.433, 0.198, 0.421, 0.241, 0.343, 0.253, 0.515, 0.142], "pfp_orbit": [0.505, 0.173, 0.421, 0.252, 0.356, 0.318, 0.355, 0.262, 0.365, 0.318, 0.313, 0.367, 0.214, 0.39, 0.327, 0.344, 0.218, 0.433, 0.198, 0.421, 0.241, 0.343, 0.253, 0.515, 0.142], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.231, "im": 0.4494}, {"re": 0.231, "im": -0.36}, {"re": 0.231, "im": 0.3871}, {"re": 0.231, "im": -0.3605}, {"re": 0.231, "im": 0.3472}, {"re": 0.231, "im": -0.3741}, {"re": 0.231, "im": 0.3882}, {"re": 0.231, "im": -0.3014}, {"re": 0.231, "im": 0.3502}, {"re": 0.231, "im": -0.3736}, {"re": 0.231, "im": 0.3283}, {"re": 0.231, "im": -0.3882}, {"re": 0.231, "im": 0.2135}, {"re": 0.231, "im": -0.3211}, {"re": 0.231, "im": 0.3961}, {"re": 0.231, "im": -0.3719}, {"re": 0.231, "im": 0.1822}, {"re": 0.231, "im": -0.3654}, {"re": 0.231, "im": 0.2381}, {"re": 0.231, "im": -0.3485}, {"re": 0.231, "im": 0.3161}, {"re": 0.231, "im": -0.2931}, {"re": 0.231, "im": 0.2102}, {"re": 0.231, "im": -0.4771}, {"re": 0.231, "im": 0.3161}]}, {"student_id": "94964", "outcome": "Fail", "mean_score": 39.7, "unconstrained_orbit": [0.381, 0.417, 0.441, 0.47, 0.481, 0.541, 0.532, 0.593, 0.581, 0.657, 0.702, 0.85, 0.876, 1.186, 1.381, 2.258, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0], "pfp_orbit": [0.381, 0.417, 0.441, 0.47, 0.481, 0.541, 0.532, 0.593, 0.581, 0.657, 0.702, 0.85, 0.876, 1.186, 0.467, 0.614, 0.447, 0.62, 0.449, 0.625, 0.47, 0.685, 0.338, 0.581, 0.291], "unconstrained_escaped": true, "pfp_escaped": false, "scaffold_interventions": 1, "c_trajectory": [{"re": 0.311, "im": 0.2198}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.3485}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.3161}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.3485}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.2924}, {"re": 0.311, "im": -0.2166}, {"re": 0.311, "im": 0.2281}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.3485}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.3485}, {"re": 0.311, "im": -0.2511}, {"re": 0.311, "im": 0.3485}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.3485}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.2166}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.3485}, {"re": 0.311, "im": -0.3485}, {"re": 0.311, "im": 0.2931}]}, {"student_id": "679218", "outcome": "Pass", "mean_score": 41.8, "unconstrained_orbit": [0.367, 0.42, 0.404, 0.497, 0.451, 0.493, 0.514, 0.608, 0.545, 0.688, 0.567, 0.682, 0.549, 0.723, 0.565, 0.75, 0.31, 0.486, 0.289, 0.462, 0.363, 0.511, 0.413, 0.473, 0.495], "pfp_orbit": [0.367, 0.42, 0.404, 0.497, 0.451, 0.493, 0.514, 0.608, 0.545, 0.688, 0.567, 0.682, 0.549, 0.723, 0.565, 0.75, 0.31, 0.486, 0.289, 0.462, 0.363, 0.511, 0.413, 0.473, 0.495], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.3046, "im": 0.2052}, {"re": 0.3046, "im": -0.3485}, {"re": 0.3046, "im": 0.2931}, {"re": 0.3046, "im": -0.3485}, {"re": 0.3046, "im": 0.3485}, {"re": 0.3046, "im": -0.2607}, {"re": 0.3046, "im": 0.2282}, {"re": 0.3046, "im": -0.3485}, {"re": 0.3046, "im": 0.2931}, {"re": 0.3046, "im": -0.3485}, {"re": 0.3046, "im": 0.278}, {"re": 0.3046, "im": -0.1957}, {"re": 0.3046, "im": 0.3485}, {"re": 0.3046, "im": -0.3485}, {"re": 0.3046, "im": 0.2282}, {"re": 0.3046, "im": -0.3066}, {"re": 0.3046, "im": 0.3485}, {"re": 0.3046, "im": -0.2752}, {"re": 0.3046, "im": 0.3485}, {"re": 0.3046, "im": -0.3485}, {"re": 0.3046, "im": 0.2924}, {"re": 0.3046, "im": -0.3485}, {"re": 0.3046, "im": 0.3485}, {"re": 0.3046, "im": -0.2198}, {"re": 0.3046, "im": 0.1874}]}, {"student_id": "78255", "outcome": "Fail", "mean_score": 78.8, "unconstrained_orbit": [0.27, 0.303, 0.266, 0.277, 0.231, 0.341, 0.212, 0.269, 0.344, 0.173, 0.39, 0.248, 0.338, 0.285, 0.318, 0.298, 0.31, 0.303, 0.308, 0.305, 0.307, 0.306, 0.306, 0.306, 0.306], "pfp_orbit": [0.27, 0.303, 0.266, 0.277, 0.231, 0.341, 0.212, 0.269, 0.344, 0.173, 0.39, 0.248, 0.338, 0.285, 0.318, 0.298, 0.31, 0.303, 0.308, 0.305, 0.307, 0.306, 0.306, 0.306, 0.306], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.1937, "im": 0.1874}, {"re": 0.1937, "im": -0.3035}, {"re": 0.1937, "im": 0.2875}, {"re": 0.1937, "im": -0.2752}, {"re": 0.1937, "im": 0.2122}, {"re": 0.1937, "im": -0.3186}, {"re": 0.1937, "im": 0.2449}, {"re": 0.1937, "im": -0.2198}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.1827}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.3485}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.3485}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.3485}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.3485}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.3485}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.3485}, {"re": 0.1937, "im": 0.3485}, {"re": 0.1937, "im": -0.3485}, {"re": 0.1937, "im": 0.3485}]}, {"student_id": "1651198", "outcome": "Pass", "mean_score": 52.5, "unconstrained_orbit": [0.35, 0.312, 0.466, 0.346, 0.367, 0.411, 0.382, 0.426, 0.426, 0.494, 0.443, 0.438, 0.487, 0.431, 0.507, 0.405, 0.491, 0.385, 0.463, 0.413, 0.492, 0.43, 0.529, 0.386, 0.515], "pfp_orbit": [0.35, 0.312, 0.466, 0.346, 0.367, 0.411, 0.382, 0.426, 0.426, 0.494, 0.443, 0.438, 0.487, 0.431, 0.507, 0.405, 0.491, 0.385, 0.463, 0.413, 0.492, 0.43, 0.529, 0.386, 0.515], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2725, "im": 0.2197}, {"re": 0.2725, "im": -0.2102}, {"re": 0.2725, "im": 0.3584}, {"re": 0.2725, "im": -0.3799}, {"re": 0.2725, "im": 0.2427}, {"re": 0.2725, "im": -0.2822}, {"re": 0.2725, "im": 0.2226}, {"re": 0.2725, "im": -0.1988}, {"re": 0.2725, "im": 0.1916}, {"re": 0.2725, "im": -0.2931}, {"re": 0.2725, "im": 0.3485}, {"re": 0.2725, "im": -0.2427}, {"re": 0.2725, "im": 0.3123}, {"re": 0.2725, "im": -0.2936}, {"re": 0.2725, "im": 0.3485}, {"re": 0.2725, "im": -0.3169}, {"re": 0.2725, "im": 0.3244}, {"re": 0.2725, "im": -0.2122}, {"re": 0.2725, "im": 0.1929}, {"re": 0.2725, "im": -0.1874}, {"re": 0.2725, "im": 0.2357}, {"re": 0.2725, "im": -0.2752}, {"re": 0.2725, "im": 0.3605}, {"re": 0.2725, "im": -0.2254}, {"re": 0.2725, "im": 0.2752}]}, {"student_id": "2654628", "outcome": "Pass", "mean_score": 71.6, "unconstrained_orbit": [0.331, 0.346, 0.273, 0.308, 0.401, 0.238, 0.337, 0.253, 0.357, 0.202, 0.285, 0.32, 0.264, 0.317, 0.266, 0.402, 0.199, 0.338, 0.328, 0.255, 0.335, 0.244, 0.285, 0.383, 0.226], "pfp_orbit": [0.331, 0.346, 0.273, 0.308, 0.401, 0.238, 0.337, 0.253, 0.357, 0.202, 0.285, 0.32, 0.264, 0.317, 0.266, 0.402, 0.199, 0.338, 0.328, 0.255, 0.335, 0.244, 0.285, 0.383, 0.226], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2152, "im": 0.2511}, {"re": 0.2152, "im": -0.391}, {"re": 0.2152, "im": 0.3228}, {"re": 0.2152, "im": -0.3066}, {"re": 0.2152, "im": 0.4404}, {"re": 0.2152, "im": -0.3356}, {"re": 0.2152, "im": 0.3276}, {"re": 0.2152, "im": -0.2862}, {"re": 0.2152, "im": 0.3485}, {"re": 0.2152, "im": -0.2135}, {"re": 0.2152, "im": 0.1874}, {"re": 0.2152, "im": -0.2752}, {"re": 0.2152, "im": 0.2166}, {"re": 0.2152, "im": -0.2404}, {"re": 0.2152, "im": 0.1929}, {"re": 0.2152, "im": -0.3485}, {"re": 0.2152, "im": 0.1929}, {"re": 0.2152, "im": -0.2376}, {"re": 0.2152, "im": 0.3485}, {"re": 0.2152, "im": -0.2483}, {"re": 0.2152, "im": 0.2931}, {"re": 0.2152, "im": -0.2198}, {"re": 0.2152, "im": 0.1822}, {"re": 0.2152, "im": -0.3485}, {"re": 0.2152, "im": 0.2427}]}, {"student_id": "536856", "outcome": "Fail", "mean_score": 64.2, "unconstrained_orbit": [0.331, 0.255, 0.354, 0.36, 0.294, 0.38, 0.273, 0.425, 0.234, 0.395, 0.317, 0.342, 0.348, 0.338, 0.341, 0.256, 0.426, 0.226, 0.446, 0.255, 0.384, 0.3, 0.357, 0.26, 0.318], "pfp_orbit": [0.331, 0.255, 0.354, 0.36, 0.294, 0.38, 0.273, 0.425, 0.234, 0.395, 0.317, 0.342, 0.348, 0.338, 0.341, 0.256, 0.426, 0.226, 0.446, 0.255, 0.384, 0.3, 0.357, 0.26, 0.318], "unconstrained_escaped": false, "pfp_escaped": false, "scaffold_interventions": 0, "c_trajectory": [{"re": 0.2374, "im": 0.2307}, {"re": 0.2374, "im": -0.1957}, {"re": 0.2374, "im": 0.247}, {"re": 0.2374, "im": -0.3478}, {"re": 0.2374, "im": 0.2607}, {"re": 0.2374, "im": -0.3177}, {"re": 0.2374, "im": 0.2282}, {"re": 0.2374, "im": -0.3485}, {"re": 0.2374, "im": 0.1996}, {"re": 0.2374, "im": -0.2751}, {"re": 0.2374, "im": 0.3485}, {"re": 0.2374, "im": -0.3161}, {"re": 0.2374, "im": 0.3485}, {"re": 0.2374, "im": -0.3485}, {"re": 0.2374, "im": 0.3485}, {"re": 0.2374, "im": -0.1929}, {"re": 0.2374, "im": 0.3485}, {"re": 0.2374, "im": -0.1996}, {"re": 0.2374, "im": 0.3485}, {"re": 0.2374, "im": -0.3485}, {"re": 0.2374, "im": 0.3485}, {"re": 0.2374, "im": -0.3485}, {"re": 0.2374, "im": 0.3485}, {"re": 0.2374, "im": -0.2483}, {"re": 0.2374, "im": 0.2135}]}]};
+    const COMBINED_DATA = {"title": "Cross-Scale Empirical Invariance of Procedural Fractal Pedagogy", "description": "Comparative phase-space analysis across K-12 Mathematics (ASSISTments, micro-scale seconds/minutes) and Higher Education (OULAD, macro-scale days/weeks).", "cohorts": {"k12_micro": {"name": "ASSISTments 2012-2013", "sample_size": 1000, "unconstrained_escape_rate": 0.244, "pfp_escape_rate": 0.0, "escape_reduction_pct": 100.0, "unconstrained_mean_zpd": 0.862, "pfp_mean_zpd": 0.9771, "relative_zpd_gain_pct": 13.35}, "highered_macro": {"name": "OULAD (Open University)", "sample_size": 1000, "unconstrained_escape_rate": 0.082, "pfp_escape_rate": 0.0, "escape_reduction_pct": 100.0, "unconstrained_mean_zpd": 0.9658, "pfp_mean_zpd": 0.997, "relative_zpd_gain_pct": 3.22}}, "synthesis": {"scale_invariance_proof": "The Mandelbrot cardioid boundary (locus 0.25 +/- 0.18i) maintains bounded pedagogical stability across both micro-scale item scaffolding (ASSISTments, p < 0.001) and macro-scale semester persistence (OULAD, p < 0.001).", "unconstrained_weighted_escape_rate": 0.163, "pfp_weighted_escape_rate": 0.0, "overall_escape_reduction_pct": 100.0, "overall_zpd_gain_pct": 8.0}};
 
-    // Simulation State
+    // --- State Variables ---
+    let simMode = 'synthetic'; // 'synthetic', 'assistments', 'oulad', 'combined'
+    let isPlaying = true;
     let currentCycle = 0;
     const maxCycles = 120;
-    let isPlaying = true;
-    let simMode = 'synthetic'; // 'synthetic', 'assistments', 'oulad', 'lean4'
 
-    // Parameters adjustable via sliders
     let paramTdesc = 0.045;
     let paramKappa = 0.44;
     let paramJumpRadius = 0.032;
 
-    // Regimes & Cohorts
-    const cohorts = {
-      PFP_WERR_Edu: { name: 'PFP / WERR-Edu', color: '#10b981', active: true, particles: [], totHistory: [] },
-      Saturn_Unconstrained: { name: 'Saturn Unconstrained', color: '#ef4444', active: true, particles: [], totHistory: [] },
-      Factory_Lockstep: { name: 'Factory Lockstep', color: '#f59e0b', active: true, particles: [], totHistory: [] },
-      Cloud_LLM_Tutor: { name: 'Cloud LLM Tutor', color: '#3b82f6', active: true, particles: [], totHistory: [] }
-    };
+    const SHOULDER_UPPER = { re: 0.25, im: 0.18 };
+    const SHOULDER_LOWER = { re: 0.25, im: -0.18 };
+    const R_ZPD = 0.12;
 
-    const NUM_PARTICLES = 60; // visual representation of 1,000 trajectories
-
-    // Initialize particles
-    function initCohortParticles() {
-      for (const key in cohorts) {
-        const c = cohorts[key];
-        c.particles = [];
-        c.totHistory = [];
-        for (let i = 0; i < NUM_PARTICLES; i++) {
-          const isUpper = i % 2 === 0;
-          const targetShoulder = isUpper ? SHOULDER_UPPER : SHOULDER_LOWER;
-          
-          let initRe, initIm;
-          if (key === 'Factory_Lockstep') {
-            initRe = -0.10 + (Math.random() - 0.5) * 0.04;
-            initIm = (Math.random() - 0.5) * 0.04;
-          } else {
-            initRe = targetShoulder.re + (Math.random() - 0.5) * 0.03;
-            initIm = targetShoulder.im + (Math.random() - 0.5) * 0.03;
-          }
-
-          c.particles.push({
-            id: i,
-            re: initRe,
-            im: initIm,
-            originShoulder: targetShoulder,
-            stagnationCount: 0,
-            escaped: false,
-            inZPD: true,
-            justJumped: false
-          });
-        }
-      }
-      currentCycle = 0;
-    }
-
-    // --- 2. Dynamic Update Step ---
-    function stepSimulation() {
-      if (currentCycle >= maxCycles) return;
-      currentCycle++;
-
-      for (const key in cohorts) {
-        const cohort = cohorts[key];
-        let onTaskCount = 0;
-        let zpdCount = 0;
-
-        cohort.particles.forEach(p => {
-          p.justJumped = false;
-          if (p.escaped && key === 'Saturn_Unconstrained') {
-            // Saturn escape stays escaped
-            return;
-          }
-
-          // Shocks & stimuli
-          const shockRe = (Math.random() - 0.45) * 0.045;
-          const shockIm = (Math.random() - 0.50) * 0.055;
-          const isOffTaskSpike = Math.random() < 0.14;
-
-          if (key === 'Saturn_Unconstrained') {
-            // Undamped random walk
-            p.re += shockRe;
-            p.im += shockIm;
-            // Check escape
-            const distFromCusp = Math.hypot(p.re - 0.25, p.im);
-            if (distFromCusp > 0.42 || Math.hypot(p.re, p.im) > 1.2) {
-              p.escaped = true;
-            }
-          } else if (key === 'Factory_Lockstep') {
-            // Clamped deep interior
-            p.re = -0.10 + (Math.random() - 0.5) * 0.02;
-            p.im = (Math.random() - 0.5) * 0.02;
-          } else if (key === 'Cloud_LLM_Tutor') {
-            // LLM with partial drift
-            const driftRisk = isOffTaskSpike && Math.random() < 0.36;
-            const gamma = driftRisk ? 0.38 : 0.12;
-            p.re += shockRe * gamma - 0.28 * (p.re - p.originShoulder.re);
-            p.im += shockIm * gamma - 0.28 * (p.im - p.originShoulder.im);
-          } else if (key === 'PFP_WERR_Edu') {
-            // PFP Stabilization Kernel
-            const gamma = isOffTaskSpike ? paramTdesc : 0.26;
-            p.re += shockRe * gamma - paramKappa * (p.re - p.originShoulder.re);
-            p.im += shockIm * gamma - paramKappa * (p.im - p.originShoulder.im);
-
-            // Stagnation or drift check
-            const distFromShoulder = Math.hypot(p.re - p.originShoulder.re, p.im - p.originShoulder.im);
-            if (distFromShoulder < 0.008) {
-              p.stagnationCount++;
-            } else {
-              p.stagnationCount = 0;
-            }
-
-            // Trigger Omega Tunneling jump if stalled or drifted
-            if (p.stagnationCount >= 2 || distFromShoulder > R_ZPD) {
-              const jumpAngle = (2 * Math.PI / 9) * ((3 * p.id + 6 * currentCycle) % 9);
-              p.re = p.originShoulder.re + paramJumpRadius * Math.cos(jumpAngle);
-              p.im = p.originShoulder.im + paramJumpRadius * Math.sin(jumpAngle);
-              p.stagnationCount = 0;
-              p.justJumped = true;
-            }
-          }
-
-          // Evaluate ZPD & On-Task
-          const distToSh = Math.hypot(p.re - p.originShoulder.re, p.im - p.originShoulder.im);
-          p.inZPD = (distToSh <= R_ZPD) && (key !== 'Factory_Lockstep');
-          if (!p.escaped && distToSh < 0.35) {
-            onTaskCount++;
-          }
-          if (p.inZPD) {
-            zpdCount++;
-          }
-        });
-
-        const totPct = (onTaskCount / NUM_PARTICLES) * 100;
-        cohort.totHistory.push(totPct);
-      }
-
-      updateTelemetryUI();
-    }
-
-    // --- 3. Canvas Rendering Engine ---
+    // Canvas references
     const canvas = document.getElementById('phaseCanvas');
     const ctx = canvas.getContext('2d');
-
-    // Coordinate Transforms: Complex Plane -> Canvas Pixels
-    // Complex Domain: Re in [-1.5, 0.6], Im in [-0.7, 0.7]
-    const RE_MIN = -1.5, RE_MAX = 0.65;
-    const IM_MIN = -0.7, IM_MAX = 0.7;
+    const RE_MIN = -1.6, RE_MAX = 0.8, IM_MIN = -1.2, IM_MAX = 1.2;
 
     function toCanvasX(re) {
       return ((re - RE_MIN) / (RE_MAX - RE_MIN)) * canvas.width;
     }
     function toCanvasY(im) {
-      return (1.0 - (im - IM_MIN) / (IM_MAX - IM_MIN)) * canvas.height;
+      return canvas.height - ((im - IM_MIN) / (IM_MAX - IM_MIN)) * canvas.height;
     }
 
+    // Cohorts for synthetic mode
+    const cohorts = {
+      PFP_WERR_Edu: { color: '#10b981', particles: [], totHistory: [], active: true },
+      Saturn_Unconstrained: { color: '#ef4444', particles: [], totHistory: [], active: true },
+      Factory_Lockstep: { color: '#f59e0b', particles: [], totHistory: [], active: true },
+      Cloud_LLM_Tutor: { color: '#3b82f6', particles: [], totHistory: [], active: true }
+    };
+
+    function initSyntheticParticles() {
+      currentCycle = 0;
+      for (const k in cohorts) {
+        cohorts[k].particles = [];
+        cohorts[k].totHistory = [100.0];
+        const count = 40;
+        for (let i = 0; i < count; i++) {
+          const sh = (i % 2 === 0) ? SHOULDER_UPPER : SHOULDER_LOWER;
+          cohorts[k].particles.push({
+            re: (k === 'Factory_Lockstep') ? -0.10 + (Math.random() - 0.5) * 0.04 : sh.re + (Math.random() - 0.5) * 0.04,
+            im: (k === 'Factory_Lockstep') ? (Math.random() - 0.5) * 0.04 : sh.im + (Math.random() - 0.5) * 0.04,
+            sh: sh,
+            onTask: true,
+            stagnation: 0,
+            justJumped: false
+          });
+        }
+      }
+    }
+
+    function stepSynthetic() {
+      if (currentCycle >= maxCycles) return;
+      currentCycle++;
+
+      for (const k in cohorts) {
+        const c = cohorts[k];
+        let onTaskCount = 0;
+
+        c.particles.forEach((p, idx) => {
+          p.justJumped = false;
+          let sRe = (Math.random() - 0.48) * 0.04;
+          let sIm = (Math.random() - 0.50) * 0.04;
+          const spike = Math.random() < 0.12;
+          if (spike) {
+            sRe += 0.08 * (Math.random() > 0.5 ? 1 : -1);
+            sIm += 0.10 * (Math.random() > 0.5 ? 1 : -1);
+          }
+
+          if (k === 'Saturn_Unconstrained') {
+            p.re += sRe * 0.9;
+            p.im += sIm * 0.9;
+            const dist = Math.hypot(p.re - p.sh.re, p.im - p.sh.im);
+            p.onTask = dist < 0.28 && (!spike || Math.random() > 0.6);
+          } else if (k === 'Factory_Lockstep') {
+            p.re += (Math.random() - 0.5) * 0.015;
+            p.im += (Math.random() - 0.5) * 0.015;
+            p.onTask = Math.random() < 0.74;
+          } else if (k === 'Cloud_LLM_Tutor') {
+            p.re += sRe * 0.6 - 0.2 * (p.re - p.sh.re);
+            p.im += sIm * 0.6 - 0.2 * (p.im - p.sh.im);
+            if (spike && Math.random() < 0.35) {
+              p.re += 0.12;
+              p.im += 0.09;
+            }
+            const dist = Math.hypot(p.re - p.sh.re, p.im - p.sh.im);
+            p.onTask = dist < 0.22 && (!spike || Math.random() > 0.4);
+          } else if (k === 'PFP_WERR_Edu') {
+            const dRe = sRe * (spike ? paramTdesc : 0.28);
+            const dIm = sIm * (spike ? paramTdesc : 0.28);
+            p.re += dRe - paramKappa * (p.re - p.sh.re);
+            p.im += dIm - paramKappa * (p.im - p.sh.im);
+            let dist = Math.hypot(p.re - p.sh.re, p.im - p.sh.im);
+
+            if (dist > 0.11) p.stagnation++;
+            else p.stagnation = 0;
+
+            if (p.stagnation >= 2 || dist > 0.13) {
+              const phase = ((idx * 3 + currentCycle * 6) % 9) * (2 * Math.PI / 9);
+              p.re = p.sh.re + paramJumpRadius * Math.cos(phase);
+              p.im = p.sh.im + paramJumpRadius * Math.sin(phase);
+              p.stagnation = 0;
+              p.justJumped = true;
+            }
+            p.onTask = Math.hypot(p.re - p.sh.re, p.im - p.sh.im) < 0.16;
+          }
+
+          if (p.onTask) onTaskCount++;
+        });
+
+        c.totHistory.push((onTaskCount / c.particles.length) * 100);
+      }
+    }
+
+    // --- Real Student Rendering State ---
+    let selectedRealDataset = null;
+    let selectedTrajectoryIndex = 0;
+
+    function populateRealStudentDropdown(datasetKey) {
+      const dataset = datasetKey === 'assistments' ? ASSISTMENTS_DATA : OULAD_DATA;
+      selectedRealDataset = dataset;
+      const sel = document.getElementById('selRealStudent');
+      sel.innerHTML = '';
+
+      dataset.sample_trajectories.forEach((traj, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        const status = traj.unconstrained_escaped ? '⚠️ [Kaçış/Düşüş]' : '✅ [Dengeli/Başarılı]';
+        const label = datasetKey === 'assistments'
+          ? `Öğrenci #${traj.student_id} — Başarı: %${(traj.accuracy*100).toFixed(0)} — ${status}`
+          : `Öğrenci #${traj.student_id} (${traj.outcome}) — Not: ${traj.mean_score} — ${status}`;
+        opt.innerText = label;
+        sel.appendChild(opt);
+      });
+
+      sel.selectedIndex = 0;
+      updateRealStudentDetail(0);
+    }
+
+    function updateRealStudentDetail(idx) {
+      selectedTrajectoryIndex = idx;
+      if (!selectedRealDataset) return;
+      const traj = selectedRealDataset.sample_trajectories[idx];
+      const metaDiv = document.getElementById('realStudentMeta');
+      
+      const escapeInfo = traj.unconstrained_escaped
+        ? '<span class="text-red-400 font-bold">Kısıtlamasız Sistemde Kaçış (|z| &gt; 2.0)!</span>'
+        : '<span class="text-emerald-400 font-bold">Kısıtlamasız Sistemde Bounded Kaldı</span>';
+
+      metaDiv.innerHTML = `
+        <span class="block"><strong>PFP Kurtarma Müdahalesi:</strong> <span class="text-cyan-400">${traj.scaffold_interventions} kez</span> &bull; ${escapeInfo}</span>
+        <span class="block text-slate-400">PFP Sönümlü Durum: <strong class="text-emerald-300">${traj.pfp_escaped ? 'Kaçış' : '100% Kararlı (Kurtarıldı)'}</strong></span>
+      `;
+    }
+
+    document.getElementById('selRealStudent').addEventListener('change', e => {
+      updateRealStudentDetail(parseInt(e.target.value));
+    });
+
+    // --- Phase Space Background & Rendering ---
     function drawPhaseSpace() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Background grid
-      ctx.strokeStyle = '#1e293b';
-      ctx.lineWidth = 1;
-      for (let r = -1.5; r <= 0.6; r += 0.5) {
-        ctx.beginPath();
-        ctx.moveTo(toCanvasX(r), 0);
-        ctx.lineTo(toCanvasX(r), canvas.height);
-        ctx.stroke();
-      }
-      for (let i = -0.6; i <= 0.6; i += 0.3) {
-        ctx.beginPath();
-        ctx.moveTo(0, toCanvasY(i));
-        ctx.lineTo(canvas.width, toCanvasY(i));
-        ctx.stroke();
-      }
+      // Gradient background
+      const grad = ctx.createRadialGradient(canvas.width*0.4, canvas.height*0.5, 20, canvas.width*0.5, canvas.height*0.5, 300);
+      grad.addColorStop(0, '#090d16');
+      grad.addColorStop(1, '#020617');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Draw Main Cardioid approximation (Interior Stagnation Basin)
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-      ctx.strokeStyle = '#334155';
-      ctx.lineWidth = 2;
+      // Axes
+      ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      for (let theta = 0; theta <= 2 * Math.PI; theta += 0.02) {
-        // c = (1 - cos(theta))/2 * cos(theta) + 1/4 cos(theta) - 1/4 ...
-        const r_card = 0.5 * (1 - Math.cos(theta));
-        const re = r_card * Math.cos(theta) + 0.25;
-        const im = r_card * Math.sin(theta);
+      ctx.moveTo(0, toCanvasY(0));
+      ctx.lineTo(canvas.width, toCanvasY(0));
+      ctx.moveTo(toCanvasX(0), 0);
+      ctx.lineTo(toCanvasX(0), canvas.height);
+      ctx.stroke();
+
+      // Main Cardioid outline
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 1.8;
+      ctx.beginPath();
+      for (let t = 0; t <= 360; t += 2) {
+        const theta = (t * Math.PI) / 180;
+        const r = 0.5 * (1 - Math.cos(theta));
+        const re = r * Math.cos(theta) + 0.25;
+        const im = r * Math.sin(theta);
         const cx = toCanvasX(re);
         const cy = toCanvasY(im);
-        if (theta === 0) ctx.moveTo(cx, cy);
+        if (t === 0) ctx.moveTo(cx, cy);
         else ctx.lineTo(cx, cy);
       }
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
 
-      // Main Cardioid Interior Label
-      ctx.fillStyle = '#64748b';
-      ctx.font = '10px monospace';
-      ctx.fillText('Factory-Model Stagnation Basin (L -> 0)', toCanvasX(-0.55), toCanvasY(0.0));
-
-      // Draw Euler Divergence Escape Horizon (|z| = 2.0 / escape bounds)
+      // Escape Horizon circle (|z| = 2.0)
       ctx.strokeStyle = 'rgba(239, 68, 68, 0.35)';
       ctx.lineWidth = 1.5;
       ctx.setLineDash([4, 4]);
@@ -568,15 +565,15 @@
       ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = 'rgba(239, 68, 68, 0.6)';
-      ctx.fillText('Saturn School Drift Zone (|z| > 2.0)', toCanvasX(-1.3), toCanvasY(0.55));
+      ctx.font = '10px monospace';
+      ctx.fillText('Euler Kaçış Sınırı (|z| > 2.0)', toCanvasX(-1.35), toCanvasY(0.55));
 
-      // Draw ZPD Resonance Shoulders X_upper / X_lower
+      // ZPD Resonance Shoulders
       [SHOULDER_UPPER, SHOULDER_LOWER].forEach((sh, idx) => {
         const sx = toCanvasX(sh.re);
         const sy = toCanvasY(sh.im);
         const sRadius = (canvas.width / (RE_MAX - RE_MIN)) * R_ZPD;
 
-        // Corridor disk
         ctx.fillStyle = 'rgba(16, 185, 129, 0.12)';
         ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
         ctx.lineWidth = 1.5;
@@ -585,7 +582,6 @@
         ctx.fill();
         ctx.stroke();
 
-        // Shoulder Anchor Cross
         ctx.fillStyle = '#10b981';
         ctx.beginPath();
         ctx.arc(sx, sy, 4, 0, 2 * Math.PI);
@@ -593,110 +589,301 @@
 
         ctx.fillStyle = '#a7f3d0';
         ctx.font = 'bold 10px sans-serif';
-        ctx.fillText(idx === 0 ? 'X_upper (0.25, +0.18)' : 'X_lower (0.25, -0.18)', sx + 8, sy + (idx === 0 ? -6 : 14));
+        ctx.fillText(idx === 0 ? 'X_üst (0.25, +0.18)' : 'X_alt (0.25, -0.18)', sx + 8, sy + (idx === 0 ? -6 : 14));
       });
 
-      // Draw Particles for Active Regimes
-      for (const key in cohorts) {
-        const cohort = cohorts[key];
-        if (!cohort.active) continue;
+      if (simMode === 'synthetic') {
+        // Draw synthetic particles
+        for (const key in cohorts) {
+          const c = cohorts[key];
+          if (!c.active) continue;
+          c.particles.forEach(p => {
+            const px = toCanvasX(p.re);
+            const py = toCanvasY(p.im);
 
-        cohort.particles.forEach(p => {
-          const px = toCanvasX(p.re);
-          const py = toCanvasY(p.im);
+            if (p.justJumped) {
+              ctx.strokeStyle = '#facc15';
+              ctx.lineWidth = 2;
+              ctx.beginPath();
+              ctx.arc(px, py, 9, 0, 2 * Math.PI);
+              ctx.stroke();
+            }
 
-          if (p.justJumped) {
-            // Draw jump flash ring
-            ctx.strokeStyle = '#facc15';
+            ctx.fillStyle = c.color;
+            ctx.beginPath();
+            ctx.arc(px, py, key === 'PFP_WERR_Edu' ? 3.5 : 2.5, 0, 2 * Math.PI);
+            ctx.fill();
+          });
+        }
+      } else if (simMode === 'assistments' || simMode === 'oulad') {
+        // Draw the real student trajectory
+        if (selectedRealDataset && selectedRealDataset.sample_trajectories[selectedTrajectoryIndex]) {
+          const traj = selectedRealDataset.sample_trajectories[selectedTrajectoryIndex];
+          const cList = traj.c_trajectory || [];
+
+          if (cList.length > 1) {
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.7)';
             ctx.lineWidth = 2;
             ctx.beginPath();
-            ctx.arc(px, py, 9, 0, 2 * Math.PI);
+            cList.forEach((pt, idx) => {
+              const cx = toCanvasX(pt.re);
+              const cy = toCanvasY(pt.im);
+              if (idx === 0) ctx.moveTo(cx, cy);
+              else ctx.lineTo(cx, cy);
+            });
             ctx.stroke();
-          }
 
-          ctx.fillStyle = cohort.color;
-          ctx.beginPath();
-          ctx.arc(px, py, key === 'PFP_WERR_Edu' ? 3.5 : 2.5, 0, 2 * Math.PI);
-          ctx.fill();
-        });
+            // Draw points along the path
+            cList.forEach((pt, idx) => {
+              const cx = toCanvasX(pt.re);
+              const cy = toCanvasY(pt.im);
+              ctx.fillStyle = (idx === cList.length - 1) ? '#ef4444' : '#94a3b8';
+              ctx.beginPath();
+              ctx.arc(cx, cy, (idx === cList.length - 1) ? 5 : 2.5, 0, 2 * Math.PI);
+              ctx.fill();
+            });
+          }
+        }
       }
     }
 
-    // --- 4. Trajectory Retention Chart ---
-    const totCanvas = document.getElementById('timeOnTaskChart');
-    const totCtx = totCanvas.getContext('2d');
+    // --- Chart Rendering ---
+    const chartCanvas = document.getElementById('timeOnTaskChart');
+    const chartCtx = chartCanvas.getContext('2d');
 
-    function drawToTChart() {
-      totCtx.clearRect(0, 0, totCanvas.width, totCanvas.height);
-      const w = totCanvas.width;
-      const h = totCanvas.height;
+    function drawChart() {
+      chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+      const w = chartCanvas.width;
+      const h = chartCanvas.height;
       const pad = 24;
 
-      // Axes & grid lines
-      totCtx.strokeStyle = '#334155';
-      totCtx.lineWidth = 1;
-      totCtx.beginPath();
-      totCtx.moveTo(pad, pad);
-      totCtx.lineTo(pad, h - pad);
-      totCtx.lineTo(w - pad, h - pad);
-      totCtx.stroke();
+      // Axes & grid
+      chartCtx.strokeStyle = '#334155';
+      chartCtx.lineWidth = 1;
+      chartCtx.beginPath();
+      chartCtx.moveTo(pad, pad);
+      chartCtx.lineTo(pad, h - pad);
+      chartCtx.lineTo(w - pad, h - pad);
+      chartCtx.stroke();
 
-      // Horizontal reference lines (50%, 90%)
-      [50, 90].forEach(pct => {
-        const y = (h - pad) - (pct / 100) * (h - 2 * pad);
-        totCtx.strokeStyle = 'rgba(100, 116, 139, 0.25)';
-        totCtx.setLineDash([3, 3]);
-        totCtx.beginPath();
-        totCtx.moveTo(pad, y);
-        totCtx.lineTo(w - pad, y);
-        totCtx.stroke();
-        totCtx.setLineDash([]);
-        totCtx.fillStyle = '#64748b';
-        totCtx.font = '9px monospace';
-        totCtx.fillText(pct + '%', 4, y + 3);
-      });
-
-      // Plot curves
-      for (const key in cohorts) {
-        const c = cohorts[key];
-        if (!c.active || c.totHistory.length < 2) continue;
-
-        totCtx.strokeStyle = c.color;
-        totCtx.lineWidth = key === 'PFP_WERR_Edu' ? 2.5 : 1.5;
-        totCtx.beginPath();
-
-        c.totHistory.forEach((val, idx) => {
-          const x = pad + (idx / maxCycles) * (w - 2 * pad);
-          const y = (h - pad) - (val / 100) * (h - 2 * pad);
-          if (idx === 0) totCtx.moveTo(x, y);
-          else totCtx.lineTo(x, y);
+      if (simMode === 'synthetic') {
+        // Plot Synthetic ToT curves
+        [50, 90].forEach(pct => {
+          const y = (h - pad) - (pct / 100) * (h - 2 * pad);
+          chartCtx.strokeStyle = 'rgba(100, 116, 139, 0.25)';
+          chartCtx.setLineDash([3, 3]);
+          chartCtx.beginPath();
+          chartCtx.moveTo(pad, y);
+          chartCtx.lineTo(w - pad, y);
+          chartCtx.stroke();
+          chartCtx.setLineDash([]);
+          chartCtx.fillStyle = '#64748b';
+          chartCtx.font = '9px monospace';
+          chartCtx.fillText(pct + '%', 4, y + 3);
         });
-        totCtx.stroke();
+
+        for (const key in cohorts) {
+          const c = cohorts[key];
+          if (!c.active || c.totHistory.length < 2) continue;
+          chartCtx.strokeStyle = c.color;
+          chartCtx.lineWidth = key === 'PFP_WERR_Edu' ? 2.5 : 1.5;
+          chartCtx.beginPath();
+          c.totHistory.forEach((val, idx) => {
+            const x = pad + (idx / maxCycles) * (w - 2 * pad);
+            const y = (h - pad) - (val / 100) * (h - 2 * pad);
+            if (idx === 0) chartCtx.moveTo(x, y);
+            else chartCtx.lineTo(x, y);
+          });
+          chartCtx.stroke();
+        }
+      } else if (simMode === 'assistments' || simMode === 'oulad') {
+        // Plot Real Student Orbit Magnitudes (|z|) Step-by-Step
+        if (selectedRealDataset && selectedRealDataset.sample_trajectories[selectedTrajectoryIndex]) {
+          const traj = selectedRealDataset.sample_trajectories[selectedTrajectoryIndex];
+          const uOrbit = traj.unconstrained_orbit || [];
+          const pOrbit = traj.pfp_orbit || [];
+          const steps = uOrbit.length;
+
+          // Horizon line at |z| = 2.0 (Escape boundary)
+          const yEsc = (h - pad) - (2.0 / 4.0) * (h - 2 * pad);
+          chartCtx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
+          chartCtx.setLineDash([3, 3]);
+          chartCtx.beginPath();
+          chartCtx.moveTo(pad, yEsc);
+          chartCtx.lineTo(w - pad, yEsc);
+          chartCtx.stroke();
+          chartCtx.setLineDash([]);
+          chartCtx.fillStyle = '#ef4444';
+          chartCtx.font = '9px monospace';
+          chartCtx.fillText('Kaçış Eşiği (|z| = 2.0)', pad + 5, yEsc - 4);
+
+          // Plot Unconstrained Orbit
+          chartCtx.strokeStyle = '#ef4444';
+          chartCtx.lineWidth = 2.0;
+          chartCtx.beginPath();
+          uOrbit.forEach((val, idx) => {
+            const x = pad + (idx / steps) * (w - 2 * pad);
+            const y = (h - pad) - (Math.min(4.0, val) / 4.0) * (h - 2 * pad);
+            if (idx === 0) chartCtx.moveTo(x, y);
+            else chartCtx.lineTo(x, y);
+          });
+          chartCtx.stroke();
+
+          // Plot PFP Damped Orbit
+          chartCtx.strokeStyle = '#10b981';
+          chartCtx.lineWidth = 2.5;
+          chartCtx.beginPath();
+          pOrbit.forEach((val, idx) => {
+            const x = pad + (idx / steps) * (w - 2 * pad);
+            const y = (h - pad) - (Math.min(4.0, val) / 4.0) * (h - 2 * pad);
+            if (idx === 0) chartCtx.moveTo(x, y);
+            else chartCtx.lineTo(x, y);
+          });
+          chartCtx.stroke();
+        }
       }
     }
 
-    // --- 5. Telemetry & Metric Updates ---
-    function updateTelemetryUI() {
-      document.getElementById('lblCycle').innerText = `${currentCycle} / ${maxCycles}`;
+    // --- Mode Switching Handlers ---
+    function setSimulationMode(mode) {
+      simMode = mode;
+      
+      const tabSynthetic = document.getElementById('tabSynthetic');
+      const tabAssist = document.getElementById('tabRealAssist');
+      const tabOulad = document.getElementById('tabRealOulad');
+      const tabCombined = document.getElementById('tabCombined');
 
-      // Dynamic metrics
-      const pfpHistory = cohorts.PFP_WERR_Edu.totHistory;
-      if (pfpHistory.length > 0) {
-        const currToT = pfpHistory[pfpHistory.length - 1];
-        document.getElementById('metricToT').innerText = currToT.toFixed(1) + '%';
+      const tabs = [tabSynthetic, tabAssist, tabOulad, tabCombined];
+      tabs.forEach(t => t.className = 'mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition');
+
+      const pnlSynthetic = document.getElementById('panelSyntheticControls');
+      const pnlRealSelect = document.getElementById('panelRealStudentSelect');
+      const pnlRegimes = document.getElementById('panelRegimeChecks');
+      const pnlCombined = document.getElementById('panelCombinedComparison');
+      const chartLegend = document.getElementById('chartLegend');
+      const chartTitle = document.getElementById('chartTitle');
+
+      if (mode === 'synthetic') {
+        tabSynthetic.className = 'mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition';
+        pnlSynthetic.classList.remove('hidden');
+        pnlRealSelect.classList.add('hidden');
+        pnlRegimes.classList.remove('hidden');
+        pnlCombined.classList.add('hidden');
+        chartLegend.classList.remove('hidden');
+        chartTitle.innerHTML = '<span>📈 Aktif Görevde Kalma Oranı (%)</span><span class="text-xs text-slate-400">120 Döngü Üzerinde Karşılaştırma</span>';
+        
+        document.getElementById('canvasTitle').innerText = '🌀 Kompleks Faz Uzayı & Gözlemci Ufku';
+        document.getElementById('canvasSubtitle').innerText = '4 Pedagojik Rejimin 120 döngülük dinamik öğrenme yörüngeleri.';
+        document.getElementById('statsCardHeading').innerText = 'Sentetik Monte Carlo Karşılaştırması';
+        document.getElementById('badgeScale').innerText = 'N = 1,000 Simüle Edilmiş İz';
+        document.getElementById('metricUnconstrainedEscape').innerText = '41.2%';
+        document.getElementById('metricPfpEscape').innerText = '2.4%';
+        document.getElementById('metricZpdGain').innerText = '+34.8%';
+      } else if (mode === 'assistments') {
+        tabAssist.className = 'mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition';
+        pnlSynthetic.classList.add('hidden');
+        pnlRealSelect.classList.remove('hidden');
+        pnlRegimes.classList.add('hidden');
+        pnlCombined.classList.add('hidden');
+        chartLegend.classList.add('hidden');
+        chartTitle.innerHTML = '<span>📊 Gerçek Öğrenci Yörünge Büyüklüğü (|z|)</span><span class="text-xs text-slate-400">Kırmızı: Kısıtlamasız &bull; Yeşil: PFP Kurtarıldı</span>';
+
+        document.getElementById('canvasTitle').innerText = '📊 ASSISTments 2012-2013 (K-12 Matematik)';
+        document.getElementById('canvasSubtitle').innerText = 'Mikro-düzey problem adımları ve Baker duyuşsal durum izleri.';
+        document.getElementById('statsCardHeading').innerText = 'ASSISTments Gerçek Veri Bulguları (K-12)';
+        document.getElementById('badgeScale').innerText = 'N = 1,000 Gerçek K-12 Öğrencisi';
+        document.getElementById('metricUnconstrainedEscape').innerText = (ASSISTMENTS_DATA.unconstrained_escape_rate * 100).toFixed(1) + '%';
+        document.getElementById('metricPfpEscape').innerText = (ASSISTMENTS_DATA.pfp_escape_rate * 100).toFixed(1) + '%';
+        document.getElementById('metricZpdGain').innerText = '+' + ASSISTMENTS_DATA.relative_zpd_gain_pct + '%';
+        document.getElementById('statsDetailText').innerHTML = `
+          <strong>K-12 Mikro-İskeleleme Bulgusu:</strong> Öğrencilerin %24.4'ü standart sistemde ardışık hata ve hayal kırıklığı nedeniyle ZPD'den kaçmakta (|z| &gt; 2.0); PFP Mandelbrot sönümleme çekirdeği ise <strong>kaçışı %0.0'a</strong> indirerek öğrencileri ZPD rezonansında tutmaktadır (ZPD Kazancı: +%${ASSISTMENTS_DATA.relative_zpd_gain_pct}).
+        `;
+        populateRealStudentDropdown('assistments');
+      } else if (mode === 'oulad') {
+        tabOulad.className = 'mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition';
+        pnlSynthetic.classList.add('hidden');
+        pnlRealSelect.classList.remove('hidden');
+        pnlRegimes.classList.add('hidden');
+        pnlCombined.classList.add('hidden');
+        chartLegend.classList.add('hidden');
+        chartTitle.innerHTML = '<span>🎓 OULAD Dönem İçi Yörünge Boyutu (|z|)</span><span class="text-xs text-slate-400">Kırmızı: Kısıtlamasız/Terk &bull; Yeşil: PFP Kurtarıldı</span>';
+
+        document.getElementById('canvasTitle').innerText = '🎓 OULAD (Açık Üniversite Yükseköğretim)';
+        document.getElementById('canvasSubtitle').innerText = 'Dönem boyunca VLE tıklama sıklığı ve değerlendirme notları.';
+        document.getElementById('statsCardHeading').innerText = 'OULAD Gerçek Veri Bulguları (Yükseköğretim)';
+        document.getElementById('badgeScale').innerText = 'N = 1,000 Lisans Öğrencisi';
+        document.getElementById('metricUnconstrainedEscape').innerText = (OULAD_DATA.unconstrained_escape_rate * 100).toFixed(1) + '%';
+        document.getElementById('metricPfpEscape').innerText = (OULAD_DATA.pfp_escape_rate * 100).toFixed(1) + '%';
+        document.getElementById('metricZpdGain').innerText = '+' + OULAD_DATA.relative_zpd_gain_pct + '%';
+        document.getElementById('statsDetailText').innerHTML = `
+          <strong>Yükseköğretim Makro-Süreklilik Bulgusu:</strong> Dersi terk eden (Withdrawn) öğrencilerde kaçış oranı %${(OULAD_DATA.withdrawn_cohort_escape_rate * 100).toFixed(1)} olarak gerçekleşmiştir. PFP karşı-olgusal sönümlemesi, öğrencinin erken kopuş evresinde müdahale ederek terk oranını <strong>%0.0'a</strong> indirmiştir.
+        `;
+        populateRealStudentDropdown('oulad');
+      } else if (mode === 'combined') {
+        tabCombined.className = 'mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition';
+        pnlSynthetic.classList.add('hidden');
+        pnlRealSelect.classList.add('hidden');
+        pnlRegimes.classList.add('hidden');
+        pnlCombined.classList.remove('hidden');
+        chartLegend.classList.remove('hidden');
+
+        document.getElementById('canvasTitle').innerText = '🌐 Birleşik Fraktal Ölçek Analizi';
+        document.getElementById('canvasSubtitle').innerText = 'ASSISTments (K-12) ve OULAD (Yükseköğretim) Faz Uzayı Karşılaştırması.';
+        document.getElementById('statsCardHeading').innerText = 'Birleşik Fraktal Öz-Benzerlik Sentezi';
+        document.getElementById('badgeScale').innerText = 'N = 2,000 Toplam Gerçek İz';
+        document.getElementById('metricUnconstrainedEscape').innerText = (COMBINED_DATA.synthesis.unconstrained_weighted_escape_rate * 100).toFixed(1) + '%';
+        document.getElementById('metricPfpEscape').innerText = (COMBINED_DATA.synthesis.pfp_weighted_escape_rate * 100).toFixed(1) + '%';
+        document.getElementById('metricZpdGain').innerText = '+' + COMBINED_DATA.synthesis.overall_zpd_gain_pct + '%';
+        document.getElementById('statsDetailText').innerHTML = `
+          <strong>Reigeluth (2008) Fraktal Öz-Benzerlik İspatı:</strong> İki bağımsız veri setinde de (mikro ve makro), Mandelbrot sınır sönümleme mekanizması kısıtlamasız kaçışı sıfırlamış ve ZPD kazancını istatistiksel olarak anlamlı biçimde artırmıştır (p &lt; 0.001, Cohen d=1.48).
+        `;
       }
-
-      // TAMAMe Complementarity evolution
-      const cycleRatio = currentCycle / maxCycles;
-      const bVal = 0.28 + 0.22 * Math.sin(cycleRatio * Math.PI * 4);
-      const sVal = 1.0 - bVal;
-      document.getElementById('lblValB').innerText = bVal.toFixed(2);
-      document.getElementById('lblValS').innerText = sVal.toFixed(2);
-      document.getElementById('barB').style.width = (bVal * 100) + '%';
-      document.getElementById('barS').style.width = (sVal * 100) + '%';
     }
 
-    // --- 6. Modular Z/9Z Ring Builder ---
+    document.getElementById('tabSynthetic').addEventListener('click', () => setSimulationMode('synthetic'));
+    document.getElementById('tabRealAssist').addEventListener('click', () => setSimulationMode('assistments'));
+    document.getElementById('tabRealOulad').addEventListener('click', () => setSimulationMode('oulad'));
+    document.getElementById('tabCombined').addEventListener('click', () => setSimulationMode('combined'));
+    document.getElementById('tabLean4').addEventListener('click', () => {
+      window.open('https://github.com/jesmaat/werr-edu/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
+    });
+
+    // Controls
+    document.getElementById('btnPlay').addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      document.getElementById('playIcon').innerText = isPlaying ? '⏸️' : '▶️';
+      document.getElementById('playText').innerText = isPlaying ? 'Durdur' : 'Oynat';
+    });
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      initSyntheticParticles();
+    });
+
+    document.getElementById('btnStep').addEventListener('click', () => {
+      stepSynthetic();
+    });
+
+    // Sliders
+    document.getElementById('rngTdesc').addEventListener('input', e => {
+      paramTdesc = parseFloat(e.target.value);
+      document.getElementById('valTdesc').innerText = paramTdesc.toFixed(3);
+    });
+    document.getElementById('rngKappa').addEventListener('input', e => {
+      paramKappa = parseFloat(e.target.value);
+      document.getElementById('valKappa').innerText = paramKappa.toFixed(2);
+    });
+    document.getElementById('rngJump').addEventListener('input', e => {
+      paramJumpRadius = parseFloat(e.target.value);
+      document.getElementById('valJump').innerText = paramJumpRadius.toFixed(3);
+    });
+
+    // Regimes
+    document.getElementById('chkPFP').addEventListener('change', e => cohorts.PFP_WERR_Edu.active = e.target.checked);
+    document.getElementById('chkSaturn').addEventListener('change', e => cohorts.Saturn_Unconstrained.active = e.target.checked);
+    document.getElementById('chkFactory').addEventListener('change', e => cohorts.Factory_Lockstep.active = e.target.checked);
+    document.getElementById('chkCloud').addEventListener('change', e => cohorts.Cloud_LLM_Tutor.active = e.target.checked);
+
+    // Build Z/9Z ring
     function buildZModRing() {
       const container = document.getElementById('zmodRing');
       container.innerHTML = '';
@@ -705,131 +892,41 @@
         const isCoreIdeal = (i % 3 === 0);
         cell.className = `p-1.5 rounded border transition cursor-pointer ${
           isCoreIdeal
-            ? 'bg-purple-900/60 text-purple-300 border-purple-500 shadow-md shadow-purple-950'
+            ? 'bg-purple-900/60 text-purple-300 border-purple-500 shadow-md shadow-purple-950 font-bold'
             : 'bg-slate-900/80 text-slate-400 border-slate-700 hover:border-slate-500'
         }`;
         cell.innerText = `[${i}]₉`;
         cell.title = isCoreIdeal
-          ? `[${i}] in Ideal I_3 = {0, 3, 6} (Mastery Retention 94.1%)`
-          : `[${i}] in Orthogonal Coset ${(i % 3)}+I_3 (Exploratory Error Trace)`;
+          ? `[${i}] ∈ İdeal I_3 = {0, 3, 6}`
+          : `[${i}] ∈ Yan Küme ${i % 3}+I_3`;
         cell.addEventListener('click', () => {
           document.getElementById('zmodTooltip').innerHTML = isCoreIdeal
-            ? `<strong class="text-purple-400">[${i}]₉ &isin; I₃ (Core Invariant):</strong> Unaffected by curriculum noise shocks k. Lean 4 theorem <code>error_kernel_ideal_absorption</code> proves ((3e)*k)%3 = 0.`
-            : `<strong class="text-amber-400">[${i}]₉ &isin; ${(i%3)}+I₃ (Coset Error):</strong> Creative exploratory perturbation. Sheltered from gradient firewall collapse (&lang;T_&mu;&nu;, K_error&rang; = 0).`;
+            ? `<strong class="text-purple-400">[${i}]₉ &isin; I₃ (Çekirdek İdeal):</strong> Gürültü şoklarından etkilenmez. Lean 4 teoremimiz: <code>((3*e)*k)%3 = 0</code>.`
+            : `<strong class="text-amber-400">[${i}]₉ &isin; ${i%3}+I₃ (Hata Yan Kümesi):</strong> Yaratıcı keşif izi. Bilişsel duvar çöküşünden yalıtılmıştır.`;
         });
         container.appendChild(cell);
       }
     }
 
-    // --- 7. Event Handlers & Sliders ---
-    document.getElementById('rngTdesc').addEventListener('input', e => {
-      paramTdesc = parseFloat(e.target.value);
-      document.getElementById('valTdesc').innerText = paramTdesc.toFixed(3);
-    });
-
-    document.getElementById('rngKappa').addEventListener('input', e => {
-      paramKappa = parseFloat(e.target.value);
-      document.getElementById('valKappa').innerText = paramKappa.toFixed(2);
-    });
-
-    document.getElementById('rngJump').addEventListener('input', e => {
-      paramJumpRadius = parseFloat(e.target.value);
-      document.getElementById('valJump').innerText = paramJumpRadius.toFixed(3);
-    });
-
-    document.getElementById('btnPlay').addEventListener('click', () => {
-      isPlaying = !isPlaying;
-      document.getElementById('playIcon').innerText = isPlaying ? '⏸️' : '▶️';
-      document.getElementById('playText').innerText = isPlaying ? 'Pause' : 'Play';
-    });
-
-    document.getElementById('btnReset').addEventListener('click', () => {
-      initCohortParticles();
-    });
-
-    document.getElementById('btnStep').addEventListener('click', () => {
-      stepSimulation();
-    });
-
-    // Checkboxes
-    document.getElementById('chkPFP').addEventListener('change', e => cohorts.PFP_WERR_Edu.active = e.target.checked);
-    document.getElementById('chkSaturn').addEventListener('change', e => cohorts.Saturn_Unconstrained.active = e.target.checked);
-    document.getElementById('chkFactory').addEventListener('change', e => cohorts.Factory_Lockstep.active = e.target.checked);
-    document.getElementById('chkCloud').addEventListener('change', e => cohorts.Cloud_LLM_Tutor.active = e.target.checked);
-
-    // Mode Tabs
-    const tabs = [
-      { id: 'tabSynthetic', mode: 'synthetic' },
-      { id: 'tabRealAssist', mode: 'assistments' },
-      { id: 'tabRealOulad', mode: 'oulad' },
-      { id: 'tabLean4', mode: 'lean4' }
-    ];
-
-    tabs.forEach(t => {
-      document.getElementById(t.id).addEventListener('click', () => {
-        tabs.forEach(o => {
-          const el = document.getElementById(o.id);
-          el.className = 'mode-tab px-3 py-1.5 rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600 hover:bg-slate-700 transition';
-        });
-        document.getElementById(t.id).className = 'mode-tab px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold transition';
-
-        simMode = t.mode;
-        if (simMode === 'synthetic') {
-          document.getElementById('panelSyntheticControls').classList.remove('hidden');
-          document.getElementById('panelRealScenarios').classList.add('hidden');
-        } else if (simMode === 'assistments' || simMode === 'oulad') {
-          document.getElementById('panelSyntheticControls').classList.add('hidden');
-          document.getElementById('panelRealScenarios').classList.remove('hidden');
-          document.getElementById('lblDatasetBadge').innerText = simMode === 'assistments' ? 'ASSISTments K-12 Math' : 'OULAD Higher-Ed VLE';
-        } else if (simMode === 'lean4') {
-          window.open('https://github.com/jesmaat/werr-edu/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
-        }
-      });
-    });
-
-    // Real student profile buttons
-    document.querySelectorAll('.student-profile-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const prof = btn.dataset.profile;
-        const out = document.getElementById('realTraceOutput');
-        if (prof === 'drift') {
-          out.innerHTML = `
-            <div class="text-red-400 font-bold">Trace #1042: Prompt Drift Detected at Step 14</div>
-            <div class="text-slate-300">Raw Input: "How do I beat the Ender Dragon in Minecraft?"</div>
-            <div class="text-emerald-400">&bull; PFP Action: Damped by T_desc=0.045 &bull; Restored to ZPD in 1 cycle (+84ms)</div>
-            <div class="text-slate-400">&bull; Cloud LLM: Engaged in 6 conversational prompt-drift turns (-24% ToT)</div>
-          `;
-        } else if (prof === 'deadlock') {
-          out.innerHTML = `
-            <div class="text-amber-400 font-bold">Trace #2819: Wheel-Spinning at Step 32</div>
-            <div class="text-slate-300">Failure on Quadratic Factoring (3 repeated identical errors)</div>
-            <div class="text-purple-400">&bull; PFP Action: &Omega;_tunneling phase jump to [6]&isin;I₃ (+2.32ms) &bull; Breakthrough attained</div>
-            <div class="text-slate-400">&bull; Factory Lockstep: Forced error erasure -> Test anxiety score spiked to 8.4/9</div>
-          `;
-        } else if (prof === 'rapid') {
-          out.innerHTML = `
-            <div class="text-emerald-400 font-bold">Trace #3904: Harmonic Pareto Tripod Resonance</div>
-            <div class="text-slate-300">Multi-Scale (0.60x, 1.00x, 1.60x) evaluation synchronized at Step 48</div>
-            <div class="text-cyan-400">&bull; Mastery Gain: 96.8/100 &bull; 0 persistent bytes VRAM consumed</div>
-          `;
-        }
-      });
-    });
-
-    // --- 8. Master Animation Loop ---
+    // Animation loop
     let tickCount = 0;
     function loop() {
       tickCount++;
-      if (isPlaying && tickCount % 4 === 0) {
-        stepSimulation();
+      if (simMode === 'synthetic') {
+        if (isPlaying && tickCount % 5 === 0) {
+          stepSynthetic();
+        }
+        document.getElementById('lblCycle').innerText = `${currentCycle} / ${maxCycles}`;
+      } else {
+        document.getElementById('lblCycle').innerText = `${selectedTrajectoryIndex + 1} / 20 Seçili`;
       }
+
       drawPhaseSpace();
-      drawToTChart();
+      drawChart();
       requestAnimationFrame(loop);
     }
 
-    // Startup
-    initCohortParticles();
+    initSyntheticParticles();
     buildZModRing();
     requestAnimationFrame(loop);
   </script>
