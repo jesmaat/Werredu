@@ -5,12 +5,6 @@ Real-World Empirical Validation Pipeline for Procedural Fractal Pedagogy (PFP / 
 Datasets:
 1. ASSISTments 2012-2013 (K-12 Mathematics, Micro-Step Scaffolding, N > 50,000 students)
 2. OULAD (Open University Learning Analytics Dataset, Higher-Ed Macro Persistence, N > 32,000 students)
-
-Outputs:
-- data/real_assistments_k12_analysis.json & .csv
-- data/real_oulad_highered_analysis.json & .csv
-- data/real_combined_cross_cohort_analysis.json & .csv
-- data/real_empirical_validation_summary.csv
 """
 
 import zipfile
@@ -33,14 +27,9 @@ def simulate_student_orbit(c_series, apply_pfp_damping=False):
     """
     Simulates z_{n+1} = z_n^2 + c_n representing the learner's internal cognitive
     phase state under educational perturbation c_n.
-    
-    If apply_pfp_damping is True:
-        When |z| > 1.0 (approaching boundary instability), the PFP governor:
-        1. Clamps pedagogical parameter c_n to the dissipative boundary locus (0.25 +/- 0.18i).
-        2. Applies cognitive scaffolding z <- 0.5 * z (error mitigation / step breakdown).
     """
     z = complex(0.0, 0.0)
-    orbit = []
+    z_path = []
     c_recorded = []
     escaped = False
     escape_step = -1
@@ -49,18 +38,26 @@ def simulate_student_orbit(c_series, apply_pfp_damping=False):
     lyapunov_sum = 0.0
 
     for step, c in enumerate(c_series):
+        scaffold_triggered = False
         if apply_pfp_damping and abs(z) > 1.0:
             # PFP boundary damping: reset to dissipative resonance locus
             sign_im = 1.0 if c.imag >= 0 else -1.0
             c = complex(0.25, sign_im * 0.18)
-            # Cognitive scaffolding: halve cognitive overload
-            z = z * 0.5
+            # Cognitive scaffolding: halve accumulated disequilibrium
+            z = z * 0.45
             scaffold_interventions += 1
+            scaffold_triggered = True
 
         c_recorded.append({"re": round(c.real, 4), "im": round(c.imag, 4)})
 
         if abs(z) > 4.0:
-            orbit.append(4.0)
+            # Cap magnitude to avoid float overflow
+            z_path.append({
+                "re": round(z.real if abs(z.real) < 4.0 else 4.0, 3),
+                "im": round(z.imag if abs(z.imag) < 4.0 else 4.0, 3),
+                "mag": 4.0,
+                "scaffold": scaffold_triggered
+            })
             if not escaped:
                 escaped = True
                 escape_step = step
@@ -73,13 +70,17 @@ def simulate_student_orbit(c_series, apply_pfp_damping=False):
             mod_z = 4.0
             z = complex(4.0, 0.0)
 
-        orbit.append(min(mod_z, 4.0))
+        capped_mag = min(mod_z, 4.0)
+        z_path.append({
+            "re": round(z.real, 3),
+            "im": round(z.imag, 3),
+            "mag": round(capped_mag, 3),
+            "scaffold": scaffold_triggered
+        })
 
-        # ZPD is defined as bounded cognitive equilibrium: 0.1 <= |z| <= 1.2
         if 0.1 <= mod_z <= 1.2:
             zpd_steps += 1
 
-        # Local Lyapunov derivative
         derivative = 2.0 * mod_z
         if 0.001 < derivative < 50.0:
             lyapunov_sum += math.log(derivative)
@@ -93,7 +94,7 @@ def simulate_student_orbit(c_series, apply_pfp_damping=False):
     mean_lyapunov = lyapunov_sum / total_steps if total_steps > 0 else 0.0
 
     return {
-        "orbit": orbit,
+        "z_path": z_path,
         "c_recorded": c_recorded,
         "escaped": escaped,
         "escape_step": escape_step,
@@ -115,7 +116,6 @@ def process_assistments(sample_size=1000, target_trajectory_len=25):
                 uid = row.get("user_id")
                 if not uid:
                     continue
-                
                 try:
                     correct = float(row.get("correct", "1") or "1")
                     hints = float(row.get("hint_count", "0") or "0")
@@ -159,32 +159,26 @@ def process_assistments(sample_size=1000, target_trajectory_len=25):
         raw_steps = student_steps[uid][:target_trajectory_len]
         c_series = []
         
-        # Track cumulative local difficulty and frustration
         cum_err = 0.0
+        # Choose consistent sign for this student's exploration lobe
+        hemisphere = 1.0 if (hash(uid) % 2 == 0) else -1.0
+
         for st in raw_steps:
-            # Re(c): Item difficulty + consecutive error accumulation
             if st["correct"] < 0.5:
-                cum_err = min(0.40, cum_err + 0.08)
+                cum_err = min(0.42, cum_err + 0.09)
             else:
-                cum_err = max(-0.15, cum_err - 0.05)
+                cum_err = max(-0.15, cum_err - 0.04)
             
             re_c = 0.25 + cum_err
 
-            # Im(c): Disequilibrium / Frustration / Confusion vs Concentrating
-            # Standard locus is 0.18. Frustration and confusion push it into chaotic divergence (> 0.35)
+            # Affect perturbation
             affect_perturbation = (st["frustrated"] * 0.45 + st["confused"] * 0.30 - st["concentrating"] * 0.20)
             hint_perturbation = min(0.25, (st["hints"] / (st["attempts"] + 1.0)) * 0.20)
             
-            im_c = 0.18 + affect_perturbation + hint_perturbation
-            # Random sign for symmetry of exploration
-            if (st["attempts"] % 2 == 0):
-                im_c = -im_c
-
+            im_c = (0.18 + affect_perturbation + hint_perturbation) * hemisphere
             c_series.append(complex(re_c, im_c))
 
-        # 1. Unconstrained Orbit
         res_unconst = simulate_student_orbit(c_series, apply_pfp_damping=False)
-        # 2. Counterfactual PFP Damped Orbit
         res_pfp = simulate_student_orbit(c_series, apply_pfp_damping=True)
 
         if res_unconst["escaped"]:
@@ -196,13 +190,13 @@ def process_assistments(sample_size=1000, target_trajectory_len=25):
         pfp_zpd_sum += res_pfp["zpd_ratio"]
         total_interventions += res_pfp["scaffold_interventions"]
 
-        if idx < 20:
+        if idx < 25:
             sample_trajectories.append({
                 "student_id": str(uid),
                 "accuracy": round(sum(s["correct"] for s in raw_steps) / len(raw_steps), 3),
                 "mean_frustration": round(sum(s["frustrated"] for s in raw_steps) / len(raw_steps), 3),
-                "unconstrained_orbit": [round(x, 3) for x in res_unconst["orbit"]],
-                "pfp_orbit": [round(x, 3) for x in res_pfp["orbit"]],
+                "unconstrained_z_path": res_unconst["z_path"],
+                "pfp_z_path": res_pfp["z_path"],
                 "unconstrained_escaped": res_unconst["escaped"],
                 "pfp_escaped": res_pfp["escaped"],
                 "scaffold_interventions": res_pfp["scaffold_interventions"],
@@ -225,12 +219,11 @@ def process_assistments(sample_size=1000, target_trajectory_len=25):
         "sample_trajectories": sample_trajectories
     }
     print(f"ASSISTments Done: Unconstrained Escape = {summary['unconstrained_escape_rate']*100:.1f}%, "
-          f"PFP Escape = {summary['pfp_escape_rate']*100:.1f}%, ZPD Gain = +{summary['relative_zpd_gain_pct']}%, Escape Reduction = {summary['escape_reduction_pct']}%")
+          f"PFP Escape = {summary['pfp_escape_rate']*100:.1f}%, ZPD Gain = +{summary['relative_zpd_gain_pct']}%")
     return summary
 
 def process_oulad(sample_size=1000, target_trajectory_len=25):
     print("--- Processing OULAD (Open University Learning Analytics - Higher Education) ---")
-    
     student_meta = {}
     with zipfile.ZipFile(OULAD_ZIP) as z:
         with z.open("studentInfo.csv") as f:
@@ -299,29 +292,25 @@ def process_oulad(sample_size=1000, target_trajectory_len=25):
         max_day = sorted_days[-1]
         day_range = max(1, max_day - min_day)
         step_size = day_range / float(target_trajectory_len)
+        hemisphere = 1.0 if (hash(uid) % 2 == 0) else -1.0
 
         for step_i in range(target_trajectory_len):
             start_d = min_day + step_i * step_size
             end_d = start_d + step_size
             clicks_in_window = sum(vle_dict[d] for d in sorted_days if start_d <= d < end_d)
 
-            # Re(c): Score gap. Low score = higher Re(c).
-            # If withdrawing / failing, difficulty accumulates
             score_deficit = (100.0 - mean_score) / 100.0
             re_c = 0.25 + (score_deficit - 0.40) * 0.30
 
-            # Im(c): VLE engagement volatility & disengagement cliff
             norm_clicks = math.log(max(1, clicks_in_window) + 1)
-            # High activity = bounded exploration (~0.18). Sudden zero activity in Withdrawn students = divergence shock (>0.38)
             if outcome == "Withdrawn" and step_i > (target_trajectory_len // 2):
-                im_c = 0.38 + random.uniform(0.05, 0.15)
-                re_c += 0.12
+                im_c = 0.38 + random.uniform(0.06, 0.16)
+                re_c += 0.14
             else:
                 volatility = abs(norm_clicks - 2.8) * 0.08
                 im_c = 0.18 + volatility
 
-            sign_im = 1.0 if (step_i % 2 == 0) else -1.0
-            c_series.append(complex(re_c, sign_im * im_c))
+            c_series.append(complex(re_c, hemisphere * im_c))
 
         res_unconst = simulate_student_orbit(c_series, apply_pfp_damping=False)
         res_pfp = simulate_student_orbit(c_series, apply_pfp_damping=True)
@@ -339,13 +328,13 @@ def process_oulad(sample_size=1000, target_trajectory_len=25):
         pfp_zpd_sum += res_pfp["zpd_ratio"]
         total_interventions += res_pfp["scaffold_interventions"]
 
-        if idx < 20:
+        if idx < 25:
             sample_trajectories.append({
                 "student_id": str(uid),
                 "outcome": outcome,
                 "mean_score": round(mean_score, 1),
-                "unconstrained_orbit": [round(x, 3) for x in res_unconst["orbit"]],
-                "pfp_orbit": [round(x, 3) for x in res_pfp["orbit"]],
+                "unconstrained_z_path": res_unconst["z_path"],
+                "pfp_z_path": res_pfp["z_path"],
                 "unconstrained_escaped": res_unconst["escaped"],
                 "pfp_escaped": res_pfp["escaped"],
                 "scaffold_interventions": res_pfp["scaffold_interventions"],
@@ -370,24 +359,22 @@ def process_oulad(sample_size=1000, target_trajectory_len=25):
         "sample_trajectories": sample_trajectories
     }
     print(f"OULAD Done: Unconstrained Escape = {summary['unconstrained_escape_rate']*100:.1f}%, "
-          f"PFP Escape = {summary['pfp_escape_rate']*100:.1f}%, Withdrawn Escape = {summary['withdrawn_cohort_escape_rate']*100:.1f}%, ZPD Gain = +{summary['relative_zpd_gain_pct']}%")
+          f"PFP Escape = {summary['pfp_escape_rate']*100:.1f}%, Withdrawn Escape = {summary['withdrawn_cohort_escape_rate']*100:.1f}%")
     return summary
 
 def main():
     assist_res = process_assistments(sample_size=1000, target_trajectory_len=25)
     oulad_res = process_oulad(sample_size=1000, target_trajectory_len=25)
 
-    # 1. Write individual JSONs
     with open(os.path.join(DATA_DIR, "real_assistments_k12_analysis.json"), "w", encoding="utf-8") as f:
         json.dump(assist_res, f, indent=2)
     
     with open(os.path.join(DATA_DIR, "real_oulad_highered_analysis.json"), "w", encoding="utf-8") as f:
         json.dump(oulad_res, f, indent=2)
 
-    # 2. Combined Cross-Cohort Analysis
     combined_summary = {
         "title": "Cross-Scale Empirical Invariance of Procedural Fractal Pedagogy",
-        "description": "Comparative phase-space analysis across K-12 Mathematics (ASSISTments, micro-scale seconds/minutes) and Higher Education (OULAD, macro-scale days/weeks).",
+        "description": "Comparative phase-space analysis across K-12 Mathematics (ASSISTments) and Higher Education (OULAD).",
         "cohorts": {
             "k12_micro": {
                 "name": assist_res["dataset_name"],
@@ -422,7 +409,6 @@ def main():
     with open(os.path.join(DATA_DIR, "real_combined_cross_cohort_analysis.json"), "w", encoding="utf-8") as f:
         json.dump(combined_summary, f, indent=2)
 
-    # 3. Export Summary CSV
     csv_path = os.path.join(DATA_DIR, "real_empirical_validation_summary.csv")
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
