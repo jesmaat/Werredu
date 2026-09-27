@@ -2,9 +2,10 @@
 generate_simulator_html.py
 ==========================
 Generates the comprehensive PFP Interactive Simulator HTML file
-embedding authentic real-world telemetry from ASSISTments and OULAD
-with dynamic multi-mode animation, unified play/pause/reset/step controls,
-and live phase-space probe tracking.
+embedding authentic real-world telemetry from ASSISTments and OULAD.
+Features 60 FPS smooth interpolated multi-cohort particle flow,
+dynamic single-student deep dives, live telemetry HUD, speed controls,
+and unified play/pause/reset/step buttons.
 """
 
 import json
@@ -83,8 +84,8 @@ html_content = f"""<!DOCTYPE html>
         </p>
       </div>
 
-      <!-- Live Controls: Play / Pause / Reset / Step -->
-      <div class="flex items-center gap-2 self-start md:self-auto">
+      <!-- Live Controls: Play / Pause / Reset / Step / Speed -->
+      <div class="flex flex-wrap items-center gap-2 self-start md:self-auto">
         <button id="btnPlay" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold text-xs md:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-900/30">
           <span id="playIcon">⏸️</span> <span id="playText">Durdur</span>
         </button>
@@ -92,8 +93,14 @@ html_content = f"""<!DOCTYPE html>
           🔄 Başa Sar (Reset)
         </button>
         <button id="btnStep" class="px-3 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg font-semibold text-xs md:text-sm transition">
-          ⏭️ İlerle (+1 Adım)
+          ⏭️ İlerle (+1)
         </button>
+        <!-- Speed Toggle -->
+        <div class="flex items-center bg-slate-800 rounded-lg p-1 border border-slate-700 text-xs">
+          <button id="btnSpeed1" class="px-2 py-1 rounded bg-emerald-600 text-white font-bold">1x</button>
+          <button id="btnSpeed2" class="px-2 py-1 rounded text-slate-300 hover:bg-slate-700">2x</button>
+          <button id="btnSpeed4" class="px-2 py-1 rounded text-slate-300 hover:bg-slate-700">4x</button>
+        </div>
       </div>
     </div>
 
@@ -118,7 +125,7 @@ html_content = f"""<!DOCTYPE html>
     </div>
   </header>
 
-  <!-- Main Grid Layout -->
+  <!-- Main Content Area -->
   <main class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
 
     <!-- LEFT COLUMN: Canvas & Phase Space Trajectories (7 cols) -->
@@ -147,16 +154,21 @@ html_content = f"""<!DOCTYPE html>
           <canvas id="phaseCanvas" width="500" height="500" class="w-full h-full object-contain cursor-crosshair"></canvas>
           <div id="canvasTooltip" class="absolute hidden bg-slate-900/90 text-white text-xs p-2 rounded border border-slate-600 pointer-events-none shadow-xl z-20"></div>
           
-          <!-- Live Real-Time Intervention Indicator Overlay -->
-          <div id="interventionBadge" class="hidden absolute top-3 left-3 bg-amber-500/90 text-slate-950 px-2.5 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+          <!-- Live Telemetry Badges -->
+          <div id="interventionBadge" class="hidden absolute top-3 left-3 bg-amber-500/95 text-slate-950 px-2.5 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
             ⚡ PFP İskeleleme Devrede!
           </div>
-          <div id="escapeBadge" class="hidden absolute top-3 right-3 bg-red-600/90 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
+          <div id="escapeBadge" class="hidden absolute top-3 right-3 bg-red-600/95 text-white px-2.5 py-1 rounded-full text-xs font-bold shadow-lg animate-pulse">
             🚨 Saturn Kaçışı (|z| &gt; 2.0)!
+          </div>
+          <div id="statusHud" class="absolute bottom-3 left-3 right-3 bg-slate-900/85 backdrop-blur border border-slate-700/80 rounded-lg p-2 text-xs flex items-center justify-between text-slate-300">
+            <span id="hudStep">Adım: 1 / 25</span>
+            <span id="hudState">Durum: ZPD Dengeli</span>
+            <span id="hudCoord" class="font-mono text-emerald-400">|z| = 0.28</span>
           </div>
         </div>
 
-        <!-- Panel 1: Synthetic Regime Checks -->
+        <!-- Sub-panel 1: Synthetic Mode Checks -->
         <div id="panelRegimeChecks" class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs bg-slate-900/70 p-2.5 rounded-xl border border-slate-700/60">
           <span class="text-slate-400 font-semibold">Aktif Rejimler:</span>
           <label class="flex items-center gap-1.5 cursor-pointer">
@@ -177,26 +189,37 @@ html_content = f"""<!DOCTYPE html>
           </label>
         </div>
 
-        <!-- Panel 2: Real Student Selector (ASSISTments & OULAD) -->
+        <!-- Sub-panel 2: Real Student Selector & Cohort Toggle -->
         <div id="panelRealStudentSelect" class="hidden mt-3 bg-slate-900/80 p-3 rounded-xl border border-slate-700">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div class="flex-1">
-              <span class="text-xs text-slate-400 font-semibold block mb-1">İncelenen Gerçek Öğrenci:</span>
+          <div class="flex flex-col gap-2.5">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-700/60 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-slate-400 font-semibold">Görüntüleme Tipi:</span>
+                <button id="btnViewSingle" class="px-2.5 py-1 rounded bg-emerald-600 text-white text-xs font-bold transition">
+                  👤 Seçili Tek Öğrenci
+                </button>
+                <button id="btnViewAll" class="px-2.5 py-1 rounded bg-slate-700 text-slate-300 text-xs hover:bg-slate-600 transition">
+                  👥 Tüm Kohort (25 Öğrenci Aynı Anda)
+                </button>
+              </div>
+              <div id="realStudentMeta" class="text-xs text-slate-300">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+            <div id="divSingleSelect" class="flex items-center gap-2">
+              <span class="text-xs text-slate-400 min-w-[120px]">Öğrenci Seç:</span>
               <select id="selRealStudent" class="w-full bg-slate-800 border border-slate-600 text-xs text-slate-200 rounded px-2.5 py-1.5 focus:outline-none focus:border-emerald-500">
                 <!-- Injected via JS -->
               </select>
             </div>
-            <div id="realStudentMeta" class="text-xs text-slate-300 min-w-[220px]">
-              <!-- Injected via JS -->
-            </div>
           </div>
         </div>
 
-        <!-- Panel 3: Combined Mode Legend -->
+        <!-- Sub-panel 3: Combined Mode Legend -->
         <div id="panelCombinedLegend" class="hidden mt-3 flex flex-wrap items-center justify-around gap-2 text-xs bg-slate-900/70 p-2.5 rounded-xl border border-slate-700/60">
-          <span class="flex items-center gap-1.5 text-emerald-400 font-bold">● ASSISTments (K-12 Mikro-İskele)</span>
-          <span class="flex items-center gap-1.5 text-cyan-400 font-bold">● OULAD (Yükseköğretim Makro-Süreklilik)</span>
-          <span class="flex items-center gap-1.5 text-red-400 font-medium">● Kısıtlamasız Kaçan Öğrenciler</span>
+          <span class="flex items-center gap-1.5 text-emerald-400 font-bold">● ASSISTments (K-12 Mikro: 25 Gerçek Öğrenci)</span>
+          <span class="flex items-center gap-1.5 text-cyan-400 font-bold">● OULAD (Yükseköğretim Makro: 25 Gerçek Öğrenci)</span>
+          <span class="flex items-center gap-1.5 text-red-400 font-bold">● Kısıtlamasız Kaçan Öğrenciler (Gerçek Çöküşler)</span>
         </div>
 
         <!-- Legend Note -->
@@ -394,17 +417,16 @@ html_content = f"""<!DOCTYPE html>
     // --- State Variables ---
     let simMode = 'synthetic'; // 'synthetic', 'assistments', 'oulad', 'combined'
     let isPlaying = true;
+    let playbackSpeed = 1.0; // 1.0, 2.0, 4.0
+    let realViewType = 'single'; // 'single', 'cohort'
     
-    // Synthetic mode cycle
+    // Cycle trackers
     let currentCycle = 0;
     const maxCycles = 120;
 
-    // Real student playback step
-    let realStepIndex = 0;
+    // Fractional progress for 60fps smooth interpolation
+    let realProgress = 0.0; // 0.0 to 24.0
     const realMaxSteps = 25;
-
-    // Combined multi-particle cycle
-    let combinedCycle = 0;
 
     let paramTdesc = 0.045;
     let paramKappa = 0.44;
@@ -423,6 +445,11 @@ html_content = f"""<!DOCTYPE html>
     }}
     function toCanvasY(im) {{
       return canvas.height - ((im - IM_MIN) / (IM_MAX - IM_MIN)) * canvas.height;
+    }}
+
+    // Lerp helper
+    function lerp(a, b, t) {{
+      return a + (b - a) * t;
     }}
 
     // Synthetic cohorts
@@ -516,72 +543,6 @@ html_content = f"""<!DOCTYPE html>
       }}
     }}
 
-    // Combined multi-particle cohort
-    const combinedParticles = [];
-    function initCombinedParticles() {{
-      combinedCycle = 0;
-      combinedParticles.length = 0;
-      // 25 K-12 micro particles (Emerald)
-      for (let i = 0; i < 25; i++) {{
-        const sh = (i % 2 === 0) ? SHOULDER_UPPER : SHOULDER_LOWER;
-        combinedParticles.push({{
-          re: sh.re + (Math.random() - 0.5) * 0.05,
-          im: sh.im + (Math.random() - 0.5) * 0.05,
-          sh: sh,
-          type: 'k12',
-          color: '#10b981',
-          escaped: false
-        }});
-      }}
-      // 25 Higher-Ed macro particles (Cyan)
-      for (let i = 0; i < 25; i++) {{
-        const sh = (i % 2 === 0) ? SHOULDER_UPPER : SHOULDER_LOWER;
-        combinedParticles.push({{
-          re: sh.re + (Math.random() - 0.5) * 0.05,
-          im: sh.im + (Math.random() - 0.5) * 0.05,
-          sh: sh,
-          type: 'highered',
-          color: '#06b6d4',
-          escaped: false
-        }});
-      }}
-      // 15 Unconstrained drifting particles (Red)
-      for (let i = 0; i < 15; i++) {{
-        const sh = (i % 2 === 0) ? SHOULDER_UPPER : SHOULDER_LOWER;
-        combinedParticles.push({{
-          re: sh.re + (Math.random() - 0.5) * 0.05,
-          im: sh.im + (Math.random() - 0.5) * 0.05,
-          sh: sh,
-          type: 'unconstrained',
-          color: '#ef4444',
-          escaped: false
-        }});
-      }}
-    }}
-
-    function stepCombined() {{
-      combinedCycle++;
-      combinedParticles.forEach(p => {{
-        const shockRe = (Math.random() - 0.48) * 0.04;
-        const shockIm = (Math.random() - 0.50) * 0.04;
-
-        if (p.type === 'unconstrained') {{
-          p.re += shockRe * 1.2;
-          p.im += shockIm * 1.2;
-          if (Math.hypot(p.re, p.im) > 1.8) p.escaped = true;
-        }} else {{
-          // Both K-12 and Higher-Ed are bounded by PFP kernel
-          p.re += shockRe * 0.28 - paramKappa * (p.re - p.sh.re);
-          p.im += shockIm * 0.28 - paramKappa * (p.im - p.sh.im);
-          const dist = Math.hypot(p.re - p.sh.re, p.im - p.sh.im);
-          if (dist > 0.12) {{
-            p.re = p.sh.re + (Math.random() - 0.5) * 0.04;
-            p.im = p.sh.im + (Math.random() - 0.5) * 0.04;
-          }}
-        }}
-      }});
-    }}
-
     // Real student datasets
     let selectedRealDataset = null;
     let selectedTrajectoryIndex = 0;
@@ -604,24 +565,24 @@ html_content = f"""<!DOCTYPE html>
       }});
 
       sel.selectedIndex = 0;
-      realStepIndex = 0;
+      realProgress = 0.0;
       updateRealStudentDetail(0);
     }}
 
     function updateRealStudentDetail(idx) {{
       selectedTrajectoryIndex = idx;
-      realStepIndex = 0; // Rewind to start on change
+      realProgress = 0.0; // Rewind on student change
       if (!selectedRealDataset) return;
       const traj = selectedRealDataset.sample_trajectories[idx];
       const metaDiv = document.getElementById('realStudentMeta');
       
       const escapeInfo = traj.unconstrained_escaped
-        ? '<span class="text-red-400 font-bold">Kısıtlamasız Sistemde Kaçış (|z| &gt; 2.0)!</span>'
-        : '<span class="text-emerald-400 font-bold">Kısıtlamasız Sistemde Dengeli</span>';
+        ? '<span class="text-red-400 font-bold">Kısıtlamasız Kaçış (|z| &gt; 2.0)!</span>'
+        : '<span class="text-emerald-400 font-bold">Kısıtlamasız Dengeli</span>';
 
       metaDiv.innerHTML = `
         <span class="block"><strong>PFP Müdahalesi:</strong> <span class="text-cyan-400">${{traj.scaffold_interventions}} kez</span> &bull; ${{escapeInfo}}</span>
-        <span class="block text-slate-400">PFP İskeleli Durum: <strong class="text-emerald-300">${{traj.pfp_escaped ? 'Kaçış' : '100% Kararlı (Kurtarıldı)'}}</strong></span>
+        <span class="block text-slate-400">PFP Durum: <strong class="text-emerald-300">${{traj.pfp_escaped ? 'Kaçış' : '100% Kararlı'}}</strong></span>
       `;
     }}
 
@@ -629,18 +590,33 @@ html_content = f"""<!DOCTYPE html>
       updateRealStudentDetail(parseInt(e.target.value));
     }});
 
+    // Cohort view toggles
+    document.getElementById('btnViewSingle').addEventListener('click', () => {{
+      realViewType = 'single';
+      document.getElementById('btnViewSingle').className = 'px-2.5 py-1 rounded bg-emerald-600 text-white text-xs font-bold transition';
+      document.getElementById('btnViewAll').className = 'px-2.5 py-1 rounded bg-slate-700 text-slate-300 text-xs hover:bg-slate-600 transition';
+      document.getElementById('divSingleSelect').classList.remove('hidden');
+    }});
+
+    document.getElementById('btnViewAll').addEventListener('click', () => {{
+      realViewType = 'cohort';
+      document.getElementById('btnViewAll').className = 'px-2.5 py-1 rounded bg-emerald-600 text-white text-xs font-bold transition';
+      document.getElementById('btnViewSingle').className = 'px-2.5 py-1 rounded bg-slate-700 text-slate-300 text-xs hover:bg-slate-600 transition';
+      document.getElementById('divSingleSelect').classList.add('hidden');
+    }});
+
     // Phase Space Canvas Rendering
     function drawPhaseSpace() {{
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Background gradient
+      // Gradient background
       const grad = ctx.createRadialGradient(canvas.width*0.4, canvas.height*0.5, 20, canvas.width*0.5, canvas.height*0.5, 300);
       grad.addColorStop(0, '#090d16');
       grad.addColorStop(1, '#020617');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Coordinate axes
+      // Axes
       ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -733,46 +709,60 @@ html_content = f"""<!DOCTYPE html>
           }});
         }}
       }} else if (simMode === 'assistments' || simMode === 'oulad') {{
-        if (selectedRealDataset && selectedRealDataset.sample_trajectories[selectedTrajectoryIndex]) {{
-          const traj = selectedRealDataset.sample_trajectories[selectedTrajectoryIndex];
-          const uPath = traj.unconstrained_z_path || [];
-          const pPath = traj.pfp_z_path || [];
-          const curStep = Math.min(realStepIndex, uPath.length - 1);
+        const baseIndex = Math.floor(realProgress);
+        const frac = realProgress - baseIndex;
+        const nextIndex = Math.min(realMaxSteps - 1, baseIndex + 1);
 
-          // 1. Draw Unconstrained Path History (Red Line)
-          if (uPath.length > 1) {{
-            ctx.strokeStyle = 'rgba(239, 68, 68, 0.45)';
-            ctx.lineWidth = 2.0;
-            ctx.beginPath();
-            for (let i = 0; i <= curStep; i++) {{
-              const cx = toCanvasX(uPath[i].re);
-              const cy = toCanvasY(uPath[i].im);
-              if (i === 0) ctx.moveTo(cx, cy);
-              else ctx.lineTo(cx, cy);
+        if (realViewType === 'single') {{
+          // Single student detailed probe
+          if (selectedRealDataset && selectedRealDataset.sample_trajectories[selectedTrajectoryIndex]) {{
+            const traj = selectedRealDataset.sample_trajectories[selectedTrajectoryIndex];
+            const uPath = traj.unconstrained_z_path || [];
+            const pPath = traj.pfp_z_path || [];
+
+            // Draw full path histories
+            if (uPath.length > 1) {{
+              ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+              ctx.lineWidth = 1.5;
+              ctx.beginPath();
+              for (let i = 0; i <= baseIndex; i++) {{
+                const cx = toCanvasX(uPath[i].re);
+                const cy = toCanvasY(uPath[i].im);
+                if (i === 0) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+              }}
+              ctx.stroke();
             }}
-            ctx.stroke();
-          }}
 
-          // 2. Draw PFP Damped Path History (Green Line)
-          if (pPath.length > 1) {{
-            ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
-            ctx.lineWidth = 2.5;
-            ctx.beginPath();
-            for (let i = 0; i <= curStep; i++) {{
-              const cx = toCanvasX(pPath[i].re);
-              const cy = toCanvasY(pPath[i].im);
-              if (i === 0) ctx.moveTo(cx, cy);
-              else ctx.lineTo(cx, cy);
+            if (pPath.length > 1) {{
+              ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)';
+              ctx.lineWidth = 2.0;
+              ctx.beginPath();
+              for (let i = 0; i <= baseIndex; i++) {{
+                const cx = toCanvasX(pPath[i].re);
+                const cy = toCanvasY(pPath[i].im);
+                if (i === 0) ctx.moveTo(cx, cy);
+                else ctx.lineTo(cx, cy);
+              }}
+              ctx.stroke();
             }}
-            ctx.stroke();
-          }}
 
-          // 3. Draw Active Probe: Unconstrained Learner (Red Probe)
-          if (uPath[curStep]) {{
-            const curU = uPath[curStep];
-            const ux = toCanvasX(curU.re);
-            const uy = toCanvasY(curU.im);
+            // Smoothly interpolated active positions
+            const ptU0 = uPath[baseIndex] || {{ re: 0, im: 0, mag: 0 }};
+            const ptU1 = uPath[nextIndex] || ptU0;
+            const curURe = lerp(ptU0.re, ptU1.re, frac);
+            const curUIm = lerp(ptU0.im, ptU1.im, frac);
+            const curUMag = lerp(ptU0.mag, ptU1.mag, frac);
 
+            const ptP0 = pPath[baseIndex] || {{ re: 0, im: 0, mag: 0 }};
+            const ptP1 = pPath[nextIndex] || ptP0;
+            const curPRe = lerp(ptP0.re, ptP1.re, frac);
+            const curPIm = lerp(ptP0.im, ptP1.im, frac);
+            const curPMag = lerp(ptP0.mag, ptP1.mag, frac);
+
+            // Draw Unconstrained Probe (Red)
+            const ux = toCanvasX(curURe);
+            const uy = toCanvasY(curUIm);
             ctx.fillStyle = '#ef4444';
             ctx.beginPath();
             ctx.arc(ux, uy, 6, 0, 2 * Math.PI);
@@ -785,7 +775,7 @@ html_content = f"""<!DOCTYPE html>
             ctx.font = 'bold 10px sans-serif';
             ctx.fillText('Kısıtlamasız', ux + 8, uy - 4);
 
-            if (curU.mag > 2.0) {{
+            if (curUMag > 2.0) {{
               escapeBadge.classList.remove('hidden');
               ctx.strokeStyle = 'rgba(239, 68, 68, 0.8)';
               ctx.lineWidth = 2;
@@ -793,14 +783,10 @@ html_content = f"""<!DOCTYPE html>
               ctx.arc(ux, uy, 12, 0, 2 * Math.PI);
               ctx.stroke();
             }}
-          }}
 
-          // 4. Draw Active Probe: PFP Damped Learner (Green Probe)
-          if (pPath[curStep]) {{
-            const curP = pPath[curStep];
-            const px = toCanvasX(curP.re);
-            const py = toCanvasY(curP.im);
-
+            // Draw PFP Damped Probe (Green)
+            const px = toCanvasX(curPRe);
+            const py = toCanvasY(curPIm);
             ctx.fillStyle = '#10b981';
             ctx.beginPath();
             ctx.arc(px, py, 6, 0, 2 * Math.PI);
@@ -813,8 +799,7 @@ html_content = f"""<!DOCTYPE html>
             ctx.font = 'bold 10px sans-serif';
             ctx.fillText('PFP İskeleli', px + 8, py + 12);
 
-            // Scaffold trigger flash
-            if (curP.scaffold) {{
+            if (ptP0.scaffold) {{
               interventionBadge.classList.remove('hidden');
               ctx.strokeStyle = '#facc15';
               ctx.lineWidth = 3;
@@ -822,31 +807,111 @@ html_content = f"""<!DOCTYPE html>
               ctx.arc(px, py, 14, 0, 2 * Math.PI);
               ctx.stroke();
             }}
+
+            // Update Status HUD
+            document.getElementById('hudStep').innerText = `Adım: ${{baseIndex + 1}} / ${{realMaxSteps}}`;
+            document.getElementById('hudState').innerText = curPMag > 1.2 ? 'Sınır Sönümleniyor' : 'ZPD Dengeli';
+            document.getElementById('hudCoord').innerText = `|z| = ${{curPMag.toFixed(2)}} (PFP) vs ${{curUMag.toFixed(2)}} (Serbest)`;
+          }}
+        }} else {{
+          // All 25 students animated cohort stream
+          if (selectedRealDataset) {{
+            selectedRealDataset.sample_trajectories.forEach((traj, sIdx) => {{
+              const pPath = traj.pfp_z_path || [];
+              const uPath = traj.unconstrained_z_path || [];
+              
+              const pt0 = pPath[baseIndex] || {{ re: 0, im: 0 }};
+              const pt1 = pPath[nextIndex] || pt0;
+              const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
+              const py = toCanvasY(lerp(pt0.im, pt1.im, frac));
+
+              ctx.fillStyle = simMode === 'assistments' ? '#10b981' : '#06b6d4';
+              ctx.beginPath();
+              ctx.arc(px, py, 3.5, 0, 2 * Math.PI);
+              ctx.fill();
+
+              // Escaped student under unconstrained
+              if (traj.unconstrained_escaped) {{
+                const upt0 = uPath[baseIndex] || {{ re: 0, im: 0 }};
+                const upt1 = uPath[nextIndex] || upt0;
+                const ux = toCanvasX(lerp(upt0.re, upt1.re, frac));
+                const uy = toCanvasY(lerp(upt0.im, upt1.im, frac));
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath();
+                ctx.arc(ux, uy, 3.0, 0, 2 * Math.PI);
+                ctx.fill();
+              }}
+            }});
           }}
         }}
       }} else if (simMode === 'combined') {{
-        // Combined multi-particle rendering
-        combinedParticles.forEach(p => {{
-          const px = toCanvasX(p.re);
-          const py = toCanvasY(p.im);
+        // AUTHENTIC DUAL-SCALE REAL DATA FLOW
+        const baseIndex = Math.floor(realProgress);
+        const frac = realProgress - baseIndex;
+        const nextIndex = Math.min(realMaxSteps - 1, baseIndex + 1);
 
-          ctx.fillStyle = p.color;
+        // 1. Stream 25 Real K-12 Students (ASSISTments, Emerald)
+        ASSISTMENTS_DATA.sample_trajectories.forEach((traj, idx) => {{
+          const pPath = traj.pfp_z_path || [];
+          const pt0 = pPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
+          const pt1 = pPath[nextIndex] || pt0;
+          const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
+          const py = toCanvasY(lerp(pt0.im, pt1.im, frac));
+
+          ctx.fillStyle = '#10b981';
           ctx.beginPath();
-          ctx.arc(px, py, p.type === 'unconstrained' ? 3.0 : 3.5, 0, 2 * Math.PI);
+          ctx.arc(px, py, 3.5, 0, 2 * Math.PI);
+          ctx.fill();
+        }});
+
+        // 2. Stream 25 Real Higher-Ed Students (OULAD, Cyan)
+        OULAD_DATA.sample_trajectories.forEach((traj, idx) => {{
+          const pPath = traj.pfp_z_path || [];
+          const pt0 = pPath[baseIndex] || {{ re: 0.25, im: -0.18 }};
+          const pt1 = pPath[nextIndex] || pt0;
+          const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
+          const py = toCanvasY(lerp(pt0.im, pt1.im, frac));
+
+          ctx.fillStyle = '#06b6d4';
+          ctx.beginPath();
+          ctx.arc(px, py, 3.5, 0, 2 * Math.PI);
+          ctx.fill();
+        }});
+
+        // 3. Stream Escaped Students from Both Real Datasets (Red)
+        const escapedAll = [
+          ...ASSISTMENTS_DATA.sample_trajectories.filter(s => s.unconstrained_escaped),
+          ...OULAD_DATA.sample_trajectories.filter(s => s.unconstrained_escaped)
+        ];
+
+        escapedAll.forEach((traj, idx) => {{
+          const uPath = traj.unconstrained_z_path || [];
+          const pt0 = uPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
+          const pt1 = uPath[nextIndex] || pt0;
+          const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
+          const py = toCanvasY(lerp(pt0.im, pt1.im, frac));
+
+          ctx.fillStyle = '#ef4444';
+          ctx.beginPath();
+          ctx.arc(px, py, 3.0, 0, 2 * Math.PI);
           ctx.fill();
 
-          if (p.escaped) {{
-            ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
+          if (lerp(pt0.mag || 0, pt1.mag || 0, frac) > 2.0) {{
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.arc(px, py, 7, 0, 2 * Math.PI);
             ctx.stroke();
           }}
         }});
+
+        document.getElementById('hudStep').innerText = `Dönem / Problem Adımı: ${{baseIndex + 1}} / ${{realMaxSteps}}`;
+        document.getElementById('hudState').innerText = 'Fraktal Ölçek Değişmezliği Aktif';
+        document.getElementById('hudCoord').innerText = `25 K-12 + 25 Yükseköğretim Canlı İz`;
       }}
     }}
 
-    // Bottom Chart Rendering
+    // Bottom Chart
     const chartCanvas = document.getElementById('timeOnTaskChart');
     const chartCtx = chartCanvas.getContext('2d');
 
@@ -900,7 +965,7 @@ html_content = f"""<!DOCTYPE html>
           const pPath = traj.pfp_z_path || [];
           const totalSteps = uPath.length;
 
-          // Escape line |z| = 2.0
+          // Escape threshold line |z| = 2.0
           const yEsc = (h - pad) - (2.0 / 4.0) * (h - 2 * pad);
           chartCtx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
           chartCtx.setLineDash([3, 3]);
@@ -937,13 +1002,12 @@ html_content = f"""<!DOCTYPE html>
           }});
           chartCtx.stroke();
 
-          // Highlight animated trajectory up to realStepIndex
-          const curStep = Math.min(realStepIndex, totalSteps - 1);
-
+          // Highlight animated trajectory up to realProgress
+          const curIndex = Math.min(totalSteps - 1, Math.floor(realProgress));
           chartCtx.strokeStyle = '#ef4444';
           chartCtx.lineWidth = 2.5;
           chartCtx.beginPath();
-          for (let i = 0; i <= curStep; i++) {{
+          for (let i = 0; i <= curIndex; i++) {{
             const x = pad + (i / totalSteps) * (w - 2 * pad);
             const y = (h - pad) - (uPath[i].mag / 4.0) * (h - 2 * pad);
             if (i === 0) chartCtx.moveTo(x, y);
@@ -954,7 +1018,7 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.strokeStyle = '#10b981';
           chartCtx.lineWidth = 2.5;
           chartCtx.beginPath();
-          for (let i = 0; i <= curStep; i++) {{
+          for (let i = 0; i <= curIndex; i++) {{
             const x = pad + (i / totalSteps) * (w - 2 * pad);
             const y = (h - pad) - (pPath[i].mag / 4.0) * (h - 2 * pad);
             if (i === 0) chartCtx.moveTo(x, y);
@@ -963,7 +1027,7 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.stroke();
 
           // Vertical playback cursor
-          const curX = pad + (curStep / totalSteps) * (w - 2 * pad);
+          const curX = pad + (realProgress / totalSteps) * (w - 2 * pad);
           chartCtx.strokeStyle = '#38bdf8';
           chartCtx.lineWidth = 1.5;
           chartCtx.setLineDash([2, 2]);
@@ -974,18 +1038,7 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.setLineDash([]);
         }}
       }} else if (simMode === 'combined') {{
-        // Plot dual scale retention over time
-        [50, 90].forEach(pct => {{
-          const y = (h - pad) - (pct / 100) * (h - 2 * pad);
-          chartCtx.strokeStyle = 'rgba(100, 116, 139, 0.25)';
-          chartCtx.setLineDash([3, 3]);
-          chartCtx.beginPath();
-          chartCtx.moveTo(pad, y);
-          chartCtx.lineTo(w - pad, y);
-          chartCtx.stroke();
-          chartCtx.setLineDash([]);
-        }});
-
+        // Combined comparison curves
         chartCtx.strokeStyle = '#10b981';
         chartCtx.lineWidth = 2.5;
         chartCtx.beginPath();
@@ -1004,14 +1057,25 @@ html_content = f"""<!DOCTYPE html>
         chartCtx.lineWidth = 1.8;
         chartCtx.beginPath();
         chartCtx.moveTo(pad, (h - pad) - 0.85 * (h - 2 * pad));
-        chartCtx.lineTo(w - pad, (h - pad) - 0.71 * (h - 2 * pad));
+        chartCtx.lineTo(w - pad, (h - pad) - 0.70 * (h - 2 * pad));
         chartCtx.stroke();
+
+        const curX = pad + (realProgress / realMaxSteps) * (w - 2 * pad);
+        chartCtx.strokeStyle = '#38bdf8';
+        chartCtx.lineWidth = 1.5;
+        chartCtx.setLineDash([2, 2]);
+        chartCtx.beginPath();
+        chartCtx.moveTo(curX, pad);
+        chartCtx.lineTo(curX, h - pad);
+        chartCtx.stroke();
+        chartCtx.setLineDash([]);
       }}
     }}
 
     // Mode Switching
     function setSimulationMode(mode) {{
       simMode = mode;
+      realProgress = 0.0;
       
       const tabSynthetic = document.getElementById('tabSynthetic');
       const tabAssist = document.getElementById('tabRealAssist');
@@ -1098,7 +1162,7 @@ html_content = f"""<!DOCTYPE html>
         chartLegend.classList.remove('hidden');
 
         document.getElementById('canvasTitle').innerText = '🌐 Birleşik Fraktal Ölçek Analizi';
-        document.getElementById('canvasSubtitle').innerText = 'ASSISTments (K-12 Mikro) ve OULAD (Yükseköğretim Makro) çoklu parçacık akışı.';
+        document.getElementById('canvasSubtitle').innerText = '25 K-12 Mikro Öğrencisi + 25 Yükseköğretim Makro Öğrencisi CANLI akışta.';
         document.getElementById('statsCardHeading').innerText = 'Birleşik Fraktal Öz-Benzerlik Sentezi';
         document.getElementById('badgeScale').innerText = 'N = 2,000 Toplam Gerçek İz';
         document.getElementById('metricUnconstrainedEscape').innerText = (COMBINED_DATA.synthesis.unconstrained_weighted_escape_rate * 100).toFixed(1) + '%';
@@ -1107,7 +1171,6 @@ html_content = f"""<!DOCTYPE html>
         document.getElementById('statsDetailText').innerHTML = `
           <strong>Reigeluth (2008) Fraktal Öz-Benzerlik İspatı:</strong> İki bağımsız veri setinde de (mikro ve makro), Mandelbrot sınır sönümleme mekanizması kısıtlamasız kaçışı sıfırlamış ve ZPD kazancını istatistiksel olarak anlamlı biçimde artırmıştır (p &lt; 0.001, Cohen d=1.48).
         `;
-        initCombinedParticles();
       }}
     }}
 
@@ -1129,21 +1192,33 @@ html_content = f"""<!DOCTYPE html>
     document.getElementById('btnReset').addEventListener('click', () => {{
       if (simMode === 'synthetic') {{
         initSyntheticParticles();
-      }} else if (simMode === 'assistments' || simMode === 'oulad') {{
-        realStepIndex = 0;
-      }} else if (simMode === 'combined') {{
-        initCombinedParticles();
+      }} else {{
+        realProgress = 0.0;
       }}
     }});
 
     document.getElementById('btnStep').addEventListener('click', () => {{
       if (simMode === 'synthetic') {{
         stepSynthetic();
-      }} else if (simMode === 'assistments' || simMode === 'oulad') {{
-        realStepIndex = (realStepIndex + 1) % realMaxSteps;
-      }} else if (simMode === 'combined') {{
-        stepCombined();
+      }} else {{
+        realProgress = (Math.floor(realProgress) + 1) % realMaxSteps;
       }}
+    }});
+
+    // Speed Controls
+    const speedBtns = [
+      {{ id: 'btnSpeed1', speed: 1.0 }},
+      {{ id: 'btnSpeed2', speed: 2.0 }},
+      {{ id: 'btnSpeed4', speed: 4.0 }}
+    ];
+    speedBtns.forEach(sb => {{
+      document.getElementById(sb.id).addEventListener('click', () => {{
+        playbackSpeed = sb.speed;
+        speedBtns.forEach(b => {{
+          document.getElementById(b.id).className = 'px-2 py-1 rounded text-slate-300 hover:bg-slate-700';
+        }});
+        document.getElementById(sb.id).className = 'px-2 py-1 rounded bg-emerald-600 text-white font-bold';
+      }});
     }});
 
     // Sliders
@@ -1191,31 +1266,32 @@ html_content = f"""<!DOCTYPE html>
       }}
     }}
 
-    // Master Animation Loop
+    // Master Animation Loop (60 FPS)
     let tickCount = 0;
     function loop() {{
       tickCount++;
 
       if (isPlaying) {{
         if (simMode === 'synthetic') {{
-          if (tickCount % 5 === 0) stepSynthetic();
-        }} else if (simMode === 'assistments' || simMode === 'oulad') {{
-          // Real student step pacing: 1 step every 18 frames (~300ms per step)
-          if (tickCount % 18 === 0) {{
-            realStepIndex = (realStepIndex + 1) % realMaxSteps;
+          if (tickCount % Math.max(1, Math.round(5 / playbackSpeed)) === 0) {{
+            stepSynthetic();
           }}
-        }} else if (simMode === 'combined') {{
-          if (tickCount % 5 === 0) stepCombined();
+        }} else {{
+          // Real student smooth 60 FPS interpolation step increment
+          // At speed 1x: 1 step every 30 frames (0.5s per step, total sequence ~12s)
+          const stepDelta = (1.0 / 30.0) * playbackSpeed;
+          realProgress += stepDelta;
+          if (realProgress >= realMaxSteps) {{
+            realProgress = 0.0; // Loop smoothly
+          }}
         }}
       }}
 
-      // Update step indicator
+      // Update cycle / step indicator
       if (simMode === 'synthetic') {{
         document.getElementById('lblCycle').innerText = `${{currentCycle}} / ${{maxCycles}}`;
-      }} else if (simMode === 'assistments' || simMode === 'oulad') {{
-        document.getElementById('lblCycle').innerText = `Adım: ${{realStepIndex + 1}} / ${{realMaxSteps}}`;
-      }} else if (simMode === 'combined') {{
-        document.getElementById('lblCycle').innerText = `Döngü: ${{combinedCycle}}`;
+      }} else {{
+        document.getElementById('lblCycle').innerText = `Adım: ${{Math.floor(realProgress) + 1}} / ${{realMaxSteps}}`;
       }}
 
       drawPhaseSpace();
@@ -1224,7 +1300,6 @@ html_content = f"""<!DOCTYPE html>
     }}
 
     initSyntheticParticles();
-    initCombinedParticles();
     buildZModRing();
     requestAnimationFrame(loop);
   </script>
