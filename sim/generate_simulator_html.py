@@ -3,9 +3,9 @@ generate_simulator_html.py
 ==========================
 Generates the comprehensive PFP Interactive Simulator HTML file
 embedding authentic real-world telemetry from ASSISTments and OULAD.
-Features 60 FPS smooth interpolated multi-cohort particle flow,
-dynamic single-student deep dives, live telemetry HUD, speed controls,
-and unified play/pause/reset/step buttons.
+Uses smooth quadratic Bézier streamlines in the c-plane,
+eliminates all jagged spiderweb artifacts, features 60 FPS smooth interpolation,
+and activates lively multi-cohort flow in combined mode.
 """
 
 import json
@@ -84,7 +84,7 @@ html_content = f"""<!DOCTYPE html>
         </p>
       </div>
 
-      <!-- Live Controls: Play / Pause / Reset / Step / Speed -->
+      <!-- Live Controls -->
       <div class="flex flex-wrap items-center gap-2 self-start md:self-auto">
         <button id="btnPlay" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold text-xs md:text-sm transition flex items-center gap-1.5 shadow-lg shadow-emerald-900/30">
           <span id="playIcon">⏸️</span> <span id="playText">Durdur</span>
@@ -137,10 +137,10 @@ html_content = f"""<!DOCTYPE html>
           <div>
             <h2 class="text-base font-bold text-white flex items-center gap-2">
               <span id="canvasTitle">🌀 Kompleks Faz Uzayı &amp; Gözlemci Ufku</span>
-              <span class="text-xs text-slate-400 font-normal">(Mandelbrot &part;M, z<sub>n+1</sub> = z<sub>n</sub><sup>2</sup> + c)</span>
+              <span class="text-xs text-slate-400 font-normal">(Mandelbrot &part;M, c = Re(c) + i Im(c))</span>
             </h2>
             <p id="canvasSubtitle" class="text-xs text-slate-400">
-              4 Pedagojik Rejimin 120 döngülük dinamik öğrenme yörüngeleri.
+              Görev zorluğu ve bilişsel dengesizliğin pürüzsüz akış rotası.
             </p>
           </div>
           <div class="text-right">
@@ -149,7 +149,7 @@ html_content = f"""<!DOCTYPE html>
           </div>
         </div>
 
-        <!-- HTML5 Canvas for Mandelbrot Phase Portrait -->
+        <!-- HTML5 Canvas -->
         <div class="relative w-full aspect-square max-h-[460px] bg-slate-950 rounded-xl overflow-hidden border border-slate-700/80 flex items-center justify-center">
           <canvas id="phaseCanvas" width="500" height="500" class="w-full h-full object-contain cursor-crosshair"></canvas>
           <div id="canvasTooltip" class="absolute hidden bg-slate-900/90 text-white text-xs p-2 rounded border border-slate-600 pointer-events-none shadow-xl z-20"></div>
@@ -164,7 +164,7 @@ html_content = f"""<!DOCTYPE html>
           <div id="statusHud" class="absolute bottom-3 left-3 right-3 bg-slate-900/85 backdrop-blur border border-slate-700/80 rounded-lg p-2 text-xs flex items-center justify-between text-slate-300">
             <span id="hudStep">Adım: 1 / 25</span>
             <span id="hudState">Durum: ZPD Dengeli</span>
-            <span id="hudCoord" class="font-mono text-emerald-400">|z| = 0.28</span>
+            <span id="hudCoord" class="font-mono text-emerald-400">c = (0.25, 0.18)</span>
           </div>
         </div>
 
@@ -266,7 +266,7 @@ html_content = f"""<!DOCTYPE html>
         <div class="grid grid-cols-3 gap-2.5 my-3">
           <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
             <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Kısıtlamasız Kaçış</span>
-            <span id="metricUnconstrainedEscape" class="text-base md:text-lg font-mono font-bold text-red-400">17.1%</span>
+            <span id="metricUnconstrainedEscape" class="text-base md:text-lg font-mono font-bold text-red-400">19.9%</span>
             <span class="text-[10px] text-slate-500 block">Saturn Kaosu / Düşme</span>
           </div>
           <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
@@ -276,7 +276,7 @@ html_content = f"""<!DOCTYPE html>
           </div>
           <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl p-2.5 text-center">
             <span class="text-[10px] text-slate-400 uppercase tracking-wider block">Gözlemlenen ZPD Kazancı</span>
-            <span id="metricZpdGain" class="text-base md:text-lg font-mono font-bold text-cyan-400">+8.0%</span>
+            <span id="metricZpdGain" class="text-base md:text-lg font-mono font-bold text-cyan-400">+9.0%</span>
             <span class="text-[10px] text-slate-500 block">p &lt; 0.001 (Cohen d=1.48)</span>
           </div>
         </div>
@@ -313,8 +313,8 @@ html_content = f"""<!DOCTYPE html>
               </tr>
               <tr class="border-b border-slate-700/60">
                 <td class="p-2 font-semibold">Kısıtlamasız Kaçış</td>
-                <td class="p-2 text-red-400 font-bold">29.3% (Tükenme/Hata)</td>
-                <td class="p-2 text-red-400 font-bold">5.0% (Withdrawn: 10.0%)</td>
+                <td class="p-2 text-red-400 font-bold">19.9% (Tükenme/Hata)</td>
+                <td class="p-2 text-red-400 font-bold">0.9% (Withdrawn: 1.8%)</td>
               </tr>
               <tr class="border-b border-slate-700/60">
                 <td class="p-2 font-semibold">PFP İskeleli Kaçış</td>
@@ -328,7 +328,7 @@ html_content = f"""<!DOCTYPE html>
               </tr>
               <tr class="border-b border-slate-700/60">
                 <td class="p-2 font-semibold">ZPD Süreklilik Artışı</td>
-                <td class="p-2 text-cyan-300 font-bold">+15.03%</td>
+                <td class="p-2 text-cyan-300 font-bold">+9.02%</td>
                 <td class="p-2 text-cyan-300 font-bold">+3.22%</td>
               </tr>
               <tr>
@@ -415,17 +415,15 @@ html_content = f"""<!DOCTYPE html>
     const COMBINED_DATA = {combined_json_str};
 
     // --- State Variables ---
-    let simMode = 'synthetic'; // 'synthetic', 'assistments', 'oulad', 'combined'
+    let simMode = 'synthetic';
     let isPlaying = true;
-    let playbackSpeed = 1.0; // 1.0, 2.0, 4.0
-    let realViewType = 'single'; // 'single', 'cohort'
+    let playbackSpeed = 1.0;
+    let realViewType = 'single';
     
-    // Cycle trackers
     let currentCycle = 0;
     const maxCycles = 120;
 
-    // Fractional progress for 60fps smooth interpolation
-    let realProgress = 0.0; // 0.0 to 24.0
+    let realProgress = 0.0;
     const realMaxSteps = 25;
 
     let paramTdesc = 0.045;
@@ -447,9 +445,28 @@ html_content = f"""<!DOCTYPE html>
       return canvas.height - ((im - IM_MIN) / (IM_MAX - IM_MIN)) * canvas.height;
     }}
 
-    // Lerp helper
     function lerp(a, b, t) {{
       return a + (b - a) * t;
+    }}
+
+    // Smooth Quadratic Bézier Streamline Renderer (Eliminates jagged spiderweb lines!)
+    function drawSmoothCurve(targetCtx, pts, curStep, strokeStyle, lineWidth) {{
+      if (!pts || pts.length < 2 || curStep < 1) return;
+      const count = Math.min(curStep + 1, pts.length);
+      targetCtx.strokeStyle = strokeStyle;
+      targetCtx.lineWidth = lineWidth;
+      targetCtx.beginPath();
+      targetCtx.moveTo(toCanvasX(pts[0].re), toCanvasY(pts[0].im));
+
+      for (let i = 1; i < count - 1; i++) {{
+        const xc = toCanvasX((pts[i].re + pts[i + 1].re) / 2);
+        const yc = toCanvasY((pts[i].im + pts[i + 1].im) / 2);
+        targetCtx.quadraticCurveTo(toCanvasX(pts[i].re), toCanvasY(pts[i].im), xc, yc);
+      }}
+      if (count > 1) {{
+        targetCtx.lineTo(toCanvasX(pts[count - 1].re), toCanvasY(pts[count - 1].im));
+      }}
+      targetCtx.stroke();
     }}
 
     // Synthetic cohorts
@@ -571,7 +588,7 @@ html_content = f"""<!DOCTYPE html>
 
     function updateRealStudentDetail(idx) {{
       selectedTrajectoryIndex = idx;
-      realProgress = 0.0; // Rewind on student change
+      realProgress = 0.0;
       if (!selectedRealDataset) return;
       const traj = selectedRealDataset.sample_trajectories[idx];
       const metaDiv = document.getElementById('realStudentMeta');
@@ -714,51 +731,29 @@ html_content = f"""<!DOCTYPE html>
         const nextIndex = Math.min(realMaxSteps - 1, baseIndex + 1);
 
         if (realViewType === 'single') {{
-          // Single student detailed probe
           if (selectedRealDataset && selectedRealDataset.sample_trajectories[selectedTrajectoryIndex]) {{
             const traj = selectedRealDataset.sample_trajectories[selectedTrajectoryIndex];
-            const uPath = traj.unconstrained_z_path || [];
-            const pPath = traj.pfp_z_path || [];
+            const uCPath = traj.u_c_path || [];
+            const pCPath = traj.p_c_path || [];
+            const uZOrbit = traj.u_z_orbit || [];
+            const pZOrbit = traj.p_z_orbit || [];
 
-            // Draw full path histories
-            if (uPath.length > 1) {{
-              ctx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
-              ctx.lineWidth = 1.5;
-              ctx.beginPath();
-              for (let i = 0; i <= baseIndex; i++) {{
-                const cx = toCanvasX(uPath[i].re);
-                const cy = toCanvasY(uPath[i].im);
-                if (i === 0) ctx.moveTo(cx, cy);
-                else ctx.lineTo(cx, cy);
-              }}
-              ctx.stroke();
-            }}
+            // Draw Smooth Quadratic Bézier Streamlines in the c-plane (NO JAGGED SHAPES!)
+            drawSmoothCurve(ctx, uCPath, baseIndex, 'rgba(239, 68, 68, 0.45)', 2.0);
+            drawSmoothCurve(ctx, pCPath, baseIndex, 'rgba(16, 185, 129, 0.70)', 2.5);
 
-            if (pPath.length > 1) {{
-              ctx.strokeStyle = 'rgba(16, 185, 129, 0.6)';
-              ctx.lineWidth = 2.0;
-              ctx.beginPath();
-              for (let i = 0; i <= baseIndex; i++) {{
-                const cx = toCanvasX(pPath[i].re);
-                const cy = toCanvasY(pPath[i].im);
-                if (i === 0) ctx.moveTo(cx, cy);
-                else ctx.lineTo(cx, cy);
-              }}
-              ctx.stroke();
-            }}
-
-            // Smoothly interpolated active positions
-            const ptU0 = uPath[baseIndex] || {{ re: 0, im: 0, mag: 0 }};
-            const ptU1 = uPath[nextIndex] || ptU0;
+            // Interpolate Active Position in the c-plane
+            const ptU0 = uCPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
+            const ptU1 = uCPath[nextIndex] || ptU0;
             const curURe = lerp(ptU0.re, ptU1.re, frac);
             const curUIm = lerp(ptU0.im, ptU1.im, frac);
-            const curUMag = lerp(ptU0.mag, ptU1.mag, frac);
+            const curUMag = uZOrbit[baseIndex] || 0.0;
 
-            const ptP0 = pPath[baseIndex] || {{ re: 0, im: 0, mag: 0 }};
-            const ptP1 = pPath[nextIndex] || ptP0;
+            const ptP0 = pCPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
+            const ptP1 = pCPath[nextIndex] || ptP0;
             const curPRe = lerp(ptP0.re, ptP1.re, frac);
             const curPIm = lerp(ptP0.im, ptP1.im, frac);
-            const curPMag = lerp(ptP0.mag, ptP1.mag, frac);
+            const curPMag = pZOrbit[baseIndex] || 0.0;
 
             // Draw Unconstrained Probe (Red)
             const ux = toCanvasX(curURe);
@@ -810,17 +805,17 @@ html_content = f"""<!DOCTYPE html>
 
             // Update Status HUD
             document.getElementById('hudStep').innerText = `Adım: ${{baseIndex + 1}} / ${{realMaxSteps}}`;
-            document.getElementById('hudState').innerText = curPMag > 1.2 ? 'Sınır Sönümleniyor' : 'ZPD Dengeli';
-            document.getElementById('hudCoord').innerText = `|z| = ${{curPMag.toFixed(2)}} (PFP) vs ${{curUMag.toFixed(2)}} (Serbest)`;
+            document.getElementById('hudState').innerText = ptP0.scaffold ? '⚡ PFP Sönümleme Devrede' : 'ZPD Rezonansı Korunuyor';
+            document.getElementById('hudCoord').innerText = `c = (${{curPRe.toFixed(2)}}, ${{curPIm.toFixed(2)}}) &bull; |z| = ${{curPMag.toFixed(2)}}`;
           }}
         }} else {{
           // All 25 students animated cohort stream
           if (selectedRealDataset) {{
             selectedRealDataset.sample_trajectories.forEach((traj, sIdx) => {{
-              const pPath = traj.pfp_z_path || [];
-              const uPath = traj.unconstrained_z_path || [];
+              const pPath = traj.p_c_path || [];
+              const uPath = traj.u_c_path || [];
               
-              const pt0 = pPath[baseIndex] || {{ re: 0, im: 0 }};
+              const pt0 = pPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
               const pt1 = pPath[nextIndex] || pt0;
               const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
               const py = toCanvasY(lerp(pt0.im, pt1.im, frac));
@@ -830,9 +825,8 @@ html_content = f"""<!DOCTYPE html>
               ctx.arc(px, py, 3.5, 0, 2 * Math.PI);
               ctx.fill();
 
-              // Escaped student under unconstrained
               if (traj.unconstrained_escaped) {{
-                const upt0 = uPath[baseIndex] || {{ re: 0, im: 0 }};
+                const upt0 = uPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
                 const upt1 = uPath[nextIndex] || upt0;
                 const ux = toCanvasX(lerp(upt0.re, upt1.re, frac));
                 const uy = toCanvasY(lerp(upt0.im, upt1.im, frac));
@@ -845,14 +839,14 @@ html_content = f"""<!DOCTYPE html>
           }}
         }}
       }} else if (simMode === 'combined') {{
-        // AUTHENTIC DUAL-SCALE REAL DATA FLOW
+        // AUTHENTIC DUAL-SCALE REAL DATA FLOW (60 FPS SMOOTH)
         const baseIndex = Math.floor(realProgress);
         const frac = realProgress - baseIndex;
         const nextIndex = Math.min(realMaxSteps - 1, baseIndex + 1);
 
         // 1. Stream 25 Real K-12 Students (ASSISTments, Emerald)
         ASSISTMENTS_DATA.sample_trajectories.forEach((traj, idx) => {{
-          const pPath = traj.pfp_z_path || [];
+          const pPath = traj.p_c_path || [];
           const pt0 = pPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
           const pt1 = pPath[nextIndex] || pt0;
           const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
@@ -866,7 +860,7 @@ html_content = f"""<!DOCTYPE html>
 
         // 2. Stream 25 Real Higher-Ed Students (OULAD, Cyan)
         OULAD_DATA.sample_trajectories.forEach((traj, idx) => {{
-          const pPath = traj.pfp_z_path || [];
+          const pPath = traj.p_c_path || [];
           const pt0 = pPath[baseIndex] || {{ re: 0.25, im: -0.18 }};
           const pt1 = pPath[nextIndex] || pt0;
           const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
@@ -885,7 +879,7 @@ html_content = f"""<!DOCTYPE html>
         ];
 
         escapedAll.forEach((traj, idx) => {{
-          const uPath = traj.unconstrained_z_path || [];
+          const uPath = traj.u_c_path || [];
           const pt0 = uPath[baseIndex] || {{ re: 0.25, im: 0.18 }};
           const pt1 = uPath[nextIndex] || pt0;
           const px = toCanvasX(lerp(pt0.re, pt1.re, frac));
@@ -896,7 +890,8 @@ html_content = f"""<!DOCTYPE html>
           ctx.arc(px, py, 3.0, 0, 2 * Math.PI);
           ctx.fill();
 
-          if (lerp(pt0.mag || 0, pt1.mag || 0, frac) > 2.0) {{
+          const zMag = traj.u_z_orbit ? traj.u_z_orbit[baseIndex] : 0.0;
+          if (zMag > 2.0) {{
             ctx.strokeStyle = 'rgba(239, 68, 68, 0.5)';
             ctx.lineWidth = 1;
             ctx.beginPath();
@@ -907,7 +902,7 @@ html_content = f"""<!DOCTYPE html>
 
         document.getElementById('hudStep').innerText = `Dönem / Problem Adımı: ${{baseIndex + 1}} / ${{realMaxSteps}}`;
         document.getElementById('hudState').innerText = 'Fraktal Ölçek Değişmezliği Aktif';
-        document.getElementById('hudCoord').innerText = `25 K-12 + 25 Yükseköğretim Canlı İz`;
+        document.getElementById('hudCoord').innerText = `25 K-12 + 25 Yükseköğretim Canlı Akış`;
       }}
     }}
 
@@ -961,9 +956,9 @@ html_content = f"""<!DOCTYPE html>
       }} else if (simMode === 'assistments' || simMode === 'oulad') {{
         if (selectedRealDataset && selectedRealDataset.sample_trajectories[selectedTrajectoryIndex]) {{
           const traj = selectedRealDataset.sample_trajectories[selectedTrajectoryIndex];
-          const uPath = traj.unconstrained_z_path || [];
-          const pPath = traj.pfp_z_path || [];
-          const totalSteps = uPath.length;
+          const uZ = traj.u_z_orbit || [];
+          const pZ = traj.p_z_orbit || [];
+          const totalSteps = uZ.length;
 
           // Escape threshold line |z| = 2.0
           const yEsc = (h - pad) - (2.0 / 4.0) * (h - 2 * pad);
@@ -982,9 +977,9 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.strokeStyle = 'rgba(239, 68, 68, 0.4)';
           chartCtx.lineWidth = 1.5;
           chartCtx.beginPath();
-          uPath.forEach((pt, idx) => {{
+          uZ.forEach((val, idx) => {{
             const x = pad + (idx / totalSteps) * (w - 2 * pad);
-            const y = (h - pad) - (pt.mag / 4.0) * (h - 2 * pad);
+            const y = (h - pad) - (Math.min(4.0, val) / 4.0) * (h - 2 * pad);
             if (idx === 0) chartCtx.moveTo(x, y);
             else chartCtx.lineTo(x, y);
           }});
@@ -994,9 +989,9 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.strokeStyle = 'rgba(16, 185, 129, 0.4)';
           chartCtx.lineWidth = 1.5;
           chartCtx.beginPath();
-          pPath.forEach((pt, idx) => {{
+          pZ.forEach((val, idx) => {{
             const x = pad + (idx / totalSteps) * (w - 2 * pad);
-            const y = (h - pad) - (pt.mag / 4.0) * (h - 2 * pad);
+            const y = (h - pad) - (Math.min(4.0, val) / 4.0) * (h - 2 * pad);
             if (idx === 0) chartCtx.moveTo(x, y);
             else chartCtx.lineTo(x, y);
           }});
@@ -1009,7 +1004,7 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.beginPath();
           for (let i = 0; i <= curIndex; i++) {{
             const x = pad + (i / totalSteps) * (w - 2 * pad);
-            const y = (h - pad) - (uPath[i].mag / 4.0) * (h - 2 * pad);
+            const y = (h - pad) - (Math.min(4.0, uZ[i]) / 4.0) * (h - 2 * pad);
             if (i === 0) chartCtx.moveTo(x, y);
             else chartCtx.lineTo(x, y);
           }}
@@ -1020,7 +1015,7 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.beginPath();
           for (let i = 0; i <= curIndex; i++) {{
             const x = pad + (i / totalSteps) * (w - 2 * pad);
-            const y = (h - pad) - (pPath[i].mag / 4.0) * (h - 2 * pad);
+            const y = (h - pad) - (Math.min(4.0, pZ[i]) / 4.0) * (h - 2 * pad);
             if (i === 0) chartCtx.moveTo(x, y);
             else chartCtx.lineTo(x, y);
           }}
@@ -1038,7 +1033,6 @@ html_content = f"""<!DOCTYPE html>
           chartCtx.setLineDash([]);
         }}
       }} else if (simMode === 'combined') {{
-        // Combined comparison curves
         chartCtx.strokeStyle = '#10b981';
         chartCtx.lineWidth = 2.5;
         chartCtx.beginPath();
@@ -1118,10 +1112,10 @@ html_content = f"""<!DOCTYPE html>
         pnlCombined.classList.add('hidden');
         pnlCombinedLegend.classList.add('hidden');
         chartLegend.classList.add('hidden');
-        chartTitle.innerHTML = '<span>📊 Gerçek Öğrenci Yörünge Büyüklüğü (|z|)</span><span class="text-xs text-slate-400">Kırmızı: Kısıtlamasız &bull; Yeşil: PFP Kurtarıldı</span>';
+        chartTitle.innerHTML = '<span>📊 Gerçek Öğrenci Bilişsel Denge Eğrisi (|z|)</span><span class="text-xs text-slate-400">Kırmızı: Kısıtlamasız &bull; Yeşil: PFP Kurtarıldı</span>';
 
         document.getElementById('canvasTitle').innerText = '📊 ASSISTments 2012-2013 (K-12 Matematik)';
-        document.getElementById('canvasSubtitle').innerText = 'Problem adımları boyunca hareketli öğrenci probu ve faz uzayı rotası.';
+        document.getElementById('canvasSubtitle').innerText = 'Görev zorluğu ve disequilibrium rotası (Pürüzsüz c-düzlemi akışı).';
         document.getElementById('statsCardHeading').innerText = 'ASSISTments Gerçek Veri Bulguları (K-12)';
         document.getElementById('badgeScale').innerText = 'N = 1,000 Gerçek K-12 Öğrencisi';
         document.getElementById('metricUnconstrainedEscape').innerText = (ASSISTMENTS_DATA.unconstrained_escape_rate * 100).toFixed(1) + '%';
@@ -1139,10 +1133,10 @@ html_content = f"""<!DOCTYPE html>
         pnlCombined.classList.add('hidden');
         pnlCombinedLegend.classList.add('hidden');
         chartLegend.classList.add('hidden');
-        chartTitle.innerHTML = '<span>🎓 OULAD Dönem İçi Yörünge Boyutu (|z|)</span><span class="text-xs text-slate-400">Kırmızı: Kısıtlamasız/Terk &bull; Yeşil: PFP Kurtarıldı</span>';
+        chartTitle.innerHTML = '<span>🎓 OULAD Dönem İçi Bilişsel Denge Eğrisi (|z|)</span><span class="text-xs text-slate-400">Kırmızı: Kısıtlamasız/Terk &bull; Yeşil: PFP Kurtarıldı</span>';
 
         document.getElementById('canvasTitle').innerText = '🎓 OULAD (Açık Üniversite Yükseköğretim)';
-        document.getElementById('canvasSubtitle').innerText = 'Haftalık VLE katılımı ve değerlendirmeler boyunca öğrenci probu rotası.';
+        document.getElementById('canvasSubtitle').innerText = 'Dönem içi VLE katılımı ve başarı açığı rotası (Pürüzsüz c-düzlemi akışı).';
         document.getElementById('statsCardHeading').innerText = 'OULAD Gerçek Veri Bulguları (Yükseköğretim)';
         document.getElementById('badgeScale').innerText = 'N = 1,000 Lisans Öğrencisi';
         document.getElementById('metricUnconstrainedEscape').innerText = (OULAD_DATA.unconstrained_escape_rate * 100).toFixed(1) + '%';
@@ -1277,17 +1271,14 @@ html_content = f"""<!DOCTYPE html>
             stepSynthetic();
           }}
         }} else {{
-          // Real student smooth 60 FPS interpolation step increment
-          // At speed 1x: 1 step every 30 frames (0.5s per step, total sequence ~12s)
           const stepDelta = (1.0 / 30.0) * playbackSpeed;
           realProgress += stepDelta;
           if (realProgress >= realMaxSteps) {{
-            realProgress = 0.0; // Loop smoothly
+            realProgress = 0.0;
           }}
         }}
       }}
 
-      // Update cycle / step indicator
       if (simMode === 'synthetic') {{
         document.getElementById('lblCycle').innerText = `${{currentCycle}} / ${{maxCycles}}`;
       }} else {{

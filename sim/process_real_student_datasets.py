@@ -23,85 +23,143 @@ DATA_DIR = r"c:\Users\TeknoSanat_3\Documents\antigravity\goofy-pasteur\data"
 
 os.makedirs(DATA_DIR, exist_ok=True)
 
-def simulate_student_orbit(c_series, apply_pfp_damping=False):
+def smooth_path(pts, alpha=0.35):
+    """Applies exponential moving average to smooth trajectory points."""
+    if not pts:
+        return []
+    smoothed = []
+    curr_re = pts[0]["re"]
+    curr_im = pts[0]["im"]
+    for p in pts:
+        curr_re = curr_re * (1.0 - alpha) + p["re"] * alpha
+        curr_im = curr_im * (1.0 - alpha) + p["im"] * alpha
+        smoothed.append({
+            "re": round(curr_re, 4),
+            "im": round(curr_im, 4),
+            "mag": p.get("mag", 0.0),
+            "scaffold": p.get("scaffold", False)
+        })
+    return smoothed
+
+def simulate_student_curriculum(raw_c_series):
     """
-    Simulates z_{n+1} = z_n^2 + c_n representing the learner's internal cognitive
-    phase state under educational perturbation c_n.
+    Simulates both unconstrained and PFP-damped educational pathways:
+    c_t is the pedagogical coordinate (task difficulty Re(c), cognitive disequilibrium Im(c)).
+    z_{n+1} = z_n^2 + c_n evaluates internal cognitive stability.
     """
-    z = complex(0.0, 0.0)
-    z_path = []
-    c_recorded = []
-    escaped = False
-    escape_step = -1
-    zpd_steps = 0
-    scaffold_interventions = 0
-    lyapunov_sum = 0.0
+    SHOULDER_UPPER = complex(0.25, 0.18)
+    SHOULDER_LOWER = complex(0.25, -0.18)
+    
+    # Choose shoulder based on student hemisphere
+    initial_im = raw_c_series[0].imag if raw_c_series else 0.18
+    target_shoulder = SHOULDER_UPPER if initial_im >= 0 else SHOULDER_LOWER
 
-    for step, c in enumerate(c_series):
-        scaffold_triggered = False
-        if apply_pfp_damping and abs(z) > 1.0:
-            # PFP boundary damping: reset to dissipative resonance locus
-            sign_im = 1.0 if c.imag >= 0 else -1.0
-            c = complex(0.25, sign_im * 0.18)
-            # Cognitive scaffolding: halve accumulated disequilibrium
-            z = z * 0.45
-            scaffold_interventions += 1
-            scaffold_triggered = True
+    # 1. Unconstrained Pathway
+    u_c_path = []
+    u_z_orbit = []
+    z_u = complex(0.0, 0.0)
+    u_escaped = False
+    u_escape_step = -1
+    u_zpd_steps = 0
 
-        c_recorded.append({"re": round(c.real, 4), "im": round(c.imag, 4)})
+    curr_u_c = raw_c_series[0] if raw_c_series else target_shoulder
 
-        if abs(z) > 4.0:
-            # Cap magnitude to avoid float overflow
-            z_path.append({
-                "re": round(z.real if abs(z.real) < 4.0 else 4.0, 3),
-                "im": round(z.imag if abs(z.imag) < 4.0 else 4.0, 3),
-                "mag": 4.0,
-                "scaffold": scaffold_triggered
-            })
-            if not escaped:
-                escaped = True
-                escape_step = step
+    for step, raw_c in enumerate(raw_c_series):
+        # In unconstrained, difficulty and frustration accumulate without restoration
+        curr_u_c = curr_u_c * 0.70 + raw_c * 0.30
+        u_c_path.append({"re": round(curr_u_c.real, 4), "im": round(curr_u_c.imag, 4)})
+
+        if abs(z_u) > 4.0:
+            u_z_orbit.append(4.0)
+            if not u_escaped:
+                u_escaped = True
+                u_escape_step = step
             continue
 
         try:
-            z = z**2 + c
-            mod_z = abs(z)
+            z_u = z_u**2 + curr_u_c
+            mod_z = abs(z_u)
         except (OverflowError, ZeroDivisionError):
             mod_z = 4.0
-            z = complex(4.0, 0.0)
+            z_u = complex(4.0, 0.0)
 
-        capped_mag = min(mod_z, 4.0)
-        z_path.append({
-            "re": round(z.real, 3),
-            "im": round(z.imag, 3),
-            "mag": round(capped_mag, 3),
-            "scaffold": scaffold_triggered
+        capped = min(mod_z, 4.0)
+        u_z_orbit.append(round(capped, 3))
+        if 0.1 <= mod_z <= 1.2:
+            u_zpd_steps += 1
+        if mod_z > 2.0 and not u_escaped:
+            u_escaped = True
+            u_escape_step = step
+
+    # 2. PFP Damped Pathway
+    p_c_path = []
+    p_z_orbit = []
+    z_p = complex(0.0, 0.0)
+    p_escaped = False
+    p_escape_step = -1
+    p_zpd_steps = 0
+    scaffold_count = 0
+
+    curr_p_c = raw_c_series[0] if raw_c_series else target_shoulder
+
+    for step, raw_c in enumerate(raw_c_series):
+        scaffold_active = False
+
+        # Observer Horizon damping toward target shoulder
+        dist_to_shoulder = abs(curr_p_c - target_shoulder)
+        if dist_to_shoulder > 0.12 or abs(z_p) > 1.0:
+            # Active boundary damping: clamp difficulty, guide disequilibrium, scaffold z
+            restored_re = 0.25 * 0.65 + curr_p_c.real * 0.35
+            restored_im = target_shoulder.imag * 0.65 + curr_p_c.imag * 0.35
+            curr_p_c = complex(restored_re, restored_im)
+            z_p = z_p * 0.45
+            scaffold_count += 1
+            scaffold_active = True
+        else:
+            # Gentle normal learning step
+            curr_p_c = curr_p_c * 0.65 + raw_c * 0.35 - 0.25 * (curr_p_c - target_shoulder)
+
+        p_c_path.append({
+            "re": round(curr_p_c.real, 4),
+            "im": round(curr_p_c.imag, 4),
+            "scaffold": scaffold_active
         })
 
+        if abs(z_p) > 4.0:
+            p_z_orbit.append(4.0)
+            if not p_escaped:
+                p_escaped = True
+                p_escape_step = step
+            continue
+
+        try:
+            z_p = z_p**2 + curr_p_c
+            mod_z = abs(z_p)
+        except (OverflowError, ZeroDivisionError):
+            mod_z = 4.0
+            z_p = complex(4.0, 0.0)
+
+        capped = min(mod_z, 4.0)
+        p_z_orbit.append(round(capped, 3))
         if 0.1 <= mod_z <= 1.2:
-            zpd_steps += 1
+            p_zpd_steps += 1
+        if mod_z > 2.0 and not p_escaped:
+            p_escaped = True
+            p_escape_step = step
 
-        derivative = 2.0 * mod_z
-        if 0.001 < derivative < 50.0:
-            lyapunov_sum += math.log(derivative)
-
-        if mod_z > 2.0 and not escaped:
-            escaped = True
-            escape_step = step
-
-    total_steps = len(c_series)
-    zpd_ratio = zpd_steps / total_steps if total_steps > 0 else 0.0
-    mean_lyapunov = lyapunov_sum / total_steps if total_steps > 0 else 0.0
-
+    total_steps = len(raw_c_series)
     return {
-        "z_path": z_path,
-        "c_recorded": c_recorded,
-        "escaped": escaped,
-        "escape_step": escape_step,
-        "scaffold_interventions": scaffold_interventions,
-        "zpd_ratio": zpd_ratio,
-        "mean_lyapunov": mean_lyapunov,
-        "final_magnitude": min(abs(z), 4.0)
+        "u_c_path": smooth_path(u_c_path, alpha=0.40),
+        "p_c_path": smooth_path(p_c_path, alpha=0.40),
+        "u_z_orbit": u_z_orbit,
+        "p_z_orbit": p_z_orbit,
+        "u_escaped": u_escaped,
+        "p_escaped": p_escaped,
+        "u_escape_step": u_escape_step,
+        "p_escape_step": p_escape_step,
+        "u_zpd_ratio": u_zpd_steps / total_steps if total_steps > 0 else 0.0,
+        "p_zpd_ratio": p_zpd_steps / total_steps if total_steps > 0 else 0.0,
+        "scaffold_count": scaffold_count
     }
 
 def process_assistments(sample_size=1000, target_trajectory_len=25):
@@ -157,50 +215,48 @@ def process_assistments(sample_size=1000, target_trajectory_len=25):
 
     for idx, uid in enumerate(selected_uids):
         raw_steps = student_steps[uid][:target_trajectory_len]
-        c_series = []
+        raw_c_series = []
         
         cum_err = 0.0
-        # Choose consistent sign for this student's exploration lobe
         hemisphere = 1.0 if (hash(uid) % 2 == 0) else -1.0
 
         for st in raw_steps:
             if st["correct"] < 0.5:
-                cum_err = min(0.42, cum_err + 0.09)
+                cum_err = min(0.45, cum_err + 0.09)
             else:
                 cum_err = max(-0.15, cum_err - 0.04)
             
             re_c = 0.25 + cum_err
 
-            # Affect perturbation
-            affect_perturbation = (st["frustrated"] * 0.45 + st["confused"] * 0.30 - st["concentrating"] * 0.20)
+            affect_perturbation = (st["frustrated"] * 0.40 + st["confused"] * 0.25 - st["concentrating"] * 0.15)
             hint_perturbation = min(0.25, (st["hints"] / (st["attempts"] + 1.0)) * 0.20)
-            
             im_c = (0.18 + affect_perturbation + hint_perturbation) * hemisphere
-            c_series.append(complex(re_c, im_c))
+            
+            raw_c_series.append(complex(re_c, im_c))
 
-        res_unconst = simulate_student_orbit(c_series, apply_pfp_damping=False)
-        res_pfp = simulate_student_orbit(c_series, apply_pfp_damping=True)
+        sim_res = simulate_student_curriculum(raw_c_series)
 
-        if res_unconst["escaped"]:
+        if sim_res["u_escaped"]:
             unconstrained_escapes += 1
-        if res_pfp["escaped"]:
+        if sim_res["p_escaped"]:
             pfp_escapes += 1
 
-        unconstrained_zpd_sum += res_unconst["zpd_ratio"]
-        pfp_zpd_sum += res_pfp["zpd_ratio"]
-        total_interventions += res_pfp["scaffold_interventions"]
+        unconstrained_zpd_sum += sim_res["u_zpd_ratio"]
+        pfp_zpd_sum += sim_res["p_zpd_ratio"]
+        total_interventions += sim_res["scaffold_count"]
 
         if idx < 25:
             sample_trajectories.append({
                 "student_id": str(uid),
                 "accuracy": round(sum(s["correct"] for s in raw_steps) / len(raw_steps), 3),
                 "mean_frustration": round(sum(s["frustrated"] for s in raw_steps) / len(raw_steps), 3),
-                "unconstrained_z_path": res_unconst["z_path"],
-                "pfp_z_path": res_pfp["z_path"],
-                "unconstrained_escaped": res_unconst["escaped"],
-                "pfp_escaped": res_pfp["escaped"],
-                "scaffold_interventions": res_pfp["scaffold_interventions"],
-                "c_trajectory": res_unconst["c_recorded"]
+                "u_c_path": sim_res["u_c_path"],
+                "p_c_path": sim_res["p_c_path"],
+                "u_z_orbit": sim_res["u_z_orbit"],
+                "p_z_orbit": sim_res["p_z_orbit"],
+                "unconstrained_escaped": sim_res["u_escaped"],
+                "pfp_escaped": sim_res["p_escaped"],
+                "scaffold_interventions": sim_res["scaffold_count"]
             })
 
     n = len(selected_uids)
@@ -287,7 +343,7 @@ def process_oulad(sample_size=1000, target_trajectory_len=25):
         sorted_days = sorted(vle_dict.keys())
         mean_score = sum(student_scores[uid]) / len(student_scores[uid]) if student_scores[uid] else 50.0
 
-        c_series = []
+        raw_c_series = []
         min_day = sorted_days[0]
         max_day = sorted_days[-1]
         day_range = max(1, max_day - min_day)
@@ -310,35 +366,35 @@ def process_oulad(sample_size=1000, target_trajectory_len=25):
                 volatility = abs(norm_clicks - 2.8) * 0.08
                 im_c = 0.18 + volatility
 
-            c_series.append(complex(re_c, hemisphere * im_c))
+            raw_c_series.append(complex(re_c, hemisphere * im_c))
 
-        res_unconst = simulate_student_orbit(c_series, apply_pfp_damping=False)
-        res_pfp = simulate_student_orbit(c_series, apply_pfp_damping=True)
+        sim_res = simulate_student_curriculum(raw_c_series)
 
-        if res_unconst["escaped"]:
+        if sim_res["u_escaped"]:
             unconstrained_escapes += 1
             if outcome in ("Fail", "Withdrawn"):
                 drop_escapes += 1
             else:
                 pass_escapes += 1
-        if res_pfp["escaped"]:
+        if sim_res["p_escaped"]:
             pfp_escapes += 1
 
-        unconstrained_zpd_sum += res_unconst["zpd_ratio"]
-        pfp_zpd_sum += res_pfp["zpd_ratio"]
-        total_interventions += res_pfp["scaffold_interventions"]
+        unconstrained_zpd_sum += sim_res["u_zpd_ratio"]
+        pfp_zpd_sum += sim_res["p_zpd_ratio"]
+        total_interventions += sim_res["scaffold_count"]
 
         if idx < 25:
             sample_trajectories.append({
                 "student_id": str(uid),
                 "outcome": outcome,
                 "mean_score": round(mean_score, 1),
-                "unconstrained_z_path": res_unconst["z_path"],
-                "pfp_z_path": res_pfp["z_path"],
-                "unconstrained_escaped": res_unconst["escaped"],
-                "pfp_escaped": res_pfp["escaped"],
-                "scaffold_interventions": res_pfp["scaffold_interventions"],
-                "c_trajectory": res_unconst["c_recorded"]
+                "u_c_path": sim_res["u_c_path"],
+                "p_c_path": sim_res["p_c_path"],
+                "u_z_orbit": sim_res["u_z_orbit"],
+                "p_z_orbit": sim_res["p_z_orbit"],
+                "unconstrained_escaped": sim_res["u_escaped"],
+                "pfp_escaped": sim_res["p_escaped"],
+                "scaffold_interventions": sim_res["scaffold_count"]
             })
 
     n = len(selected_uids)
