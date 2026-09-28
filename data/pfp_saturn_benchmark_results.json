@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "framework": "Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0)",
+    "framework": "Procedural Fractal Pedagogy (PFP / Werredu v1.0)",
     "authors": [
       "Zerrin Dağlı",
       "Volkan Dağlı",
@@ -327,7 +327,7 @@
         ]
       }
     },
-    "PFP_WERR_Edu": {
+    "PFP_Werredu": {
       "time_on_task_pct": {
         "mean": 94.19,
         "sd": 0.14,

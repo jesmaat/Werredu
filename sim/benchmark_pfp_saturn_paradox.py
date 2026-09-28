@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0)
+Procedural Fractal Pedagogy (PFP / Werredu v1.0)
 Official Empirical Benchmark & High-Resolution Figure Generator
 
 Paper: "Procedural Fractal Pedagogy: Resolving the Saturn School Disequilibrium
@@ -109,7 +109,7 @@ def simulate_four_regimes():
     Runs the 4-arm comparative pedagogical simulation across 5 seeds (N = 1,000 total).
     Returns aggregated metrics and step-by-step trajectories.
     """
-    regimes = ["Saturn_Unconstrained", "Factory_Lockstep", "Cloud_LLM_Tutor", "PFP_WERR_Edu"]
+    regimes = ["Saturn_Unconstrained", "Factory_Lockstep", "Cloud_LLM_Tutor", "PFP_Werredu"]
     per_seed_metrics = {r: {
         "time_on_task_pct": [],
         "zpd_residence_pct": [],
@@ -217,7 +217,7 @@ def simulate_four_regimes():
                             mastery += 0.74 * (1.0 if in_zpd else 0.42)
                             stress = max(1.2, stress * 0.96 + 0.18)
 
-                    elif r == "PFP_WERR_Edu":
+                    elif r == "PFP_Werredu":
                         # Procedural Fractal Pedagogy (24-byte seed + T_desc=0.045 + Omega_tunneling + Z/9Z Kernel)
                         res = tripod_harmonic_evaluation(c, zoom)
                         lat_list.append(max(0.45, res["latency_ms"] * 14.2 + rng.normal(1.78, 0.18)))
@@ -318,13 +318,13 @@ def simulate_four_regimes():
     for baseline in ["Saturn_Unconstrained", "Factory_Lockstep", "Cloud_LLM_Tutor"]:
         comparisons[f"PFP_vs_{baseline}"] = {}
         for metric in ["time_on_task_pct", "zpd_residence_pct", "mastery_gain", "cognitive_stress_index"]:
-            a = np.array(per_seed_metrics["PFP_WERR_Edu"][metric])
+            a = np.array(per_seed_metrics["PFP_Werredu"][metric])
             b = np.array(per_seed_metrics[baseline][metric])
             diff = a - b
             t_stat, p_val = stats.ttest_rel(a, b)
             d_seed = float(np.mean(diff) / (np.std(diff, ddof=1) + 1e-9))
 
-            sa = np.array(per_seed_metrics["PFP_WERR_Edu"]["student_pool"][metric])
+            sa = np.array(per_seed_metrics["PFP_Werredu"]["student_pool"][metric])
             sb = np.array(per_seed_metrics[baseline]["student_pool"][metric])
             s_pooled = float(np.sqrt((np.var(sa, ddof=1) + np.var(sb, ddof=1)) / 2.0))
             d_student = float((np.mean(sa) - np.mean(sb)) / (s_pooled + 1e-9))
@@ -462,8 +462,8 @@ def plot_fig2_saturn_paradox_trajectories(step_histories, stress_histories):
     steps = np.arange(1, T_STEPS + 1)
 
     styles = {
-        "PFP_WERR_Edu": {
-            "label": "PFP / WERR-Edu (24-Byte Seed, Ours)",
+        "PFP_Werredu": {
+            "label": "PFP / Werredu (24-Byte Seed, Ours)",
             "color": "#059669", "ls": "-", "lw": 2.4
         },
         "Cloud_LLM_Tutor": {
@@ -579,8 +579,8 @@ def plot_fig4_edge_latency_memory_pareto():
         "Local 8B LLM (142.0 ms)",
         "Quantized 4B Edge GPU (28.5 ms)",
         "Deep Knowledge Tracing DKT (14.2 ms)",
-        "PFP / WERR-Edu Tripod (2.32 ms)",
-        "PFP / WERR-Edu Z/9Z Kernel (0.48 ms)",
+        "PFP / Werredu Tripod (2.32 ms)",
+        "PFP / Werredu Z/9Z Kernel (0.48 ms)",
     ]
     latencies = [312.0, 142.0, 28.5, 14.2, 2.32, 0.48]
     retentions = [88.96, 84.10, 79.40, 75.80, 94.19, 92.45]
@@ -590,7 +590,7 @@ def plot_fig4_edge_latency_memory_pareto():
     for arch, lat, ret, col, sz in zip(architectures, latencies, retentions, colors, sizes):
         ax1.scatter([lat], [ret], s=sz, c=col, edgecolors="black", linewidth=1.4, zorder=5, label=arch)
 
-    ax1.annotate("PFP / WERR-Edu\n(2.32 ms, 94.19% ToT, 0 VRAM)", xy=(2.32, 94.19), xytext=(5.5, 95.8),
+    ax1.annotate("PFP / Werredu\n(2.32 ms, 94.19% ToT, 0 VRAM)", xy=(2.32, 94.19), xytext=(5.5, 95.8),
                  arrowprops=dict(arrowstyle="->", lw=1.5, color="#059669"),
                  fontsize=8.2, fontweight="bold", color="#065f46")
     ax1.annotate("Cloud LLM Tutor\n(312.0 ms, 88.96% ToT)", xy=(312.0, 88.96), xytext=(42.0, 90.5),
@@ -638,7 +638,7 @@ def main():
     # Save JSON telemetry
     results_payload = {
         "metadata": {
-            "framework": "Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0)",
+            "framework": "Procedural Fractal Pedagogy (PFP / Werredu v1.0)",
             "authors": ["Zerrin Dağlı", "Volkan Dağlı", "Dağhan Dağlı"],
             "patent_priority": "TÜRKPATENT TR 2026/016285",
             "companion_dois": [

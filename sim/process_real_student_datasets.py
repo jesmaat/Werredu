@@ -1,7 +1,7 @@
 """
 process_real_student_datasets.py
 ================================
-Real-World Empirical Validation Pipeline for Procedural Fractal Pedagogy (PFP / WERR-Edu)
+Real-World Empirical Validation Pipeline for Procedural Fractal Pedagogy (PFP / Werredu)
 Datasets:
 1. ASSISTments 2012-2013 (K-12 Mathematics, Micro-Step Scaffolding, N > 50,000 students)
 2. OULAD (Open University Learning Analytics Dataset, Higher-Ed Macro Persistence, N > 32,000 students)

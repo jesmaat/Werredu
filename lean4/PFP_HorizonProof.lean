@@ -1,5 +1,5 @@
 /-
-  Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0)
+  Procedural Fractal Pedagogy (PFP / Werredu v1.0)
   Interactive Formal Verification Module in Lean 4 (Zero `sorry` Axioms)
 
   Paper: "Procedural Fractal Pedagogy: Resolving the Saturn School Disequilibrium

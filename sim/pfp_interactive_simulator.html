@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PFP / WERR-Edu v1.0 — Çok Ölçekli Faz Uzayı ve Ampirik Simülatör</title>
+  <title>PFP / Werredu v1.0 — Çok Ölçekli Faz Uzayı ve Ampirik Simülatör</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
     .slider-thumb::-webkit-slider-thumb {
@@ -32,7 +32,7 @@
       <div>
         <div class="flex flex-wrap items-center gap-2 mb-1.5">
           <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-            WERR-Edu v1.0 Motoru
+            Werredu v1.0 Motoru
           </span>
           <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
             Lean 4 Resmi Kanıtlı (0 sorry)
@@ -141,7 +141,7 @@
           <span class="text-slate-400 font-semibold">Aktif Rejimler:</span>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkPFP" checked class="accent-emerald-500">
-            <span class="text-emerald-400 font-bold">● PFP / WERR-Edu (Bizim)</span>
+            <span class="text-emerald-400 font-bold">● PFP / Werredu (Bizim)</span>
           </label>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkSaturn" checked class="accent-red-500">
@@ -208,7 +208,7 @@
           <canvas id="timeOnTaskChart" width="600" height="170" class="w-full h-full"></canvas>
         </div>
         <div id="chartLegend" class="mt-2 flex items-center justify-center gap-4 text-xs">
-          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> PFP / WERR-Edu (Kararlı)</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> PFP / Werredu (Kararlı)</span>
           <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-red-400 inline-block"></span> Kısıtlamasız / Serbest</span>
           <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-amber-400 inline-block"></span> Fabrika Modeli</span>
           <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-blue-400 inline-block"></span> Bulut LLM</span>
@@ -439,7 +439,7 @@
 
     // Synthetic cohorts
     const cohorts = {
-      PFP_WERR_Edu: { color: '#10b981', particles: [], totHistory: [], active: true },
+      PFP_Werredu: { color: '#10b981', particles: [], totHistory: [], active: true },
       Saturn_Unconstrained: { color: '#ef4444', particles: [], totHistory: [], active: true },
       Factory_Lockstep: { color: '#f59e0b', particles: [], totHistory: [], active: true },
       Cloud_LLM_Tutor: { color: '#3b82f6', particles: [], totHistory: [], active: true }
@@ -501,7 +501,7 @@
             }
             const dist = Math.hypot(p.re - p.sh.re, p.im - p.sh.im);
             p.onTask = dist < 0.22 && (!spike || Math.random() > 0.4);
-          } else if (k === 'PFP_WERR_Edu') {
+          } else if (k === 'PFP_Werredu') {
             const dRe = sRe * (spike ? paramTdesc : 0.28);
             const dIm = sIm * (spike ? paramTdesc : 0.28);
             p.re += dRe - paramKappa * (p.re - p.sh.re);
@@ -689,7 +689,7 @@
 
             ctx.fillStyle = c.color;
             ctx.beginPath();
-            ctx.arc(px, py, key === 'PFP_WERR_Edu' ? 3.5 : 2.5, 0, 2 * Math.PI);
+            ctx.arc(px, py, key === 'PFP_Werredu' ? 3.5 : 2.5, 0, 2 * Math.PI);
             ctx.fill();
           });
         }
@@ -911,7 +911,7 @@
           const c = cohorts[key];
           if (!c.active || c.totHistory.length < 2) continue;
           chartCtx.strokeStyle = c.color;
-          chartCtx.lineWidth = key === 'PFP_WERR_Edu' ? 2.5 : 1.5;
+          chartCtx.lineWidth = key === 'PFP_Werredu' ? 2.5 : 1.5;
           chartCtx.beginPath();
           c.totHistory.forEach((val, idx) => {
             const x = pad + (idx / maxCycles) * (w - 2 * pad);
@@ -1141,7 +1141,7 @@
     document.getElementById('tabRealOulad').addEventListener('click', () => setSimulationMode('oulad'));
     document.getElementById('tabCombined').addEventListener('click', () => setSimulationMode('combined'));
     document.getElementById('tabLean4').addEventListener('click', () => {
-      window.open('https://github.com/jesmaat/werr-edu/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
+      window.open('https://github.com/jesmaat/Werredu/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
     });
 
     // Controls
@@ -1198,7 +1198,7 @@
     });
 
     // Regimes
-    document.getElementById('chkPFP').addEventListener('change', e => cohorts.PFP_WERR_Edu.active = e.target.checked);
+    document.getElementById('chkPFP').addEventListener('change', e => cohorts.PFP_Werredu.active = e.target.checked);
     document.getElementById('chkSaturn').addEventListener('change', e => cohorts.Saturn_Unconstrained.active = e.target.checked);
     document.getElementById('chkFactory').addEventListener('change', e => cohorts.Factory_Lockstep.active = e.target.checked);
     document.getElementById('chkCloud').addEventListener('change', e => cohorts.Cloud_LLM_Tutor.active = e.target.checked);

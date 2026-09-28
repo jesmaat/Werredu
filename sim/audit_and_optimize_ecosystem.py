@@ -50,9 +50,9 @@ ECOSYSTEM_OPTIMIZATION_MAP = {
             "formal-verification", "mandelbrot", "web3", "zero-storage"
         ]
     },
-    "werr-edu": {
+    "Werredu": {
         "tier": "Tier 1: Core Foundation",
-        "description": "Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0): Zero-Storage Mandelbrot Boundary Reflexes & Lean 4 Formal Verification for AIED",
+        "description": "Procedural Fractal Pedagogy (PFP / Werredu v1.0): Zero-Storage Mandelbrot Boundary Reflexes & Lean 4 Formal Verification for AIED",
         "homepage": "https://doi.org/10.5281/zenodo.22774934",
         "topics": [
             "aied", "intelligent-tutoring-systems", "educational-technology", "chaos-theory", "complex-systems",

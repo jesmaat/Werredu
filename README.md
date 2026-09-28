@@ -1,4 +1,4 @@
-# ⚡ Procedural Fractal Pedagogy (`PFP` / `WERR-Edu` v1.0)
+# ⚡ Procedural Fractal Pedagogy (`PFP` / `Werredu` v1.0)
 
 **Resolving the Saturn School Disequilibrium Paradox in Self-Directed AI Education via Zero-Storage Mandelbrot Boundary Reflexes**
 
@@ -32,7 +32,7 @@ Contemporary Artificial Intelligence in Education (AIED) and Intelligent Tutorin
 1. **The AIED Memory & Latency Wall:** Cloud-hosted Large Language Models (LLMs) require $4\text{--}80\text{ GB}$ of VRAM, incur $>300\text{ ms}$ latency, expose student PII, and suffer from stochastic pedagogical hallucinations.
 2. **The Saturn School Disequilibrium Paradox (Reigeluth, 2008, p. 34; Bennett & King, 1991):** While educational complexity theory posits that cognitive *disequilibrium* and learner autonomy are essential for self-organization, unconstrained self-directed learning in real classrooms causes severe reductions in *time-on-task* and learning outcomes.
 
-**Procedural Fractal Pedagogy (`PFP` / `WERR-Edu`)** resolves both crises simultaneously:
+**Procedural Fractal Pedagogy (`PFP` / `Werredu`)** resolves both crises simultaneously:
 * **Observer Horizon ZPD Corridor:** Formalizes Vygotsky's Zone of Proximal Development (ZPD) and Reigeluth's disequilibrium corridor at the Mandelbrot sub-boundary resonance shoulders $X_{\text{upper}} = (0.25, +0.18)$ and $X_{\text{lower}} = (0.25, -0.18)$ along $\partial\mathcal{M}$ ($z_{n+1} = z_n^2 + c$).
 * **Zero-Storage 24-Byte Student Seed:** Replaces gigabyte-scale neural tensors with an $O(1)$ 24-byte student coordinate seed $\Theta_{\text{student}} = (c_x, c_y, \text{zoom})$, executing in **$2.32\text{ ms}$** on standard CPUs with **$0\text{ Bytes}$ persistent VRAM**.
 * **Three-Operator Stabilization Kernel:** Combines an Information-Theoretic Semantic Token Damping Filter ($T_{\text{desc}} = 0.045$), a Biomimetic Perturbed Jump Operator ($\Omega_{\text{tunneling}}$), and a 3-Scale Harmonic Tripod evaluator ($0.60\times, 1.00\times, 1.60\times$) to eliminate both Saturn School off-task drift and factory-model rote stagnation.
@@ -47,7 +47,7 @@ Contemporary Artificial Intelligence in Education (AIED) and Intelligent Tutorin
 | **1. Unconstrained Self-Directed** *(Saturn School Baseline)* | `11.68 ± 0.31` | `6.04 ± 0.30` | `4.37 ± 0.16` | `88.32 ± 0.31` | `327.51 ± 1.12` | `0.06` |
 | **2. Factory-Model Linear Lockstep** *(Forced Erasure $L \to 0$)* | `74.20 ± 0.12` | `18.47 ± 0.20` | `32.64 ± 0.04` | `25.80 ± 0.12` | `437.84 ± 3.65` | `0.03` |
 | **3. Cloud LLM / DKT Adaptive Tutor** *(Dense Tensor Baseline)* | `88.96 ± 0.49` | `82.53 ± 0.63` | `74.20 ± 0.49` | `11.04 ± 0.49` | `9.10 ± 0.32` | `312.00` |
-| **4. PFP / `WERR-Edu` v1.0 (Ours, 24-Byte Seed, 0 VRAM)** | **`94.19 ± 0.14`** | **`89.24 ± 0.13`** | **`93.04 ± 0.07`** | **`5.81 ± 0.14`** | **`1.29 ± 0.00`** | **`2.32`** |
+| **4. PFP / `Werredu` v1.0 (Ours, 24-Byte Seed, 0 VRAM)** | **`94.19 ± 0.14`** | **`89.24 ± 0.13`** | **`93.04 ± 0.07`** | **`5.81 ± 0.14`** | **`1.29 ± 0.00`** | **`2.32`** |
 
 ---
 
@@ -55,7 +55,7 @@ Contemporary Artificial Intelligence in Education (AIED) and Intelligent Tutorin
 
 **Prosedürel Fraktal Pedagoji: Yapay Zekâ Destekli Öz-Yönelimli Eğitimde Satürn Okulu Dengesizlik Paradoksunun Sıfır-Depolamalı Mandelbrot Sınır Refleksleriyle Çözümü**
 
-Günümüz uyarlanabilir eğitim sistemleri (AIED), bulut tabanlı Büyük Dil Modellerinin (LLM) ağır bellek ve gecikme duvarı ($4\text{--}80\text{ GB}$ VRAM, $>300\text{ ms}$ gecikme) ile Charles M. Reigeluth’ın (2008, s. 34) karmaşıklık kuramında itiraf ettiği **Satürn Okulu Paradoksu** (*Bennett ve King, 1991*; öğrenciye sınır sönümlemesi olmadan öz-yönelim verildiğinde görev başında geçirilen sürenin ve öğrenmenin çökmesi) arasında sıkışmıştır. Bu kurucu (tohum) makalede, doğrusal olmayan sınır dinamikleri ve sıfır-depolamalı nöral sentez üzerine önceki çalışmalarımız (*OED, Mandelbrot Fraktal Nöral Sentezi, WERR v2.0, Wormhole Error-Kernel Invariants*) eğitim bilimlerine uyarlanarak **Prosedürel Fraktal Pedagoji (`PFP` / `WERR-Edu`)** mimarisi inşa edilmiştir.
+Günümüz uyarlanabilir eğitim sistemleri (AIED), bulut tabanlı Büyük Dil Modellerinin (LLM) ağır bellek ve gecikme duvarı ($4\text{--}80\text{ GB}$ VRAM, $>300\text{ ms}$ gecikme) ile Charles M. Reigeluth’ın (2008, s. 34) karmaşıklık kuramında itiraf ettiği **Satürn Okulu Paradoksu** (*Bennett ve King, 1991*; öğrenciye sınır sönümlemesi olmadan öz-yönelim verildiğinde görev başında geçirilen sürenin ve öğrenmenin çökmesi) arasında sıkışmıştır. Bu kurucu (tohum) makalede, doğrusal olmayan sınır dinamikleri ve sıfır-depolamalı nöral sentez üzerine önceki çalışmalarımız (*OED, Mandelbrot Fraktal Nöral Sentezi, WERR v2.0, Wormhole Error-Kernel Invariants*) eğitim bilimlerine uyarlanarak **Prosedürel Fraktal Pedagoji (`PFP` / `Werredu`)** mimarisi inşa edilmiştir.
 
 ---
 
@@ -86,7 +86,7 @@ Günümüz uyarlanabilir eğitim sistemleri (AIED), bulut tabanlı Büyük Dil M
 │   └── PFP_HorizonProof.lean                       # Lean 4 Interactive Formal Verification (0 sorry)
 └── zenodo_dist/
     ├── Procedural_Fractal_Pedagogy_Seed_Paper_v1.pdf
-    ├── zenodo_bundle_pfp_werr_edu_v1.zip           # Ready-to-upload Zenodo Replication Bundle
+    ├── zenodo_bundle_pfp_werredu_v1.zip           # Ready-to-upload Zenodo Replication Bundle
     └── arxiv_submission_pfp_v1.zip                 # Ready-to-upload arXiv LaTeX Source Bundle
 ```
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Automated GitHub Publisher for werr-edu (Private Repository)
+Automated GitHub Publisher for Werredu (Private Repository)
 and Ecosystem Metadata Synchronizer for pCwOrM.
 """
 
@@ -13,8 +13,8 @@ import urllib.request
 import urllib.error
 
 GH_USERNAME = "jesmaat"
-REPO_NAME = "werr-edu"
-REPO_DESC = "Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0): Zero-Storage Mandelbrot Boundary Reflexes & Lean 4 Formal Verification for AIED"
+REPO_NAME = "Werredu"
+REPO_DESC = "Procedural Fractal Pedagogy (PFP / Werredu v1.0): Zero-Storage Mandelbrot Boundary Reflexes & Lean 4 Formal Verification for AIED"
 HOMEPAGE = "https://doi.org/10.5281/zenodo.22774934"
 
 TOPICS = [
@@ -146,6 +146,6 @@ if __name__ == "__main__":
         create_and_push_with_pat(sys.argv[1], is_private=True)
     else:
         print("Usage:")
-        print("  1. python scripts/push_werr_edu.py <GITHUB_PERSONAL_ACCESS_TOKEN>")
+        print("  1. python scripts/push_werredu.py <GITHUB_PERSONAL_ACCESS_TOKEN>")
         print("  or")
         print("  2. Authenticate GitHub CLI once: & 'C:\\Program Files\\GitHub CLI\\gh.exe' auth login -w")

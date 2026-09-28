@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Cryptographic SHA-256 Sealer and Zenodo / arXiv Archive Packager
-for Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0).
+for Procedural Fractal Pedagogy (PFP / Werredu v1.0).
 """
 
 import os
@@ -62,7 +62,7 @@ def main():
 
     master_seal = combined_hasher.hexdigest()
     seal_manifest = {
-        "package": "Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0) — Zenodo & CAEAI Replication Suite",
+        "package": "Procedural Fractal Pedagogy (PFP / Werredu v1.0) — Zenodo & CAEAI Replication Suite",
         "authors": [
             {"name": "Zerrin Dağlı", "orcid": "0000-0001-9490-6425"},
             {"name": "Volkan Dağlı", "orcid": "0009-0000-1587-8703"},
@@ -84,7 +84,7 @@ def main():
     shutil.copy2(pdf_src, pdf_dst)
 
     # 2. Build Zenodo Replication Bundle ZIP
-    zenodo_zip_path = os.path.join(DIST_DIR, "zenodo_bundle_pfp_werr_edu_v1.zip")
+    zenodo_zip_path = os.path.join(DIST_DIR, "zenodo_bundle_pfp_werredu_v1.zip")
     with zipfile.ZipFile(zenodo_zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for rel_path in FILES_TO_SEAL + ["SEAL_MANIFEST.json", "sim/package_zenodo_bundle.py"]:
             abs_path = os.path.join(BASE_DIR, rel_path.replace("/", os.sep))

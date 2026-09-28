@@ -1,16 +1,16 @@
-# 📘 Procedural Fractal Pedagogy (PFP / WERR-Edu v1.0)
+# 📘 Procedural Fractal Pedagogy (PFP / Werredu v1.0)
 ## Interactive Phase-Space Simulator & Empirical Replay Engine — Technical Manual
 
 **Authors:** Dr. Zerrin Dağlı (First & Corresponding Author, Mersin University) • Volkan Dağlı (Anadolu University & ITouch Systems) • Dağhan Dağlı (Toros Science College)  
 **Priority Patent:** TÜRKPATENT `TR 2026/016285`  
-**Open Science Repositories:** [GitHub (`jesmaat/werr-edu`)](https://github.com/jesmaat/werr-edu) • Zenodo Preprint Series  
+**Open Science Repositories:** [GitHub (`jesmaat/Werredu`)](https://github.com/jesmaat/Werredu) • Zenodo Preprint Series  
 **Target Q1 Venue:** *Computers & Education: Artificial Intelligence* (Elsevier)
 
 ---
 
 ## 1. Executive Summary & Purpose of the Simulator
 
-The **PFP / WERR-Edu v1.0 Interactive Simulator** (`sim/pfp_interactive_simulator.html`) is an open-source, publication-grade computational laboratory designed to demonstrate, analyze, and empirically validate the resolution of the **Saturn School Disequilibrium Paradox** (Bennett & King, 1991; Reigeluth, 2008, p. 34) in self-directed AI-supported education.
+The **PFP / Werredu v1.0 Interactive Simulator** (`sim/pfp_interactive_simulator.html`) is an open-source, publication-grade computational laboratory designed to demonstrate, analyze, and empirically validate the resolution of the **Saturn School Disequilibrium Paradox** (Bennett & King, 1991; Reigeluth, 2008, p. 34) in self-directed AI-supported education.
 
 The simulator provides:
 1. **Real-time Complex Phase-Space Visualization:** Renders individual student cognitive trajectories across the Mandelbrot boundary ($\partial\mathcal{M}$, $z_{n+1} = z_n^2 + c$), demarcating the interior Factory-Model Stagnation Basin, the exterior chaotic Saturn Drift Zone ($|z| > 2.0$), and the conjugate **Observer Horizon ZPD Resonance Shoulders** $X_{\text{upper/lower}} = (0.25, \pm 0.18)$.
@@ -92,7 +92,7 @@ sim/pfp_interactive_simulator.html
 | **1. Saturn_Unconstrained** | Red (`#ef4444`) | Undamped random walk ($\gamma = 1.0, \kappa = 0$). Off-task shocks trigger Euler escape across $|z| > 2.0$, dropping active cohort retention to $11.68\% \pm 0.31\%$. |
 | **2. Factory_Lockstep** | Amber (`#f59e0b`) | Clamped to deep interior fixed point ($c \approx -0.10 + 0.00i$). Rote compliance ($74.20\%$) with only $18.47\%$ ZPD residence and high stress ($437.84$). |
 | **3. Cloud_LLM_Tutor** | Blue (`#3b82f6`) | Simulated 312 ms latency, partial ($36\%$) susceptibility to conversational prompt-drift during distraction spikes ($88.96\%$ retention). |
-| **4. PFP / WERR-Edu (Ours)** | Emerald (`#10b981`) | Full 3-operator kernel ($T_{\text{desc}} = 0.045$, $\kappa = 0.44$, $\Omega_{\text{tunneling}}$ phase jumps). Sustains **$94.19\% \pm 0.14\%$ retention** and **$89.24\%$ ZPD residence**. |
+| **4. PFP / Werredu (Ours)** | Emerald (`#10b981`) | Full 3-operator kernel ($T_{\text{desc}} = 0.045$, $\kappa = 0.44$, $\Omega_{\text{tunneling}}$ phase jumps). Sustains **$94.19\% \pm 0.14\%$ retention** and **$89.24\%$ ZPD residence**. |
 
 ---
 
