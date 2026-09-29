@@ -15,19 +15,19 @@
     }
   ],
   "patent_priority": "TÜRKPATENT TR 2026/016285",
-  "timestamp_utc": "2026-09-29T08:32:23.022669+00:00",
-  "master_merkle_sha256": "4b497a4875531838628877cb70013c93c322a2dc1e9b29a4b2d6e2973efbbb8b",
+  "timestamp_utc": "2026-09-29T09:29:17.730192+00:00",
+  "master_merkle_sha256": "906d320f6ec056f71c35727d13383a652ab1748a54fd576df671153081b797f7",
   "files": {
     "Procedural_Fractal_Pedagogy_Seed_Paper_v1.pdf": {
-      "sha256": "dad517cfbfa9280fd7a90e9975eeefbd2a2aad9980152d7eef93cbecf95ff3ec",
+      "sha256": "a0cc0cbacbb41813b9ffc473a92c03c998e517b1614cf50922c3c00557ea85d4",
       "size_bytes": 2561032
     },
     ".zenodo.json": {
-      "sha256": "0c1aebb3f21ae260ba02ac965555ac686c9b30edfbbe9250583d9d19e2568d02",
-      "size_bytes": 14290
+      "sha256": "5204e1caedd75ddf7e47313e558da7de5f7734643b6cd9f96ba0e3930127e230",
+      "size_bytes": 14413
     },
     "README.md": {
-      "sha256": "1c68bc7d3924a96e8c83a9a04b859927aa2a8f43d1b6d6de2778fc6d6fa21e63",
+      "sha256": "7f6efe5d9a4bee5d5acd185ce013b31e65018eb7ae80491c34a193277502ad83",
       "size_bytes": 10788
     },
     "PFP_SIMULATOR_CONCEPTUAL_GUIDE.md": {
@@ -39,20 +39,20 @@
       "size_bytes": 15798
     },
     "ZENODO_ARXIV_Q1_YUKLEME_REHBERI.md": {
-      "sha256": "9d1923afed5211f8e21f68cdfba11ec082fa32f6e628c9f9bdd046f03808d9e9",
-      "size_bytes": 16465
+      "sha256": "ce152f4610a051b8ced6ccc3e8c2ea46eb718b107fead2192d9292afda2bd45d",
+      "size_bytes": 16469
     },
     "HAKEM_SAVUNMASI_ZPD_GEOMETRI_REBUTTAL.html": {
       "sha256": "ee9122a29ee5ca1b67e7a6ff6dde5900dba4e92c2b84438a111e06afe554ea61",
       "size_bytes": 28357
     },
     "latex/main.tex": {
-      "sha256": "800e357d5b13ad3492bd408fb7fb9070954287e8abb93b4da99f86d47cfcc561",
-      "size_bytes": 44424
+      "sha256": "a510306d62f0f7332912fe7cd0713bf6ed1833f3be9d3fd67d5f7cc43fcc5b2c",
+      "size_bytes": 46045
     },
     "latex/references.bib": {
-      "sha256": "8065cc3180dccacfaa10e7a98eb5ffd961712581c320850c3bcc559421558716",
-      "size_bytes": 7815
+      "sha256": "3b0c490cb7259c3a99064dcc4c04de2a36773e5c3a32bb998557c310bdd2948c",
+      "size_bytes": 8359
     },
     "latex/camera_ready_manuscript.html": {
       "sha256": "9d81b9c24f45a0c40a9fee21411d5690c57530e0c1cca0887249ca186d4d785c",
@@ -71,8 +71,8 @@
       "size_bytes": 3855
     },
     "werr/pedagogy.py": {
-      "sha256": "e5b21c31323a4ccccdfd2aa53786af29502062a617168f1ab34230ab4e2fdb2e",
-      "size_bytes": 7261
+      "sha256": "3b890b4d6092f264c91ab98a4e593cbacdf05257d381954079d899bda850e539",
+      "size_bytes": 8802
     },
     "werr/engine.py": {
       "sha256": "4e63d432d613963b7e0f179c97a6355bd7f09ce0997b6964e220399e1f9dcc02",
@@ -103,8 +103,8 @@
       "size_bytes": 8862
     },
     "tests/test_werredu_werr_core.py": {
-      "sha256": "1d81ebc25e57ed48b7db17f1e691aaeaaf01f641614362fd713e0248a9413155",
-      "size_bytes": 7009
+      "sha256": "22bf8419f0de6cf40c053cd0ebed4f63d2c523eba06a0ca224e82c97bc91e4ef",
+      "size_bytes": 7979
     },
     "sim/benchmark_pfp_saturn_paradox.py": {
       "sha256": "ff160d2b9dc101fc2676b719e72dcbf03fa3cc4c3684d2bf6aa14b26d1081372",
@@ -119,12 +119,12 @@
       "size_bytes": 246353
     },
     "data/pfp_saturn_benchmark_results.json": {
-      "sha256": "40a2ccb7dd0c47059a0f2c464d8cc0908fdf3394226d0e0fc5ca96fa27df6ab3",
-      "size_bytes": 11378
+      "sha256": "ecaf2358554d5a8dc09d9348ffd4d3faa6c6189910e3c97f1bc6b830e02c72b8",
+      "size_bytes": 11379
     },
     "data/pfp_student_trajectories_summary.csv": {
-      "sha256": "3381ed7793ea6142154bfaf0d9501b091cfaf75920ef85228312f3d24b38c5ee",
-      "size_bytes": 1239
+      "sha256": "50cc7ce76ffb3ae9ce6b673f5d2dd505c9a91d02bcef25051359abc80f1b8b0f",
+      "size_bytes": 1240
     },
     "figures/fig1_observer_horizon_zpd.png": {
       "sha256": "bdff111156da97c50a41f5927eca99d8662c6eb5a519dba7a2d65e84626d7863",

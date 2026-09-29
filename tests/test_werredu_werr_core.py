@@ -172,6 +172,24 @@ class TestPFPPedagogicalOperators(unittest.TestCase):
         self.assertGreater(orb_x, 0.0)
         self.assertGreater(compute_orbital_recurrence_entropy(X_UPPER), 0.0)
 
+    def test_fixed_point_multiplier_and_radial_ontology(self):
+        from werr.pedagogy import compute_fixed_point_multiplier
+        
+        # 1. Super-attracting rote origin c = 0 -> |lambda| = 0.0
+        lam_0 = compute_fixed_point_multiplier(0j)
+        self.assertAlmostEqual(abs(lam_0), 0.0, places=7)
+
+        # 2. ZPD resonance shoulders X_upper/lower -> |lambda| = sqrt(0.52) approx 0.7211
+        lam_upper = compute_fixed_point_multiplier(X_UPPER)
+        self.assertAlmostEqual(lam_upper.real, 0.40, places=2)
+        self.assertAlmostEqual(abs(lam_upper.imag), 0.60, places=2)
+        self.assertAlmostEqual(abs(lam_upper), np.sqrt(0.52), places=3)
+        self.assertLess(abs(lam_upper), 1.0)  # Must be strictly inside stable cardioid basin
+
+        # 3. Boundary separatrix c = 0.25 + 0.50i -> |lambda| = 1.0
+        lam_boundary = compute_fixed_point_multiplier(complex(0.25, 0.50))
+        self.assertAlmostEqual(abs(lam_boundary), 1.0, places=3)
+
 
 if __name__ == "__main__":
     unittest.main()
