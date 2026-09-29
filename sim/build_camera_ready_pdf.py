@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Camera-Ready Academic PDF Builder for Procedural Fractal Pedagogy (PFP / Werredu v1.0)
+Camera-Ready Academic PDF Builder for Procedural Fractal Pedagogy (PFP / WerreduR v1.0)
 Renders an Elsevier CAEAI / IEEE publication-grade manuscript with balanced two-column
 blocks, embedded 300-DPI figures, and mathematical typography directly to PDF via Headless Chrome.
 """

@@ -88,7 +88,7 @@ __all__ = [
     "is_resonant_subideal_i3",
     "neutralize_modular_perturbation",
     "verify_gap0331_invariants",
-    # PFP / Werredu v1.0 Pedagogical Operators
+    # PFP / WerreduR v1.0 Pedagogical Operators
     "ObserverHorizonZPD",
     "SemanticTokenDampingFilter",
     "BiomimeticPerturbedJumpOperator",

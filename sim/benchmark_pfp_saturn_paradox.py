@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Procedural Fractal Pedagogy (PFP / Werredu v1.0)
+Procedural Fractal Pedagogy (PFP / WerreduR v1.0)
 Official Empirical Benchmark & High-Resolution Figure Generator
 
 Paper: "Procedural Fractal Pedagogy: Resolving the Saturn School Disequilibrium
@@ -508,7 +508,7 @@ def plot_fig2_saturn_paradox_trajectories(step_histories, stress_histories):
 
     styles = {
         "PFP_Werredu": {
-            "label": "PFP / Werredu (24-Byte Seed, Ours)",
+            "label": "PFP / WerreduR (24-Byte Seed, Ours)",
             "color": "#059669", "ls": "-", "lw": 2.4
         },
         "Cloud_LLM_Tutor": {
@@ -624,8 +624,8 @@ def plot_fig4_edge_latency_memory_pareto():
         "Local 8B LLM (142.0 ms)",
         "Quantized 4B Edge GPU (28.5 ms)",
         "Deep Knowledge Tracing DKT (14.2 ms)",
-        "PFP / Werredu Tripod (2.32 ms)",
-        "PFP / Werredu Z/9Z Kernel (0.48 ms)",
+        "PFP / WerreduR Tripod (2.32 ms)",
+        "PFP / WerreduR Z/9Z Kernel (0.48 ms)",
     ]
     latencies = [312.0, 142.0, 28.5, 14.2, 2.32, 0.48]
     retentions = [88.96, 84.10, 79.40, 75.80, 94.19, 92.45]
@@ -635,7 +635,7 @@ def plot_fig4_edge_latency_memory_pareto():
     for arch, lat, ret, col, sz in zip(architectures, latencies, retentions, colors, sizes):
         ax1.scatter([lat], [ret], s=sz, c=col, edgecolors="black", linewidth=1.4, zorder=5, label=arch)
 
-    ax1.annotate("PFP / Werredu\n(2.32 ms, 94.19% ToT, 0 VRAM)", xy=(2.32, 94.19), xytext=(5.5, 95.8),
+    ax1.annotate("PFP / WerreduR\n(2.32 ms, 94.19% ToT, 0 VRAM)", xy=(2.32, 94.19), xytext=(5.5, 95.8),
                  arrowprops=dict(arrowstyle="->", lw=1.5, color="#059669"),
                  fontsize=8.2, fontweight="bold", color="#065f46")
     ax1.annotate("Cloud LLM Tutor\n(312.0 ms, 88.96% ToT)", xy=(312.0, 88.96), xytext=(42.0, 90.5),
@@ -683,7 +683,7 @@ def main():
     # Save JSON telemetry
     results_payload = {
         "metadata": {
-            "framework": "Procedural Fractal Pedagogy (PFP / Werredu v1.0)",
+            "framework": "Procedural Fractal Pedagogy (PFP / WerreduR v1.0)",
             "authors": ["Zerrin Dağlı", "Volkan Dağlı", "Dağhan Dağlı"],
             "patent_priority": "TÜRKPATENT TR 2026/016285",
             "companion_dois": [
