@@ -1,8 +1,8 @@
-# ⚡ Procedural Fractal Pedagogy (`PFP` / `Werredu` v2.0)
+# ⚡ Procedural Fractal Pedagogy (`PFP` / `Werredu` v3.0)
 
 **Resolving the Saturn School Disequilibrium Paradox in Self-Directed AI Education via Zero-Storage Mandelbrot Boundary Reflexes**
 
-[![Zenodo DOI (v2.0)](https://img.shields.io/badge/Zenodo%20DOI%20(v2.0)-10.5281%2Fzenodo.23025916-blue.svg)](https://doi.org/10.5281/zenodo.23025916)
+[![Zenodo DOI (v3.0)](https://img.shields.io/badge/Zenodo%20DOI%20(v3.0)-10.5281%2Fzenodo.23034488-blue.svg)](https://doi.org/10.5281/zenodo.23034488)
 [![Concept DOI](https://img.shields.io/badge/Concept%20DOI-10.5281%2Fzenodo.22999420-indigo.svg)](https://doi.org/10.5281/zenodo.22999420)
 [![GitHub: jesmaat/Werredu](https://img.shields.io/badge/GitHub-jesmaat%2FWerredu-181717.svg?logo=github)](https://github.com/jesmaat/Werredu)
 [![Referee Rebuttal & ZPD Geometry](https://img.shields.io/badge/Referee%20Rebuttal-ZPD%20Geometry%20%7C%20%7C%CE%BB%7C%20%E2%89%88%200.72-emerald.svg)](./HAKEM_SAVUNMASI_ZPD_GEOMETRI_REBUTTAL.html)
@@ -21,7 +21,7 @@
 * **Dağhan Dağlı** — Toros Science College, Mersin, Turkey • ORCID: [`0009-0003-2492-8313`](https://orcid.org/0009-0003-2492-8313) (`@Lexovian`)
 
 **Companion Open-Science Corpus:**
-* **PFP / Werredu v2.0 (This Work):** `doi:10.5281/zenodo.23025916` • Concept DOI: `10.5281/zenodo.22999420` ([GitHub: `jesmaat/Werredu`](https://github.com/jesmaat/Werredu))
+* **PFP / Werredu v3.0 (This Work):** `doi:10.5281/zenodo.23034488` • Concept DOI: `10.5281/zenodo.22999420` ([GitHub: `jesmaat/Werredu`](https://github.com/jesmaat/Werredu))
 * **WERR v2.0 Decision Map:** `arXiv:2609.25498` • `doi:10.5281/zenodo.22939253` ([GitHub: `pCwOrM/werr`](https://github.com/pCwOrM/werr))
 * **Orbital Error Dynamics (OED):** `arXiv:2609.30115` • `doi:10.5281/zenodo.22896856`
 * **Mandelbrot Fractal Neural Synthesis:** `doi:10.5281/zenodo.22774934` ([GitHub: `pCwOrM/mandelbrot-fractal-neural-synthesis`](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis))

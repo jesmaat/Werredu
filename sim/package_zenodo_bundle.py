@@ -23,6 +23,7 @@ FILES_TO_SEAL = [
     "PFP_SIMULATOR_CONCEPTUAL_GUIDE.md",
     "PFP_SIMULATOR_TECHNICAL_MANUAL.md",
     "ZENODO_ARXIV_Q1_YUKLEME_REHBERI.md",
+    "HAKEM_SAVUNMASI_ZPD_GEOMETRI_REBUTTAL.html",
     "latex/main.tex",
     "latex/references.bib",
     "latex/camera_ready_manuscript.html",

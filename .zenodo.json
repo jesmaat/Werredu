@@ -97,8 +97,13 @@
       "identifier": "10.5281/zenodo.22999421",
       "relation": "isNewVersionOf",
       "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.23025916",
+      "relation": "isNewVersionOf",
+      "scheme": "doi"
     }
   ],
   "notes": "Priority Patent Application: Turkish Patent and Trademark Office (TÜRKPATENT) Application No. TR 2026/016285. Target Q1 Journal Preprint Series: Computers & Education: Artificial Intelligence (Elsevier).",
-  "version": "v2.0"
+  "version": "v3.0"
 }

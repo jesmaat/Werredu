@@ -8,7 +8,7 @@ via Zero-Storage Mandelbrot Boundary Reflexes (arXiv:2609.25498, TR 2026/016285)
 Companion Open-Science Corpus:
 - WERR v2.0 Decision Map: arXiv:2609.25498 | doi:10.5281/zenodo.22939253
 - Orbital Error Dynamics (OED): arXiv:2609.30115 | doi:10.5281/zenodo.22896856
-- Zenodo Record (v2.0): https://doi.org/10.5281/zenodo.23025916
+- Zenodo Record (v3.0): https://doi.org/10.5281/zenodo.23034488
 - Zenodo Concept DOI: https://doi.org/10.5281/zenodo.22999420
 - GitHub: https://github.com/jesmaat/Werredu
 """
