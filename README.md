@@ -1,7 +1,11 @@
-# ⚡ Procedural Fractal Pedagogy (`PFP` / `Werredu` v1.0)
+# ⚡ Procedural Fractal Pedagogy (`PFP` / `Werredu` v2.0)
 
 **Resolving the Saturn School Disequilibrium Paradox in Self-Directed AI Education via Zero-Storage Mandelbrot Boundary Reflexes**
 
+[![Zenodo DOI (v2.0)](https://img.shields.io/badge/Zenodo%20DOI%20(v2.0)-10.5281%2Fzenodo.23025916-blue.svg)](https://doi.org/10.5281/zenodo.23025916)
+[![Concept DOI](https://img.shields.io/badge/Concept%20DOI-10.5281%2Fzenodo.22999420-indigo.svg)](https://doi.org/10.5281/zenodo.22999420)
+[![GitHub: jesmaat/Werredu](https://img.shields.io/badge/GitHub-jesmaat%2FWerredu-181717.svg?logo=github)](https://github.com/jesmaat/Werredu)
+[![Referee Rebuttal & ZPD Geometry](https://img.shields.io/badge/Referee%20Rebuttal-ZPD%20Geometry%20%7C%20%7C%CE%BB%7C%20%E2%89%88%200.72-emerald.svg)](./HAKEM_SAVUNMASI_ZPD_GEOMETRI_REBUTTAL.html)
 [![Target Venue: Computers & Education: Artificial Intelligence (Q1)](https://img.shields.io/badge/Target%20Q1-Computers%20%26%20Education%3A%20AI%20(Elsevier)-059669.svg)](https://www.sciencedirect.com/journal/computers-and-education-artificial-intelligence)
 [![Formal Verification: Lean 4 (Zero Sorry)](https://img.shields.io/badge/Lean%204%20Verification-7%20Theorems%20(0%20sorry)-7c3aed.svg)](./lean4/PFP_HorizonProof.lean)
 [![Memory Footprint: 24 Bytes (0 VRAM)](https://img.shields.io/badge/Memory%20Footprint-24%20Bytes%20%7C%200%20VRAM-10b981.svg)](./sim/benchmark_pfp_saturn_paradox.py)
@@ -17,13 +21,13 @@
 * **Dağhan Dağlı** — Toros Science College, Mersin, Turkey • ORCID: [`0009-0003-2492-8313`](https://orcid.org/0009-0003-2492-8313) (`@Lexovian`)
 
 **Companion Open-Science Corpus:**
+* **PFP / Werredu v2.0 (This Work):** `doi:10.5281/zenodo.23025916` • Concept DOI: `10.5281/zenodo.22999420` ([GitHub: `jesmaat/Werredu`](https://github.com/jesmaat/Werredu))
 * **WERR v2.0 Decision Map:** `arXiv:2609.25498` • `doi:10.5281/zenodo.22939253` ([GitHub: `pCwOrM/werr`](https://github.com/pCwOrM/werr))
 * **Orbital Error Dynamics (OED):** `arXiv:2609.30115` • `doi:10.5281/zenodo.22896856`
 * **Mandelbrot Fractal Neural Synthesis:** `doi:10.5281/zenodo.22774934` ([GitHub: `pCwOrM/mandelbrot-fractal-neural-synthesis`](https://github.com/pCwOrM/mandelbrot-fractal-neural-synthesis))
 * **Lean 4 Formal Verification & 40-Core Gauntlet:** `doi:10.5281/zenodo.22983889`
 * **Wormhole Error-Kernel Invariants (Page Curve):** `doi:10.5281/zenodo.22961999`
 * **Werracle On-Chain EVM AI Oracle:** `doi:10.5281/zenodo.22974543` ([GitHub: `pCwOrM/werracle`](https://github.com/pCwOrM/werracle))
-
 ---
 
 ## 🎯 Executive Summary (English)
@@ -75,6 +79,13 @@ Günümüz uyarlanabilir eğitim sistemleri (AIED), bulut tabanlı Büyük Dil M
 │   ├── fig2_saturn_paradox_trajectories.png        # 300-DPI Saturn School Paradox Empirical Resolution
 │   ├── fig3_tamame_error_kernel.png                # 300-DPI TAMAMe B(t)+S(t)=1 & Z/9Z Error-Kernel
 │   └── fig4_edge_latency_memory_pareto.png         # 300-DPI Hardware Latency & O(1) Memory Pareto
+├── werr/                                           # WERR v0.5.1 Canonical Core Engine
+│   ├── modular_algebra.py                          # GAP-0331 Z/nZ Constructive Modular Arithmetic & Invariants
+│   ├── pedagogy.py                                 # Formal PFP / Werredu Operators (ZPD, T_desc, Jump, Tripod)
+│   ├── engine.py                                   # Zero-Memory 8-State Decision Engine
+│   └── fractal.py                                  # Vectorized Mandelbrot & Quadtree Extractors
+├── tests/
+│   └── test_werredu_werr_core.py                   # Automated Unit & GAP-0331 Invariant Test Suite
 ├── sim/
 │   ├── benchmark_pfp_saturn_paradox.py             # Deterministic 5-Seed, 4-Arm Simulation & Plotter
 │   ├── build_camera_ready_pdf.py                   # Automated Camera-Ready PDF Compiler
@@ -93,7 +104,14 @@ Günümüz uyarlanabilir eğitim sistemleri (AIED), bulut tabanlı Büyük Dil M
 ## 🚀 Reproducing the Benchmark & Figures
 
 ```bash
+# 1. Run full unit and GAP-0331 invariant test suite
+python -m unittest discover tests
+
+# 2. Run deterministic 4-arm simulation & generate figures
 python sim/benchmark_pfp_saturn_paradox.py
+
+# 3. Build camera-ready PDF and seal Zenodo replication bundle
 python sim/build_camera_ready_pdf.py
 python sim/package_zenodo_bundle.py
 ```
+

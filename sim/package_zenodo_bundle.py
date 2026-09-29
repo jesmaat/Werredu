@@ -20,13 +20,27 @@ FILES_TO_SEAL = [
     "Procedural_Fractal_Pedagogy_Seed_Paper_v1.pdf",
     ".zenodo.json",
     "README.md",
+    "PFP_SIMULATOR_CONCEPTUAL_GUIDE.md",
+    "PFP_SIMULATOR_TECHNICAL_MANUAL.md",
     "ZENODO_ARXIV_Q1_YUKLEME_REHBERI.md",
     "latex/main.tex",
     "latex/references.bib",
     "latex/camera_ready_manuscript.html",
     "lean4/PFP_HorizonProof.lean",
+    "werr/__init__.py",
+    "werr/modular_algebra.py",
+    "werr/pedagogy.py",
+    "werr/engine.py",
+    "werr/fractal.py",
+    "werr/datatypes.py",
+    "werr/calibration.py",
+    "werr/router.py",
+    "werr/presets.py",
+    "werr/telemetry.py",
+    "tests/test_werredu_werr_core.py",
     "sim/benchmark_pfp_saturn_paradox.py",
     "sim/build_camera_ready_pdf.py",
+    "sim/pfp_interactive_simulator.html",
     "data/pfp_saturn_benchmark_results.json",
     "data/pfp_student_trajectories_summary.csv",
     "figures/fig1_observer_horizon_zpd.png",
@@ -34,6 +48,7 @@ FILES_TO_SEAL = [
     "figures/fig3_tamame_error_kernel.png",
     "figures/fig4_edge_latency_memory_pareto.png",
 ]
+
 
 
 def sha256_file(filepath: str) -> str:

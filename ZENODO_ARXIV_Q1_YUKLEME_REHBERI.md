@@ -1,6 +1,8 @@
 # 🏛️ ZENODO $\to$ arXiv $\to$ Q1 (*Computers & Education: Artificial Intelligence*) TAM YÜKLEME VE YAYIN REHBERİ
 
-Bu rehber, doğrusal olmayan sınır dinamikleri ve sıfır-depolamalı nöral sentez çalışmalarımızın eğitim bilimleri alanındaki kurucu (tohum) yayını olan **"Procedural Fractal Pedagogy (PFP / Werredu v1.0)"** çalışmasının;
+> **⚡ GÜNCEL DURUM (2026-09-29):** v2.0 Zenodo'da CANLI — DOI: [`10.5281/zenodo.23025916`](https://zenodo.org/records/23025916) | Concept DOI: [`10.5281/zenodo.22999420`](https://doi.org/10.5281/zenodo.22999420) | GitHub: [jesmaat/Werredu](https://github.com/jesmaat/Werredu)
+
+Bu rehber, doğrusal olmayan sınır dinamikleri ve sıfır-depolamalı nöral sentez çalışmalarımızın eğitim bilimleri alanındaki kurucu (tohum) yayını olan **"Procedural Fractal Pedagogy (PFP / Werredu v2.0)"** çalışmasının;
 1. **GitHub Kararı**,
 2. **Zenodo DOI Tescili**,
 3. **arXiv (`cs.CY` / `cs.AI` / `cs.NE` / `nlin.CD`) Ön-Basımı**,
@@ -51,7 +53,7 @@ adımlarını **kopyala-yapıştır (copy-paste)** hazır metinleriyle içermekt
   ```text
   Procedural Fractal Pedagogy: Resolving the Saturn School Disequilibrium Paradox in Self-Directed AI Education via Zero-Storage Mandelbrot Boundary Reflexes
   ```
-* **Publication Date:** `2026-09-27`
+* **Publication Date:** `2026-09-29` *(v2.0 Major Revision)*
 * **Creators (Yazarlar — Eğitim Serisi Sıralaması):**
   1. **Family name:** `Dağlı` | **Given names:** `Zerrin` | **ORCID:** `0000-0001-9490-6425` | **Affiliation:** `Mersin University, Mersin, Turkey`
   2. **Family name:** `Dağlı` | **Given names:** `Volkan` | **ORCID:** `0009-0000-1587-8703` | **Affiliation:** `Anadolu University, Eskişehir, Turkey; ITouch Systems, Mersin, Turkey`

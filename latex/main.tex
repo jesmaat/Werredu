@@ -129,17 +129,23 @@ By partitioning a local spatial patch around $c$ into four orthogonal sub-quadra
 \begin{equation}
     D_q(c, \zeta) = \frac{1}{|Q_q|} \sum_{p \in Q_q} \frac{N_{\text{esc}}(p)}{N_{\max}}, \quad \{w_1, w_2, w_3, b\} = \Phi_{\text{quad}}\big(D_1, D_2, D_3, D_4\big).
 \end{equation}
-Because parameters are synthesized ephemerally in CPU registers and discarded immediately after decision emission, persistent tensor memory is identically $0\text{ Bytes}$ ($O(1)$ spatial complexity).
+At the curriculum evaluation scale, the multi-scale tripod deploys an effective observation radius $r_{\text{patch}} = 0.22 / \zeta$. Because parameters are synthesized ephemerally in CPU registers and discarded immediately after decision emission, persistent tensor memory is identically $0\text{ Bytes}$ ($O(1)$ spatial complexity).
 
 \subsection{Observer Horizon ZPD Corridor Geometry}
-In classical complex dynamics, the Main Cardioid of $\mathcal{M}$ consists of parameters $c = \frac{1}{2}\mu - \frac{1}{4}\mu^2$ with $|\mu| < 1$, where orbits collapse rapidly to an attractive fixed point ($\lambda = |2z^*| < 1$). Pedagogically, this interior basin corresponds to \textbf{Factory-Model Rote Equilibrium}: tasks are overly predictable, error is suppressed, and learners experience boredom and stagnation. Conversely, for parameters outside $\partial\mathcal{M}$ where $|z_n| > 2.0$, orbits diverge exponentially ($\lambda > 1$), corresponding to the \textbf{Saturn School Drift Zone} where learners lose task coherence.
+In classical complex dynamics, the interior of the Main Cardioid is radially structured by the fixed-point multiplier $\lambda = 1 - \sqrt{1 - 4c}$ ($|\lambda| < 1$). The deep interior origin ($c \approx 0, |\lambda| \to 0$) represents the \textbf{Factory-Model Rote Sink}, where error is instantly annihilated ($L \to 0$) into unchallenging, overdamped stagnation ($\text{Var}(|z_n|) \equiv 0$). Conversely, for parameters crossing into the exterior divergent escape basin ($|\lambda| > 1.0$), learners enter the \textbf{Saturn School Drift Zone}, experiencing cognitive burnout stress and uncontrolled off-task loss of coherence.
 
-Following Orbital Error Dynamics \cite{dagli2026oed}, we formalize Vygotsky's Zone of Proximal Development (ZPD) \cite{vygotsky1978mind} as the \textbf{Observer Horizon Corridor} anchored at the conjugate sub-boundary resonance shoulder loci:
+Crucially, an authentic Zone of Proximal Development (ZPD) cannot reside strictly upon the analytic boundary separatrix $\partial\mathcal{M}$ ($|\lambda| = 1.0$, e.g., $\hat{c} = 0.25 \pm 0.50i$), because a mathematical set of Lebesgue measure zero offers no basin stability against infinitesimal distraction shocks $\delta c > 0$. Following Orbital Error Dynamics \cite{dagli2026oed}, we formalize Vygotsky's Zone of Proximal Development (ZPD) \cite{vygotsky1978mind} as a computational isomorphism for algorithmic Intelligent Tutoring Systems, anchored at the conjugate sub-boundary resonance shoulder loci:
 \begin{equation}
     X_{\text{upper}} = 0.25 + 0.18i, \qquad X_{\text{lower}} = 0.25 - 0.18i.
     \label{eq:shoulders}
 \end{equation}
-Positioned strategically between the Main Cardioid cusp ($c = 0.25 + 0.00i$) and the true analytic boundary ($\hat{c} = 0.25 \pm 0.50i$), $X_{\text{upper}}$ and $X_{\text{lower}}$ exhibit high local boundary gradient dispersion ($\sigma_D > 0.08$) while remaining gravitationally tethered to the somatic dissipation axis ($\mathrm{Re}(c) = 0.25$), as illustrated in Fig.~\ref{fig:observer_horizon}.
+Evaluating the fixed-point multiplier at these shoulders yields:
+\begin{equation}
+    \lambda = 1 - \sqrt{1 - 4(0.25 \pm 0.18i)} = 0.40 \pm 0.60i, \quad |\lambda| = \sqrt{0.52} \approx 0.7211 < 1, \quad \arg(\lambda) \approx 56.31^\circ.
+    \label{eq:lambda_shoulder}
+\end{equation}
+Positioned strategically between the parabolic cusp ($c = 0.25$) and the critical separatrix ($\hat{c} = 0.25 \pm 0.50i$), $X_{\text{upper}}$ and $X_{\text{lower}}$ constitute a weakly attracting \textbf{spiral resonance shelf}. At $r_{\text{patch}} = 0.22$, the eastern quadrants reach $\text{Re}(c) = 0.47 > 0.25$ into the adjacent escape basin while western quadrants remain within the cardioid ($\text{Re}(c) = 0.03$), producing high quadrant boundary dispersion ($\sigma_D = 0.417 \gg 0.08$) to provoke active cognitive disequilibrium. Simultaneously, local orbital trajectory variance ($\text{Var}(|z_n|) > 0$) differentiates the spiral shelf from the rote origin ($\text{Var}(|z_n|) \equiv 0$) even under infinitesimal patch limits, while providing the finite spiral restoring basin required for deterministic containment under $T_{\text{desc}} = 0.045$, as illustrated in Fig.~\ref{fig:observer_horizon}.
+
 
 \subsection{Three-Operator Stabilization Kernel: Resolving the Saturn School Paradox}
 When a self-directed learner explores a curriculum module at step $t$, environmental stimuli and curiosity generate a complex perturbation $\Delta c_t = \delta_{\text{re},t} + i\delta_{\text{im},t}$. To prevent $\Delta c_t$ from driving the learner into Saturn School divergence, PFP applies three coupled operators:
