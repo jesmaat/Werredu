@@ -1,0 +1,81 @@
+% results_rasch.tex  (edu-revision, 2026-09-29, second version)
+% Every number is a macro from latex/generated/rasch_numbers.tex or
+% latex/generated/ablation_numbers.tex, or a generated table. Pipeline:
+%   python sim/rasch_fair_benchmark.py        ; Rscript analysis/rasch_fair_benchmark.R
+%   python sim/rasch_ablation_mandelbrot.py   ; Rscript analysis/rasch_ablation_mandelbrot.R
+%   python sim/rasch_pfp2d_isolated.py        ; Rscript analysis/rasch_pfp2d_isolated.R
+%   python sim/rasch_offset_control.py        ; Rscript analysis/rasch_offset_control.R
+%   Rscript analysis/make_results_tex.R       ; Rscript analysis/make_ablation_tex.R
+% Preamble needs: \input{generated/rasch_numbers}, \input{generated/ablation_numbers},
+%                 graphicx, booktabs, amsmath, enumitem
+% ---------------------------------------------------------------------------
+
+\section{Simulation Study}
+\label{sec:sim}
+
+\subsection{Design}
+All conditions act on one and the same simulated learner and differ \emph{only} in how the difficulty $b_t$ of the next task is chosen. Each learner has a hidden ability $\theta_t$ with $\theta_0 \sim \mathcal{N}(0,1)$ and answers correctly with the Rasch probability \cite{rasch1960probabilistic}
+\begin{equation}
+P_t = \Pr(y_t = 1) = \frac{1}{1 + e^{-(\theta_t - b_t)}} .
+\end{equation}
+We simulated $N = \RaschN$ learners per condition over $T = \RaschT$ tasks (five seeds of 200). The same $\theta_0$ and the same random draws deciding each answer were used in every condition, so conditions are compared learner by learner. All free parameters, parameter grids and decision criteria were fixed in writing before the corresponding run. We report means, paired differences with 95\% bootstrap intervals and paired effect sizes $d_z$; because $N$ is chosen by the analyst, $p$-values are not interpreted.
+
+\paragraph{Conditions and naming.} To keep the role of the fractal geometry explicit, every condition is named after what it actually computes.
+\begin{itemize}[leftmargin=*,nosep]
+  \item \textbf{Saturn} (unconstrained self-direction): $b_t \sim U(-3, 3)$.
+  \item \textbf{Factory} (fixed sequence): $b_t = -1 + 0.01\,t$.
+  \item \textbf{CAT} (adaptive tutor): Elo ability estimate \cite{pelanek2016elo}; $b_t$ targets an estimated success probability of $0.70$.
+  \item \textbf{PFP-Core} (feedback core, no fractal computation): $c_{t+1} = c_t \pm \delta - \kappa(c_t - X)$, $+\delta$ after a correct and $-\delta$ after an incorrect answer, $b_t = \beta\,\mathrm{Re}(c_t - X)$, with $X = 0.25 + 0.18i$, $\kappa = 0.44$, $\delta = 0.05$, $\beta = 10$. This is a leaky one-up/one-down staircase in the sense of Levitt \cite{levitt1971transformed}; it neither knows nor estimates $\theta_t$ and settles where $P_t \approx 0.5$.
+  \item \textbf{PFP-Core+J}: PFP-Core with a two-dimensional step ($\pm\delta(1 + 0.5i)$) and a jump rule (after four consecutive errors, $c \leftarrow X$). The imaginary part does not enter $b_t$; there is still no fractal computation.
+  \item \textbf{PFP-M1}: PFP-Core plus the Mandelbrot term $\alpha\,(1 - H(c_t))$.
+  \item \textbf{PFP-M2}: PFP-Core+J plus the Mandelbrot term $\alpha \ln\!\big((1 - H(c_t) + \varepsilon)/(H(c_t) + \varepsilon)\big)$, $\varepsilon = 0.01$.
+  \item \textbf{Offset} (control): PFP-Core+J plus a \emph{constant} shift equal to the mean of the PFP-M2 term ($\offsetShiftOne$ logits in Scenario~1, $\offsetShiftTwo$ in Scenario~2).
+\end{itemize}
+In PFP-M1 and PFP-M2, $H(c)$ is the mean non-escape ratio $N_{\text{esc}}/36$ of the four corner probes at radius $0.22$ around $c$, computed by the \texttt{werr} core. Unless stated otherwise $\alpha = 1$; $\alpha \in \{0.5, 1.0, 1.5\}$ was fixed in advance as a grid.
+
+\paragraph{Two pedagogical scenarios.} How ability changes after a task is an assumption about learning. We report two scenarios specified in advance: \textbf{Scenario~1 (symmetric)}, $\theta_{t+1} = \theta_t \pm \eta$ after a success or failure; and \textbf{Scenario~2 (difficulty-weighted, productive failure)}, $\theta_{t+1} = \theta_t + \eta(1 - P_t)$ after a success and no loss after a failure \cite{kapur2008productive}; $\eta = 0.02$. The expected gain per task is
+\begin{equation}
+\mathbb{E}[\Delta\theta \mid P] = \eta\,(2P - 1) \quad\text{(Scenario 1)}, \qquad \mathbb{E}[\Delta\theta \mid P] = \eta\,P\,(1 - P) \quad\text{(Scenario 2)} .
+\label{eq:expected_gain}
+\end{equation}
+Scenario~1 rewards easier tasks and gives zero expected gain at $P = 0.5$; Scenario~2 is maximised at $P = 0.5$. Because PFP-Core operates at $P \approx 0.5$ and CAT at $P \approx 0.7$, Eq.~\eqref{eq:expected_gain} largely determines which of them gains more ability in each scenario.
+
+\paragraph{Challenge regimes.} Residence in a success-probability band is an operational stand-in for the ZPD, and its value depends on the band. We report a \emph{disequilibrium corridor} ($0.40 \le P \le 0.60$), the \emph{pre-specified band} ($0.50 \le P \le 0.70$) and a \emph{consolidation corridor} ($0.60 \le P \le 0.80$).
+
+\subsection{Main comparison}
+
+\begin{table*}[!t]
+\centering
+\caption{Main comparison ($N = \RaschN$ learners per condition, $T = \RaschT$ tasks; PFP-M1 and PFP-M2 with $\alpha = 1$). Band rows give the mean share of tasks whose true success probability lies in the band.}
+\label{tab:main}
+\resizebox{\textwidth}{!}{\input{generated/table_main}}
+\end{table*}
+
+Table~\ref{tab:main} summarises both scenarios.
+
+\paragraph{PFP-Core.} Without estimating ability, PFP-Core kept task difficulty closer to ability than any other condition (mean $|b_t - \theta_t| = \mCoreTrackOne$ and $\mCoreTrackTwo$, versus $\mCATTrackOne$ and $\mCATTrackTwo$ for CAT) and spent the most time in the disequilibrium corridor ($\mCoreZpdAOne$ and $\mCoreZpdATwo$). It outperformed unconstrained self-direction on every outcome in both scenarios and the fixed sequence on task--ability fit. In Scenario~2 it produced the largest ability gain ($\mCoreGainTwo$ versus $\mCATGainTwo$ for CAT; $d_z = \cCATGainTwoDz$), and this held in $\gridPfpBeatsCatGainTwo$ of $\gridPfpCellsTwo$ pre-specified parameter settings. In Scenario~1, as Eq.~\eqref{eq:expected_gain} predicts, it produced no gain ($\mCoreGainOne$) whereas CAT did ($\mCATGainOne$). In both scenarios PFP-Core exposed learners to more low-success tasks than CAT ($P < 0.30$: $\mCoreFrustrOne$ and $\mCoreFrustrTwo$ versus $\mCATFrustrOne$ and $\mCATFrustrTwo$), although far fewer than unconstrained self-direction ($\mSaturnFrustrOne$ and $\mSaturnFrustrTwo$).
+
+\paragraph{PFP-M1 and PFP-M2.} Adding the Mandelbrot term did not improve on PFP-Core overall. PFP-M1 made tasks harder on average, raising the share of low-success tasks ($\mMOneFrustrOne$ and $\mMOneFrustrTwo$). PFP-M2 made tasks easier on average, lowering that share ($\mMTwoFrustrOne$ and $\mMTwoFrustrTwo$) and raising ability gain in Scenario~1 ($\mMTwoGainOne$), but lowering it in Scenario~2 ($\mMTwoGainTwo$) and loosening task--ability fit ($\mMTwoTrackTwo$).
+
+\subsection{Component analysis: what does the fractal term add?}
+
+\begin{table*}[!t]
+\centering
+\caption{Component tests, paired differences with 95\% bootstrap intervals. Each row adds or replaces one component. The last column is the per-learner standard deviation of $|b_t - \theta_t|$ over tasks (lower = steadier fit); it was not recorded for PFP-Core.}
+\label{tab:components}
+\resizebox{\textwidth}{!}{\input{generated/table_components}}
+\end{table*}
+
+Table~\ref{tab:components} isolates the contribution of each component. The jump rule alone had a small negative effect. The Mandelbrot term of PFP-M2 changed outcomes substantially, but a constant shift of the same average size reproduced almost all of these changes; in Scenario~1 it reproduced $\frustShareOffsetOne\%$ of the reduction in low-success tasks. Three criteria for a contribution beyond the shift were fixed before the control was run: a steadier task--ability fit, more time in the disequilibrium corridor, or a larger Scenario~2 ability gain. None was met. Compared with the constant shift, PFP-M2 made the fit markedly less steady ($\dMTwoVsOffsetTrackSdOne$ and $\dMTwoVsOffsetTrackSdTwo$), did not increase time in the corridor ($\dMTwoVsOffsetZpdAOne$ and $\dMTwoVsOffsetZpdATwo$) and yielded a slightly smaller Scenario~2 gain ($\dMTwoVsOffsetGainTwo$). Its only advantages were small and confined to Scenario~1 (gain $\dMTwoVsOffsetGainOne$, low-success share $\dMTwoVsOffsetFrustrOne$).
+
+\begin{table}[!t]
+\centering
+\caption{Sensitivity to the pre-specified weight $\alpha$ of the Mandelbrot term ($\alpha = 0$: PFP-Core for PFP-M1, PFP-Core+J for PFP-M2).}
+\label{tab:alpha}
+\resizebox{\columnwidth}{!}{\input{generated/table_alpha}}
+\end{table}
+
+Table~\ref{tab:alpha} shows that the two Mandelbrot formulations push difficulty in opposite directions and that their effects grow smoothly with $\alpha$, as a difficulty offset would. Within the region the learner coordinate actually visits, $H$ varies little, so the term acts mostly as a shift rather than as a state-dependent modulation.
+
+\subsection{Interpretation and limits}
+The working mechanism in these simulations is PFP's feedback core: a leaky staircase that keeps learners near $P \approx 0.5$ without estimating their ability. Against unconstrained self-direction it is clearly beneficial in both scenarios. Against a conventional adaptive tutor the comparison turns on the learning assumption: PFP-Core is preferable if learning follows a difficulty-weighted rule and inferior if success and failure change ability symmetrically. Its choice of $P \approx 0.5$ coincides with maximal outcome uncertainty but differs from optimal-difficulty results for other learners, e.g.\ the error rate of about 15\% derived by Wilson et al.\ \cite{wilson2019eighty}. For the fractal geometry, the tested Mandelbrot terms did not add anything beyond a constant difficulty shift. This is a result for the specific definitions tested here (four-point probe at radius $0.22$, two link functions), not a general verdict on fractal representations, which remain a question for further design work. All results rest on a simulated Rasch learner with two stylised learning rules; they are design predictions, not evidence of effects on students. The classroom study will test which learning rule describes real learners and whether the additional low-success episodes are productive.
