@@ -1172,7 +1172,7 @@ html_content = f"""<!DOCTYPE html>
     document.getElementById('tabRealOulad').addEventListener('click', () => setSimulationMode('oulad'));
     document.getElementById('tabCombined').addEventListener('click', () => setSimulationMode('combined'));
     document.getElementById('tabLean4').addEventListener('click', () => {{
-      window.open('https://github.com/jesmaat/WerreduRR/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
+      window.open('https://github.com/jesmaat/WerreduR/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
     }});
 
     // Controls

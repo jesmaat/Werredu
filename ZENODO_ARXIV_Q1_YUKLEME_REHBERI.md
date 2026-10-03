@@ -1,6 +1,6 @@
 # 🏛️ ZENODO $\to$ arXiv $\to$ Q1 (*Computers & Education: Artificial Intelligence*) TAM YÜKLEME VE YAYIN REHBERİ
 
-> **⚡ GÜNCEL DURUM (2026-09-29):** v3.0 Zenodo'da CANLI — DOI: [`10.5281/zenodo.23034488`](https://doi.org/10.5281/zenodo.23034488) | Concept DOI: [`10.5281/zenodo.22999420`](https://doi.org/10.5281/zenodo.22999420) | GitHub: [jesmaat/WerreduR](https://github.com/jesmaat/WerreduRR)
+> **⚡ GÜNCEL DURUM (2026-09-29):** v3.0 Zenodo'da CANLI — DOI: [`10.5281/zenodo.23034488`](https://doi.org/10.5281/zenodo.23034488) | Concept DOI: [`10.5281/zenodo.22999420`](https://doi.org/10.5281/zenodo.22999420) | GitHub: [jesmaat/WerreduR](https://github.com/jesmaat/WerreduR)
 
 Bu rehber, doğrusal olmayan sınır dinamikleri ve sıfır-depolamalı nöral sentez çalışmalarımızın eğitim bilimleri alanındaki kurucu (tohum) yayını olan **"Procedural Fractal Pedagogy (PFP / WerreduR v3.0)"** çalışmasının;
 1. **GitHub Kararı**,

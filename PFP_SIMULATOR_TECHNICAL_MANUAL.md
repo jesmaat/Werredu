@@ -3,7 +3,7 @@
 
 **Authors:** Dr. Zerrin Dağlı (First & Corresponding Author, Mersin University) • Volkan Dağlı (Anadolu University & ITouch Systems) • Dağhan Dağlı (Toros Science College)  
 **Priority Patent:** TÜRKPATENT `TR 2026/016285`  
-**Open Science Repositories:** [GitHub (`jesmaat/WerreduR`)](https://github.com/jesmaat/WerreduRR) • Zenodo Preprint Series  
+**Open Science Repositories:** [GitHub (`jesmaat/WerreduR`)](https://github.com/jesmaat/WerreduR) • Zenodo Preprint Series  
 **Target Q1 Venue:** *Computers & Education: Artificial Intelligence* (Elsevier)
 
 ---

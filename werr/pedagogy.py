@@ -10,7 +10,7 @@ Companion Open-Science Corpus:
 - Orbital Error Dynamics (OED): arXiv:2609.30115 | doi:10.5281/zenodo.22896856
 - Zenodo Record (v3.0): https://doi.org/10.5281/zenodo.23034488
 - Zenodo Concept DOI: https://doi.org/10.5281/zenodo.22999420
-- GitHub: https://github.com/jesmaat/WerreduRR
+- GitHub: https://github.com/jesmaat/WerreduR
 """
 
 import math
