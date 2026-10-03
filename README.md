@@ -17,8 +17,8 @@
 ## 👥 Authors & Affiliations
 
 * **Zerrin Dağlı** *(First & Corresponding Author)* — Mersin University, Mersin, Turkey • ORCID: [`0000-0001-9490-6425`](https://orcid.org/0000-0001-9490-6425)
-* **Volkan Dağlı** — Anadolu University, Eskişehir, Turkey & ITouch Systems, Mersin, Turkey • ORCID: [`0009-0000-1587-8703`](https://orcid.org/0009-0000-1587-8703) (`@pCwOrM`)
-* **Dağhan Dağlı** — Toros Science College, Mersin, Turkey • ORCID: [`0009-0003-2492-8313`](https://orcid.org/0009-0003-2492-8313) (`@Lexovian`)
+* **Volkan Dağlı** — Anadolu University, Eskişehir, Turkey & ITouch Systems, Çukurova Teknokent, Mersin, Turkey • ORCID: [`0009-0000-1587-8703`](https://orcid.org/0009-0000-1587-8703) (`@pCwOrM`)
+* **Dağhan Dağlı** — Toros Science High School, Mersin Education Foundation (Toros University), Mersin, Turkey • ORCID: [`0009-0003-2492-8313`](https://orcid.org/0009-0003-2492-8313) (`@Lexovian`)
 
 **Companion Open-Science Corpus:**
 * **PFP / WerreduR (This Work):** `doi:10.5281/zenodo.23034488` • Concept DOI: `10.5281/zenodo.22999420` ([GitHub: `jesmaat/WerreduR`](https://github.com/jesmaat/WerreduR))
@@ -69,14 +69,36 @@ All conditions share one identical 1PL Rasch learner model ($P_t = 1 / (1 + e^{-
 
 ### 2. Empirical Execution Latency & Edge Footprint ($N = 5,000$ Cycles)
 
-Profiled on commodity dual-core x86_64 host (Python 3.10.12, NumPy 2.2.6, paired seed = 2026, 200-cycle warmup):
+Profiled across diverse operating systems and micro-architectures (paired seed = 2026, 200-cycle warmup):
 
-| Subsystem / Operation | Median Latency | IQR [Q1, Q3] | Mean [SD] | p95 Ceiling | Single-Thread Throughput | Memory Footprint |
-| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Servo Update Kernel** (`kernel_tripod`) | **30.4 μs** | [29.4, 32.3] μs | 31.9 μs [15.8] | 36.0 μs | ≈ 32,895 ops/s | **24 Bytes** |
-| **Full Decision Step** (`decision_step`) | **59.8 μs** | [57.0, 63.7] μs | 64.3 μs [37.1] | 76.7 μs | ≈ 16,722 ops/s | **0 Bytes VRAM** |
+| Platform / Environment | Subsystem / Operation | Median Latency | IQR [Q1, Q3] | Mean [SD] | p95 Ceiling | Memory Footprint |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Linux x86_64** (Cloud / Server) | **Servo Update Kernel** (`kernel_tripod`) | **30.4 μs** | [29.4, 32.3] μs | 31.9 μs [15.8] | 36.0 μs | **24 Bytes** |
+| *(Python 3.10.12, NumPy 2.2.6)* | **Full Decision Step** (`decision_step`) | **59.8 μs** | [57.0, 63.7] μs | 64.3 μs [37.1] | 76.7 μs | **0 Bytes VRAM** |
+| **Windows 11** (Commodity Edge / Desktop) | **Servo Update Kernel** (`kernel_tripod`) | **38.6 μs** | [38.2, 39.1] μs | 39.4 μs [7.8] | 42.2 μs | **24 Bytes** |
+| *(Intel Core i7, Python 3.12.10)* | **Full Decision Step** (`decision_step`) | **75.1 μs** | [74.0, 76.9] μs | 78.8 μs [21.4] | 87.8 μs | **0 Bytes VRAM** |
 
-*Source: `sim/measure_latency.py` → `data/edu_revision/latency_claude.json`.*
+*Source: `sim/measure_latency.py` → `data/edu_revision/latency_claude.json` & `data/edu_revision/latency_DESKTOP-Q83M87D.json`.*
+
+### 3. 🏛️ Cumulative Academic Chronology & Benchmark Evolution
+
+In accordance with the highest standards of scientific cumulative progression and open-science traceability, this repository archives the complete evolutionary trajectory of the WerreduR / PFP framework across four developmental epochs:
+
+* **Epoch 1: Exploratory Saturn-Factory Baseline (`data/pfp_saturn_benchmark_results.json`)**  
+  *Research Milestone:* Initial heuristic proof-of-concept modeling Bennett & King's (1991) / Reigeluth's (2008) Saturn School paradox. Proved that unconstrained learner autonomy precipitates severe time-on-task collapse, which is quenched by preliminary fractal boundary damping.  
+  *Script:* `sim/benchmark_pfp_saturn_paradox.py` • *Artifact:* `data/pfp_saturn_benchmark_results.json`.
+
+* **Epoch 2: Pre-Registered Fair 1PL Rasch Psychometric Benchmark (`data/edu_revision/rasch_students.csv`)**  
+  *Research Milestone:* Unification of all experimental arms (Saturn, Factory, CAT, PFP) under a single, shared 1PL Rasch learner model ($P = 1 / (1 + e^{-(\theta - b)})$) with common random numbers ($N=1,000$ learners, $T=120$ cycles, 5 seeds). Proved that PFP-Core sustains **3.6× higher disequilibrium** ($P \approx 0.50$, $H = 1.0\text{ bit}$) than conventional CAT under productive failure without latent ability estimation.  
+  *Script:* `sim/rasch_fair_benchmark.py` • *Artifact:* `data/edu_revision/rasch_students.csv`, `rasch_grid.csv`.
+
+* **Epoch 3: Multi-Tier Mandelbrot Ablation Hierarchy & Static Offset Control (`data/edu_revision/r_ablation_contrasts.csv`)**  
+  *Research Milestone:* Rigorous component ablation isolating the local Mandelbrot escape dynamics ($H_{\text{macro}}$) from static difficulty offsets ($\Delta b_{\text{static}} \approx -0.42\text{ logit}$). Definitively proved the *null hypothesis of the fractal surface*: local escape geometry acts as a static task-easing offset, while the true pedagogical breakthrough resides in the $O(1)$ zero-storage servo targeting maximal Shannon entropy.  
+  *Scripts:* `sim/rasch_ablation_mandelbrot.py`, `sim/rasch_offset_control.py`, `sim/rasch_pfp2d_protocol.py` • *Artifact:* `data/edu_revision/r_ablation_contrasts.csv`, `rasch_offset_students.csv`.
+
+* **Epoch 4: Cross-Platform Hardware Profiling & Machine Verification**  
+  *Research Milestone:* High-resolution latency benchmarking across operating systems (Linux $30.4\ \mu\text{s}$ vs. Windows 11 $38.6\ \mu\text{s}$), paired with 7 machine-checked Lean 4 theorems verifying $O(1)$ state bounds with zero `sorry` axioms.  
+  *Proofs:* `lean4/PFP_HorizonProof.lean` • *Telemetry:* `data/edu_revision/latency_*.json`.
 
 ---
 

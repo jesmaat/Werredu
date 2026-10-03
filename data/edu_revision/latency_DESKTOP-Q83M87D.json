@@ -1,0 +1,39 @@
+{
+  "machine": {
+    "node": "DESKTOP-Q83M87D",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "machine": "AMD64",
+    "python": "3.12.10",
+    "numpy": "1.26.4",
+    "cpu_count": 12
+  },
+  "design": {
+    "seed": 2026,
+    "n_points": 200,
+    "repeats": 25,
+    "warmup": 200
+  },
+  "kernel_tripod": {
+    "n": 5000,
+    "median_ms": 0.0386,
+    "iqr_ms": [
+      0.0382,
+      0.0391
+    ],
+    "p95_ms": 0.0422,
+    "mean_ms": 0.0394,
+    "sd_ms": 0.0078
+  },
+  "decision_step": {
+    "n": 5000,
+    "median_ms": 0.0751,
+    "iqr_ms": [
+      0.074,
+      0.0769
+    ],
+    "p95_ms": 0.0878,
+    "mean_ms": 0.0788,
+    "sd_ms": 0.0214
+  }
+}
