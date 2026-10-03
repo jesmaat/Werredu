@@ -37,3 +37,6 @@ real_student_data/
 # Legacy experimental HTML builds
 offline_simulation/
 simulation_v2/
+# Academic embargo: unreviewed manuscript drafts (prevent iThenticate indexing & preserve double-blind review)
+*.docx
+docs/manuscript/*.docx
