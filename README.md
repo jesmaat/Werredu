@@ -2,7 +2,7 @@
 
 **Operationalizing Fractal Geometry in Adaptive Learning: A Deterministic $O(1)$ Servo-Controller for Sustaining Productive Failure Without Latent Ability Estimation**
 
-[![Target Venue: Computers & Education: Artificial Intelligence (Q1)](https://img.shields.io/badge/Target%20Q1-Computers%20%26%20Education%3A%20AI%20(Elsevier)-059669.svg)](https://www.sciencedirect.com/journal/computers-and-education-artificial-intelligence)
+[![Target: Q1 AI in Education Journal](https://img.shields.io/badge/Target-Q1%20Peer--Reviewed%20AIED%20Journal-059669.svg)](#)
 [![Zenodo DOI (v3.0)](https://img.shields.io/badge/Zenodo%20DOI%20(v3.0)-10.5281%2Fzenodo.23034488-blue.svg)](https://doi.org/10.5281/zenodo.23034488)
 [![Concept DOI](https://img.shields.io/badge/Concept%20DOI-10.5281%2Fzenodo.22999420-indigo.svg)](https://doi.org/10.5281/zenodo.22999420)
 [![GitHub: jesmaat/WerreduR](https://img.shields.io/badge/GitHub-jesmaat%2FWerreduR-181717.svg?logo=github)](https://github.com/jesmaat/WerreduR)
