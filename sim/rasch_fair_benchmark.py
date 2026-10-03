@@ -102,7 +102,7 @@ def H_macro(c_arr):
     return np.array([compute_boundary_dispersion(complex(z), r_patch=0.22)[0] for z in c_arr])
 
 
-def run(arm, rule, seed, delta=None, beta=None, K=None, alpha=0.0, h_log=None):
+def run(arm, rule, seed, delta=None, beta=None, K=None, alpha=0.0, h_log=None, target_p=None):
     """Vectorised over the N_PER_SEED learners of one seed.
     alpha > 0 adds the Mandelbrot term alpha * (1 - H_macro(c_t)) to the PFP
     difficulty (ablation); alpha = 0 is the protocol's plain PFP."""
@@ -116,14 +116,23 @@ def run(arm, rule, seed, delta=None, beta=None, K=None, alpha=0.0, h_log=None):
     c = np.full(N_PER_SEED, X, dtype=complex)
     P_hist = np.empty((T_STEPS, N_PER_SEED))
     track = np.zeros(N_PER_SEED)
-    off = math.log(CAT_TARGET_P / (1 - CAT_TARGET_P))
+
+    effective_target_p = target_p
+    if effective_target_p is None:
+        if arm == "CAT_50":
+            effective_target_p = 0.50
+        elif arm == "CAT_85":
+            effective_target_p = 0.85
+        else:
+            effective_target_p = CAT_TARGET_P
+    off = math.log(effective_target_p / (1.0 - effective_target_p))
 
     for t in range(T_STEPS):
         if arm == "Saturn":
             b = sat[t]
         elif arm == "Factory":
             b = np.full(N_PER_SEED, FACTORY_START + FACTORY_SLOPE * t)
-        elif arm == "CAT":
+        elif arm.startswith("CAT"):
             b = th_hat - off
         elif arm == "PFP":
             b = B_BASE + beta * (c - X).real
@@ -140,7 +149,7 @@ def run(arm, rule, seed, delta=None, beta=None, K=None, alpha=0.0, h_log=None):
         P_hist[t] = P
         track += np.abs(b - theta)
 
-        if arm == "CAT":
+        if arm.startswith("CAT"):
             th_hat += K * (y - logistic(th_hat - b))
         if arm == "PFP":
             dc = np.where(y, delta * np.exp(1j * PHI_S), -delta * np.exp(1j * PHI_F))
@@ -168,8 +177,15 @@ METRICS = ("zpd", "zpd_40_60", "zpd_60_80", "zpd_40_80", "zpd_40_70", "bored", "
 
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
-    primary = {"Saturn": {}, "Factory": {}, "CAT": {"K": PRIMARY["K"]},
-               "PFP": {"delta": PRIMARY["delta"], "beta": PRIMARY["beta"]}}
+    primary = {
+        "Saturn": {},
+        "Factory": {},
+        "CAT_50": {"K": PRIMARY["K"], "target_p": 0.50},
+        "CAT_70": {"K": PRIMARY["K"], "target_p": 0.70},
+        "CAT_85": {"K": PRIMARY["K"], "target_p": 0.85},
+        "CAT": {"K": PRIMARY["K"], "target_p": 0.70},
+        "PFP": {"delta": PRIMARY["delta"], "beta": PRIMARY["beta"]},
+    }
 
     rows = []
     for rule in RULES:
@@ -188,7 +204,10 @@ def main():
 
     grid = []
     settings = [("Saturn", {}, "-"), ("Factory", {}, "-")]
-    settings += [("CAT", {"K": k}, f"K={k}") for k in GRID_CAT]
+    settings += [("CAT_50", {"K": k, "target_p": 0.50}, f"K={k}") for k in GRID_CAT]
+    settings += [("CAT_70", {"K": k, "target_p": 0.70}, f"K={k}") for k in GRID_CAT]
+    settings += [("CAT_85", {"K": k, "target_p": 0.85}, f"K={k}") for k in GRID_CAT]
+    settings += [("CAT", {"K": k, "target_p": 0.70}, f"K={k}") for k in GRID_CAT]
     settings += [("PFP", {"delta": d, "beta": b}, f"delta={d};beta={b}") for d, b in GRID_PFP]
     for rule in RULES:
         for arm, kw, label in settings:

@@ -16,7 +16,7 @@ dir_in <- file.path("data", "edu_revision")
 s  <- read.csv(file.path(dir_in, "rasch_students.csv"), stringsAsFactors = FALSE)
 g  <- read.csv(file.path(dir_in, "rasch_grid.csv"),     stringsAsFactors = FALSE)
 metrics <- c("zpd", "zpd_40_60", "zpd_60_80", "zpd_40_80", "zpd_40_70", "bored", "frustr", "mean_p", "gain", "track")
-arms    <- c("Saturn", "Factory", "CAT", "PFP")
+arms    <- c("Saturn", "Factory", "CAT_50", "CAT_70", "CAT_85", "CAT", "PFP")
 out <- character(); say <- function(...) { l <- paste0(...); out <<- c(out, l); cat(l, "\n") }
 
 boot_ci <- function(x, B = 2000) unname(quantile(replicate(B, mean(sample(x, replace = TRUE))), c(.025, .975)))
