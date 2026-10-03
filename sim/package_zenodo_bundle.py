@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Cryptographic SHA-256 Sealer and Zenodo / arXiv Archive Packager
-for Procedural Fractal Pedagogy (PFP / Werredu v1.0).
+for Procedural Fractal Pedagogy (PFP / WerreduR v1.0).
 """
 
 import os
@@ -78,7 +78,7 @@ def main():
 
     master_seal = combined_hasher.hexdigest()
     seal_manifest = {
-        "package": "Procedural Fractal Pedagogy (PFP / Werredu v1.0) — Zenodo & CAEAI Replication Suite",
+        "package": "Procedural Fractal Pedagogy (PFP / WerreduR v1.0) — Zenodo & CAEAI Replication Suite",
         "authors": [
             {"name": "Zerrin Dağlı", "orcid": "0000-0001-9490-6425"},
             {"name": "Volkan Dağlı", "orcid": "0009-0000-1587-8703"},

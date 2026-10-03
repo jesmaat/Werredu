@@ -1,4 +1,4 @@
-# 🎓 PFP / Werredu v1.0 Simülatörü: Kavramsal Anlatım ve Sonuç Yorumlama Rehberi
+# 🎓 PFP / WerreduR v1.0 Simülatörü: Kavramsal Anlatım ve Sonuç Yorumlama Rehberi
 **Yazarlar:** Dr. Zerrin Dağlı (Yürütücü & Sorumlu Yazar) • Volkan Dağlı • Dağhan Dağlı  
 **Hedef:** *Computers & Education: Artificial Intelligence* (Elsevier, Q1)  
 **Patent Önceliği:** TÜRKPATENT `TR 2026/016285`

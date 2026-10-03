@@ -1,7 +1,7 @@
 """
 werr.pedagogy
 =============
-Procedural Fractal Pedagogy (PFP / Werredu v1.0) Core Implementation.
+Procedural Fractal Pedagogy (PFP / WerreduR v1.0) Core Implementation.
 Resolving the Saturn School Disequilibrium Paradox in Self-Directed AI Education
 via Zero-Storage Mandelbrot Boundary Reflexes (arXiv:2609.25498, TR 2026/016285).
 
@@ -10,7 +10,7 @@ Companion Open-Science Corpus:
 - Orbital Error Dynamics (OED): arXiv:2609.30115 | doi:10.5281/zenodo.22896856
 - Zenodo Record (v3.0): https://doi.org/10.5281/zenodo.23034488
 - Zenodo Concept DOI: https://doi.org/10.5281/zenodo.22999420
-- GitHub: https://github.com/jesmaat/Werredu
+- GitHub: https://github.com/jesmaat/WerreduRR
 """
 
 import math

@@ -1,7 +1,7 @@
 """
 tests/test_werredu_werr_core.py
 ===============================
-Comprehensive Unit & Invariant Test Suite for Werredu v1.0
+Comprehensive Unit & Invariant Test Suite for WerreduR v1.0
 Verifying WERR v0.5.1 Core Integration, GAP-0331 Modular Algebra,
 and Procedural Fractal Pedagogy (PFP) Operators.
 """
@@ -108,7 +108,7 @@ class TestGAP0331ModularAlgebra(unittest.TestCase):
 
 
 class TestPFPPedagogicalOperators(unittest.TestCase):
-    """Verifies the Procedural Fractal Pedagogy (PFP / Werredu v1.0) operators."""
+    """Verifies the Procedural Fractal Pedagogy (PFP / WerreduR v1.0) operators."""
 
     def test_observer_horizon_coordinates(self):
         self.assertEqual(X_UPPER, complex(0.25, 0.18))

@@ -12,10 +12,9 @@ import json
 import os
 import shutil
 
-BASE_DIR = r"c:\Users\TeknoSanat_3\Documents\antigravity\goofy-pasteur"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 OUTPUT_HTML = os.path.join(BASE_DIR, "sim", "pfp_interactive_simulator.html")
-ARTIFACT_HTML = r"C:\Users\TeknoSanat_3\.gemini\antigravity\brain\0e9fc3aa-5fdb-4180-bc63-186c43a6bf6f\pfp_interactive_simulator.html"
 
 with open(os.path.join(DATA_DIR, "real_assistments_k12_analysis.json"), encoding="utf-8") as f:
     assist_data = json.load(f)
@@ -35,7 +34,7 @@ html_content = f"""<!DOCTYPE html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PFP / Werredu v1.0 — Çok Ölçekli Faz Uzayı ve Ampirik Simülatör</title>
+  <title>PFP / WerreduR v1.0 — Çok Ölçekli Faz Uzayı ve Ampirik Simülatör</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
     .slider-thumb::-webkit-slider-thumb {{
@@ -64,7 +63,7 @@ html_content = f"""<!DOCTYPE html>
       <div>
         <div class="flex flex-wrap items-center gap-2 mb-1.5">
           <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-            Werredu v1.0 Motoru
+            WerreduR v1.0 Motoru
           </span>
           <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30">
             Lean 4 Resmi Kanıtlı (0 sorry)
@@ -173,7 +172,7 @@ html_content = f"""<!DOCTYPE html>
           <span class="text-slate-400 font-semibold">Aktif Rejimler:</span>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkPFP" checked class="accent-emerald-500">
-            <span class="text-emerald-400 font-bold">● PFP / Werredu (Bizim)</span>
+            <span class="text-emerald-400 font-bold">● PFP / WerreduR (Bizim)</span>
           </label>
           <label class="flex items-center gap-1.5 cursor-pointer">
             <input type="checkbox" id="chkSaturn" checked class="accent-red-500">
@@ -240,7 +239,7 @@ html_content = f"""<!DOCTYPE html>
           <canvas id="timeOnTaskChart" width="600" height="170" class="w-full h-full"></canvas>
         </div>
         <div id="chartLegend" class="mt-2 flex items-center justify-center gap-4 text-xs">
-          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> PFP / Werredu (Kararlı)</span>
+          <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-emerald-400 inline-block"></span> PFP / WerreduR (Kararlı)</span>
           <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-red-400 inline-block"></span> Kısıtlamasız / Serbest</span>
           <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-amber-400 inline-block"></span> Fabrika Modeli</span>
           <span class="flex items-center gap-1.5"><span class="w-3 h-0.5 bg-blue-400 inline-block"></span> Bulut LLM</span>
@@ -1173,7 +1172,7 @@ html_content = f"""<!DOCTYPE html>
     document.getElementById('tabRealOulad').addEventListener('click', () => setSimulationMode('oulad'));
     document.getElementById('tabCombined').addEventListener('click', () => setSimulationMode('combined'));
     document.getElementById('tabLean4').addEventListener('click', () => {{
-      window.open('https://github.com/jesmaat/Werredu/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
+      window.open('https://github.com/jesmaat/WerreduRR/blob/main/lean4/PFP_HorizonProof.lean', '_blank');
     }});
 
     // Controls
@@ -1301,8 +1300,4 @@ html_content = f"""<!DOCTYPE html>
 with open(OUTPUT_HTML, "w", encoding="utf-8") as f:
     f.write(html_content)
 
-os.makedirs(os.path.dirname(ARTIFACT_HTML), exist_ok=True)
-shutil.copyfile(OUTPUT_HTML, ARTIFACT_HTML)
-
 print(f"Simulator HTML successfully regenerated at: {OUTPUT_HTML}")
-print(f"Artifact synced at: {ARTIFACT_HTML}")
