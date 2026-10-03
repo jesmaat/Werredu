@@ -1,0 +1,3 @@
+"dataset","n","u_zpd_mean","p_zpd_mean","zpd_diff","zpd_diff_ci_low","zpd_diff_ci_high","wilcoxon_p","u_escape","p_escape","mcnemar_chi2","mcnemar_p"
+"ASSISTments",1000,0.91924,1,0.08076,0.069639,0.092641,4.59901248234433e-37,0.187,0,185.005347593583,3.91408782622739e-42
+"OULAD",1000,0.9972,1,0.0028,0.000719,0.00556,0.00890894826873264,0.005,0,3.2,0.0736382701203028

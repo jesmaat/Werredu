@@ -1,0 +1,148 @@
+{
+  "title": "WerreduR / PFP Educational Revision Empirical Data Manifest",
+  "target_manuscript": "CAEAI_Manuscript_03102026.docx",
+  "journal": "Computers and Education: Artificial Intelligence (CAEAI)",
+  "generated_at": "2026-10-03T10:49:34.786729",
+  "algorithm_parameters": {
+    "learner_model": "1PL Rasch Model",
+    "n_learners": 1000,
+    "t_tasks": 120,
+    "seeds": [
+      42,
+      137,
+      369,
+      1024,
+      2026
+    ],
+    "pfp_cusp": "0.25 + 0.18i",
+    "kappa": 0.44,
+    "delta": 0.05,
+    "beta": 10.0
+  },
+  "files": {
+    "latency_claude.json": {
+      "sha256": "8094bcce796754c86fca77c5b7bd31370de953ab72f2edcaaa534fa0d73083fc",
+      "bytes": 682
+    },
+    "r_ablation_contrasts.csv": {
+      "sha256": "a93b9611ac36ff3b7b9cf95e58809c25fa2495108d18eac6ec8fd8cd6f161bfc",
+      "bytes": 5860
+    },
+    "r_ablation_report.txt": {
+      "sha256": "82a1591fc9f31cfb7c9a31033d1d85c48b1e085ddc287fd6868e79baba5cee1e",
+      "bytes": 1999
+    },
+    "r_iso_contrasts.csv": {
+      "sha256": "53ea0b95c5abd627c233c80fd38359974cb09ad1ae883c9f763ec4d46e90f54f",
+      "bytes": 27857
+    },
+    "r_iso_means.csv": {
+      "sha256": "cb9762f0107e7be80c3f7938d57a3558339c15b6907b780089f8d101df93f7dd",
+      "bytes": 2073
+    },
+    "r_iso_report.txt": {
+      "sha256": "1d996de5011a6b800c411cd86e89da59c2dc0acd8c8644ad9f0498d80f267df4",
+      "bytes": 4400
+    },
+    "r_offset_contrasts.csv": {
+      "sha256": "ff7f43637e09228cfc48e9d5ff4ad9148d047452612a5fb873fb0b92a48ea60f",
+      "bytes": 6662
+    },
+    "r_offset_report.txt": {
+      "sha256": "a6c727475aba6a1d8cf79f7868e7f2501aeb76ab343696e90672f49fc57360ba",
+      "bytes": 4230
+    },
+    "r_pfp2d_contrasts.csv": {
+      "sha256": "ec3c736fa3442046d1b049b227a8e84409d3c5782f93b2507930da00b6bceadf",
+      "bytes": 28745
+    },
+    "r_pfp2d_means.csv": {
+      "sha256": "e01872a551bfcc41c4b51a28810f13b95329700052294c9b28fcebcf5f97bf8d",
+      "bytes": 2101
+    },
+    "r_pfp2d_report.txt": {
+      "sha256": "696956b81319784a7c74b02b75e3e255591576020cab5a6382b3847d3e287272",
+      "bytes": 4672
+    },
+    "r_rasch_arm_means.csv": {
+      "sha256": "e1834cfb3bb8131fe0e72cb09b7f019190aa41f0f2ae84f2ed1bafc2301e1f0e",
+      "bytes": 5484
+    },
+    "r_rasch_grid_summary.csv": {
+      "sha256": "e64283dc9b6cf7a744d091b4d5c6203717cda3cd4e273a5739f4b1a002c3a479",
+      "bytes": 5846
+    },
+    "r_rasch_pfp_contrasts.csv": {
+      "sha256": "601249f791fceccf551705e506838717d2aace50eb51de3eb9a338094ec05327",
+      "bytes": 8252
+    },
+    "r_rasch_report.txt": {
+      "sha256": "f48d423e97705dd36d449c44e03992d5a37db7f9bffc070a22d0cc76f7dc5f78",
+      "bytes": 4683
+    },
+    "r_real_report.txt": {
+      "sha256": "0d6bddd384c3f89f2d8a6757b7dce5e41cc88706841523d0dbcab125064d8487",
+      "bytes": 1141
+    },
+    "r_real_tests.csv": {
+      "sha256": "298fd5598db5a152f1eb0a10a00bf659d9a3ff7f4de0188ac76a19b889a61e0a",
+      "bytes": 369
+    },
+    "r_real_zpd_sensitivity.csv": {
+      "sha256": "c0108601f290631fea695076df8030f896faa403b9d78532b37c7b631d93efcf",
+      "bytes": 2068
+    },
+    "rasch_ablation_H.csv": {
+      "sha256": "971ad4e5fb516df2d89480f0a0e687fcea5f0298ad6e6963c50506d4aaaec80c",
+      "bytes": 1313
+    },
+    "rasch_ablation_students.csv": {
+      "sha256": "6f422a75a2f9c9dcd2b6b7d15f7d0b8b9612252f2ebc0817928dd5556ec828a3",
+      "bytes": 776977
+    },
+    "rasch_grid.csv": {
+      "sha256": "1617cb1b754017764c7b9749423ad35db0b47c853c2c888ed42895e975b94833",
+      "bytes": 26629
+    },
+    "rasch_offset_meta.csv": {
+      "sha256": "567669f1911ffbb68ae22be4241dff94d263d5a369c25baef2401bb01fbe5d94",
+      "bytes": 61
+    },
+    "rasch_offset_students.csv": {
+      "sha256": "9ab57f7db0701cc0f9b7a61a58bd448cb3957acfc9462ecb4f80ed7c9e4eb7ac",
+      "bytes": 667661
+    },
+    "rasch_pfp2d_diagnostics.csv": {
+      "sha256": "0ac5e92a4ca2e353263a50145bc5aa705633789c898b10b94cc96b18180588ec",
+      "bytes": 2990
+    },
+    "rasch_pfp2d_iso_diagnostics.csv": {
+      "sha256": "d1516117257dbc5c093b16e9fd32cdaf1216ca99b47ba9d833d9e930d1797629",
+      "bytes": 2871
+    },
+    "rasch_pfp2d_iso_students.csv": {
+      "sha256": "f9210dcd1891e8a81d4a98e37978147533000e2d1c20f254e607cfce7574817c",
+      "bytes": 803713
+    },
+    "rasch_pfp2d_students.csv": {
+      "sha256": "ed5bf90e960b87789f2a00c4e2fd3481dd40b474d904c9a3543ccd7b99e4048e",
+      "bytes": 730428
+    },
+    "rasch_students.csv": {
+      "sha256": "50a67fc5c69445f9614867a825c9b926fd5079ea3320669b1e15b0939f2605da",
+      "bytes": 863867
+    },
+    "real_counterfactual_steps.csv": {
+      "sha256": "e4b0cd279f041879ee397c3dd5987e750ea0c791dc8fcd736770dd1eb2086fef",
+      "bytes": 5371308
+    },
+    "real_counterfactual_students.csv": {
+      "sha256": "9c2f2f50367fa1b3833be5e131657f61ddbaa714bd1d99e8952099adb4198f0c",
+      "bytes": 230416
+    },
+    "real_counterfactual_summary.json": {
+      "sha256": "497e04150470334fe5d5162b8c51e254fdb500d8557f6cdaf92e2dec9896edab",
+      "bytes": 1607
+    }
+  }
+}

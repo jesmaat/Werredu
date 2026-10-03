@@ -1,0 +1,55 @@
+{
+  "note": "Counterfactual demonstration on logged trajectories, not an empirical validation. 'ZPD' = operational band 0.1 <= |z| <= 1.2. No p-values here; see analysis/real_data_counterfactual.R.",
+  "seed": 42,
+  "trajectory_steps": 25,
+  "results": {
+    "ASSISTments": {
+      "revised": {
+        "n": 1000,
+        "unconstrained_escape_rate": 0.187,
+        "pfp_escape_rate": 0.0,
+        "unconstrained_mean_zpd": 0.9192,
+        "pfp_mean_zpd": 1.0,
+        "mean_scaffolds_per_student": 2.9
+      },
+      "legacy_z_reset": {
+        "n": 1000,
+        "unconstrained_escape_rate": 0.187,
+        "pfp_escape_rate": 0.0,
+        "unconstrained_mean_zpd": 0.9192,
+        "pfp_mean_zpd": 1.0,
+        "mean_scaffolds_per_student": 2.9
+      }
+    },
+    "OULAD": {
+      "revised": {
+        "n": 1000,
+        "unconstrained_escape_rate": 0.005,
+        "pfp_escape_rate": 0.0,
+        "unconstrained_mean_zpd": 0.9972,
+        "pfp_mean_zpd": 1.0,
+        "mean_scaffolds_per_student": 1.04,
+        "unconstrained_escape_rate_by_outcome": {
+          "Distinction": 0.0,
+          "Fail": 0.0109,
+          "Pass": 0.0,
+          "Withdrawn": 0.0088
+        }
+      },
+      "legacy_z_reset": {
+        "n": 1000,
+        "unconstrained_escape_rate": 0.005,
+        "pfp_escape_rate": 0.0,
+        "unconstrained_mean_zpd": 0.9972,
+        "pfp_mean_zpd": 1.0,
+        "mean_scaffolds_per_student": 1.04,
+        "unconstrained_escape_rate_by_outcome": {
+          "Distinction": 0.0,
+          "Fail": 0.0109,
+          "Pass": 0.0,
+          "Withdrawn": 0.0088
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "machine": {
+    "node": "claude",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "processor": "x86_64",
+    "machine": "x86_64",
+    "python": "3.10.12",
+    "numpy": "2.2.6",
+    "cpu_count": 2
+  },
+  "design": {
+    "seed": 2026,
+    "n_points": 200,
+    "repeats": 25,
+    "warmup": 200
+  },
+  "kernel_tripod": {
+    "n": 5000,
+    "median_ms": 0.0304,
+    "iqr_ms": [
+      0.0294,
+      0.0323
+    ],
+    "p95_ms": 0.036,
+    "mean_ms": 0.0319,
+    "sd_ms": 0.0158
+  },
+  "decision_step": {
+    "n": 5000,
+    "median_ms": 0.0598,
+    "iqr_ms": [
+      0.057,
+      0.0637
+    ],
+    "p95_ms": 0.0767,
+    "mean_ms": 0.0643,
+    "sd_ms": 0.0371
+  }
+}

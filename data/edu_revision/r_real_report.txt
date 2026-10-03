@@ -1,0 +1,17 @@
+== ASSISTments (n = 1000) ==
+ZPD ratio: unconstrained mean = 0.9192, PFP mean = 1.0000, PFP SD = 0.0000
+  paired mean difference = 0.0808, bootstrap 95% CI [0.0696, 0.0926], Wilcoxon V = 23220.0, p = 4.6e-37
+Escape: unconstrained = 0.187, PFP = 0.000, McNemar chi2 = 185.01, p = 3.91e-42
+PFP |z| at last step: median = 0.3649, IQR = [0.3027, 0.4533]  (fixed point |z*| at c = 0.25+0.18i is 0.3606)
+
+== OULAD (n = 1000) ==
+ZPD ratio: unconstrained mean = 0.9972, PFP mean = 1.0000, PFP SD = 0.0000
+  paired mean difference = 0.0028, bootstrap 95% CI [0.0007, 0.0056], Wilcoxon V = 45.0, p = 0.00891
+Escape: unconstrained = 0.005, PFP = 0.000, McNemar chi2 = 3.20, p = 0.0736
+PFP |z| at last step: median = 0.3612, IQR = [0.3388, 0.3869]  (fixed point |z*| at c = 0.25+0.18i is 0.3606)
+Unconstrained escape by real outcome:
+  escapes: Fail/Withdrawn 5/500, Pass/Distinction 0/500; Fisher exact p = 0.0619
+
+ZPD-band sensitivity (PFP minus unconstrained, mean per-student ratio):
+  ASSISTments: diff ranges from 0.018 to 0.221; PFP ratio ranges from 0.333 to 1.000
+  OULAD: diff ranges from -0.101 to 0.018; PFP ratio ranges from 0.191 to 1.000
