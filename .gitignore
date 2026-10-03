@@ -32,3 +32,8 @@ desktop.ini
 *password*.txt
 *.key
 credentials.json
+# Raw student datasets (licensed; never commit)
+real_student_data/
+# Legacy experimental HTML builds
+offline_simulation/
+simulation_v2/
